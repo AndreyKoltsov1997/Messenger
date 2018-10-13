@@ -1,0 +1,17 @@
+version: "Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)"
+options: "8a1e9fce55c0fbf89c5906f5021b83a3"
+build_time: [1538946645, 484414000]
+inputs:
+  "/Users/Andrey/Developer/Chat/Chat/ConversationsListCell.swift": [1538928649, 0]
+  "/Users/Andrey/Developer/Chat/Chat/ConversationViewController/RecivedMessagesCell.swift": [1538943299, 0]
+  "/Users/Andrey/Developer/Chat/Chat/ConversationViewController/ConversationCell.swift": [1538946645, 0]
+  "/Users/Andrey/Developer/Chat/Chat/ConversationCellConfiguration.swift": [1538919117, 0]
+  "/Users/Andrey/Developer/Chat/Chat/ConversationViewController/ConversationViewController.swift": [1538945263, 0]
+  "/Users/Andrey/Developer/Chat/Chat/AppDelegate.swift": [1538425763, 0]
+  "/Users/Andrey/Developer/Chat/Chat/ConversationListViewController.swift": [1538945595, 0]
+  "/Users/Andrey/Developer/Chat/Chat/ConversationViewController/MessageCellConfiguration.swift": [1538937249, 0]
+  "/Users/Andrey/Developer/Chat/Chat/ProfileViewController.swift": [1538944971, 0]
+  "/Users/Andrey/Developer/Chat/Chat/Message.swift": [1538945996, 0]
+  "/Users/Andrey/Developer/Chat/Chat/Constants.swift": [1538933545, 0]
+  "/Users/Andrey/Developer/Chat/Chat/Contact.swift": [1538932556, 0]
+  "/Users/Andrey/Developer/Chat/Chat/User.swift": [1538945708, 0]
