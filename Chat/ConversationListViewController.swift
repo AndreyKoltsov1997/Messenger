@@ -148,7 +148,6 @@ extension ConversationListViewController: UITableViewDataSource {
         if (cell.hasUnreadMessages) {
             cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
         }
-        
         return cell
     }
     
