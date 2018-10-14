@@ -25,7 +25,7 @@
 		55E2362C216A38CE0040E4DB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E2362B216A38CE0040E4DB /* Contact.swift */; };
 		55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E23635216A7D4B0040E4DB /* ConversationViewController.swift */; };
 		55E23638216A7D4B0040E4DB /* ConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55E23636216A7D4B0040E4DB /* ConversationViewController.xib */; };
-		55E2363F216A7FA80040E4DB /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E2363D216A7FA70040E4DB /* ConversationCell.swift */; };
+		55E2363F216A7FA80040E4DB /* SentMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E2363D216A7FA70040E4DB /* SentMessageCell.swift */; };
 		55E23640216A7FA80040E4DB /* SentMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55E2363E216A7FA80040E4DB /* SentMessageCell.xib */; };
 		55E23642216A85770040E4DB /* MessageCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E23641216A85770040E4DB /* MessageCellConfiguration.swift */; };
 /* End PBXBuildFile section */
@@ -51,7 +51,7 @@
 		55E2362B216A38CE0040E4DB /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		55E23635216A7D4B0040E4DB /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		55E23636216A7D4B0040E4DB /* ConversationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationViewController.xib; sourceTree = "<group>"; };
-		55E2363D216A7FA70040E4DB /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
+		55E2363D216A7FA70040E4DB /* SentMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentMessageCell.swift; sourceTree = "<group>"; };
 		55E2363E216A7FA80040E4DB /* SentMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SentMessageCell.xib; sourceTree = "<group>"; };
 		55E23641216A85770040E4DB /* MessageCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,7 +137,7 @@
 				5506460E216A97BD00EB961B /* RecivedMessagesCell.swift */,
 				5506460F216A97BD00EB961B /* RecivedMessagesCell.xib */,
 				55E23636216A7D4B0040E4DB /* ConversationViewController.xib */,
-				55E2363D216A7FA70040E4DB /* ConversationCell.swift */,
+				55E2363D216A7FA70040E4DB /* SentMessageCell.swift */,
 				55E2363E216A7FA80040E4DB /* SentMessageCell.xib */,
 				55E23641216A85770040E4DB /* MessageCellConfiguration.swift */,
 			);
@@ -222,7 +222,7 @@
 			files = (
 				552810A921652B77001A304A /* ConversationsListCell.swift in Sources */,
 				55064610216A97BD00EB961B /* RecivedMessagesCell.swift in Sources */,
-				55E2363F216A7FA80040E4DB /* ConversationCell.swift in Sources */,
+				55E2363F216A7FA80040E4DB /* SentMessageCell.swift in Sources */,
 				55E23626216A30230040E4DB /* ConversationCellConfiguration.swift in Sources */,
 				55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */,
 				550995872157955600D377E5 /* AppDelegate.swift in Sources */,

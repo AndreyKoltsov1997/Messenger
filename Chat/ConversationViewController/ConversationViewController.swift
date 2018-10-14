@@ -56,7 +56,7 @@ extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var displayingCell: UITableViewCell?
         if (indexPath.row % 2) == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? ConversationCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? SentMessageCell else {
                 // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
                 return UITableViewCell()
             }

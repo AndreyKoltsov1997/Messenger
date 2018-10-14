@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationCell: UITableViewCell {
+class SentMessageCell: UITableViewCell {
     
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var messageBackgroundImage: UIImageView!
