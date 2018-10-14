@@ -16,8 +16,20 @@ struct Constants {
     static let PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME = "profile-vc-userpic-placeholder"
     static let PROFILE_VC_BLUE_COLOR = UIColor(red:0.25, green:0.47, blue:0.94, alpha:1.0)
     static let USER_DISCRIPTION_TEXT_DEFAULT_COLOR = UIColor(red:0.41, green:0.41, blue:0.41, alpha:1.0)
+    static let ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR = UIColor.yellow.withAlphaComponent(0.05)
+    static let OFFLINE_CONTACT_BACKGROUND_DEFAULT_COLOR = UIColor.white
     static let ROUNDED_BUTTONS_DEFAULT_RADIUS = CGFloat(12)
     static let BUTTON_BORDER_DEFAULT_WIDTH = CGFloat(1.5)
+    
+    static let ONLINE_USERS_SECTION_HEADER = "Online"
+    static let OFFLINE_USERS_SECTION_HEADER = "History"
+    
+    // NOTE: There's 2 formats of displaying date possible:
+    // ... 1. Message has been recived within the current day => hours and minutes would be displayed; (@param MESSAGE_RECIVED_TODAY_DATE_FORMAT)
+    // ... 2. Message was has been recived in other day => date and month would be dispalyed; (@Param MESSAGE_RECIVED_IN_THE_PAST_DATE_FORMAT)
+    static let MESSAGE_RECIVED_TODAY_DATE_FORMAT = "HH:mm"
+    static let MESSAGE_RECIVED_IN_THE_PAST_DATE_FORMAT = "dd MMM"
+    static let DATE_FORMAT_DEFAULT_LOCALE = Locale(identifier: "RU_ru")
     
     // Options for profile picture choosing
     static let OPTION_TAKE_PHOTO_DEFAULT_TITLE = "Take photo"

@@ -53,16 +53,29 @@
                                     <action selector="chooseImageButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ubD-L3-AU5"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bj8-cK-0iG">
+                                <rect key="frame" x="20" y="455" width="280" height="44"/>
+                                <state key="normal" title="Закрыть">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TXU-bA-8H5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bj8-cK-0iG" secondAttribute="trailing" constant="20" id="3wB-3b-B4j"/>
                             <constraint firstItem="nOh-ET-JOx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="54S-2v-Uvv"/>
                             <constraint firstItem="Vjr-xF-fQh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="56C-70-m4e"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="trailing" secondItem="nOh-ET-JOx" secondAttribute="trailing" id="9cV-zf-X3n"/>
                             <constraint firstItem="Vjr-xF-fQh" firstAttribute="top" secondItem="nOh-ET-JOx" secondAttribute="bottom" constant="20" id="9wU-4U-qB9"/>
+                            <constraint firstItem="bj8-cK-0iG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="BA3-98-NQu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YsN-7l-xPL" secondAttribute="bottom" constant="20" id="BA6-uH-CqM"/>
+                            <constraint firstItem="bj8-cK-0iG" firstAttribute="height" secondItem="YsN-7l-xPL" secondAttribute="height" id="CDd-qU-DmG"/>
                             <constraint firstItem="nOh-ET-JOx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="EBe-qm-owT"/>
                             <constraint firstItem="YsN-7l-xPL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="KCs-RA-9jq"/>
+                            <constraint firstItem="bj8-cK-0iG" firstAttribute="width" secondItem="YsN-7l-xPL" secondAttribute="width" id="L5e-Jx-M6o"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Vjr-xF-fQh" secondAttribute="trailing" constant="20" id="LJe-IY-kgs"/>
                             <constraint firstItem="dfG-x6-YyV" firstAttribute="top" secondItem="Vjr-xF-fQh" secondAttribute="bottom" constant="10" id="SLB-pE-yqa"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="height" secondItem="nOh-ET-JOx" secondAttribute="height" multiplier="0.2" id="cXH-lD-wUk"/>
@@ -72,12 +85,14 @@
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="width" secondItem="nOh-ET-JOx" secondAttribute="width" multiplier="0.2" id="j9x-1Y-ZcN"/>
                             <constraint firstItem="YsN-7l-xPL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="dfG-x6-YyV" secondAttribute="bottom" constant="20" id="k0B-WP-Yoq"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="bottom" secondItem="nOh-ET-JOx" secondAttribute="bottom" id="n6R-ip-ORf"/>
+                            <constraint firstItem="YsN-7l-xPL" firstAttribute="top" secondItem="bj8-cK-0iG" secondAttribute="bottom" constant="5" id="paU-pZ-0AL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nOh-ET-JOx" secondAttribute="trailing" constant="20" id="r9y-ug-o7S"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="chooseImageButton" destination="UIo-W8-LaN" id="b0R-GB-axt"/>
+                        <outlet property="dismissButton" destination="bj8-cK-0iG" id="Lhy-wt-rUV"/>
                         <outlet property="editProfileButton" destination="YsN-7l-xPL" id="API-mN-PgE"/>
                         <outlet property="profilePictureImage" destination="nOh-ET-JOx" id="09t-Nq-qg3"/>
                         <outlet property="userDiscriptionLabel" destination="dfG-x6-YyV" id="izY-ts-7K9"/>

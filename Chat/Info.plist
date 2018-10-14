@@ -10,10 +10,10 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-    <key>NSCameraUsageDescription</key>
-    <string>You can set profile picture using camera.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>You can select profile picture from the library.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>You can set profile picture using camera.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You can select profile picture from the library.</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
@@ -27,7 +27,7 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<string>ConversationListViewController</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

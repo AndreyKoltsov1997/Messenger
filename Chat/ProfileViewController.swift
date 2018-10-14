@@ -18,7 +18,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var profilePictureImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var dismissButton: UIButton!
     
+    @IBAction func dismissBtnClicked(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
     // MARK: Outlet methods
     
     @IBAction func chooseImageButtonPressed(_ sender: UIButton) {
@@ -198,12 +202,14 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     private func configureLayout() {
         let multiplierToFormCircle = CGFloat(0.5)
         let CORNER_RADIUS_FOR_PROFILE_ICON = chooseImageButton.bounds.height * multiplierToFormCircle
+   
+        
         
         // NOTE: configuring chooseImageButton
-        chooseImageButton.backgroundColor = Constants.PROFILE_VC_BLUE_COLOR
-        chooseImageButton.layer.cornerRadius = CORNER_RADIUS_FOR_PROFILE_ICON
         let paddingValueInPercentage = CGFloat(0.1)
         let paddingForBackgroundPicture = self.chooseImageButton.frame.size.width * paddingValueInPercentage
+        chooseImageButton.backgroundColor = Constants.PROFILE_VC_BLUE_COLOR
+        chooseImageButton.layer.cornerRadius = CORNER_RADIUS_FOR_PROFILE_ICON
         self.chooseImageButton.contentEdgeInsets = UIEdgeInsets(
             top: paddingForBackgroundPicture,
             left: paddingForBackgroundPicture,
@@ -230,10 +236,17 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let userDiscriptionFontSize = self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize
         userDiscriptionLabel.font = UIFont.systemFont(ofSize: userDiscriptionFontSize, weight: .regular)
         
+        
         // NOTE: configuring editProfileButton
         editProfileButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
         editProfileButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
         editProfileButton.titleLabel?.font = editProfileButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
+        
+        // NOTE: configuring dismissButton
+
+        dismissButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
+        dismissButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
+        dismissButton.titleLabel?.font = editProfileButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
     }
     
     // MARK: UIImagePickerDelegate methods
