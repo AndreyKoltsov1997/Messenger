@@ -32,7 +32,7 @@ class SentMessageCell: UITableViewCell {
     }
     
     public func setBackground() {
-        let imageName = "sent-message-background"
+        let imageName = Constants.SENT_MESSAGE_CELL_BACKGROUND_RESOUCE_NAME
         guard let image = UIImage(named: imageName) else { return }
         messageBackgroundImage.image = image
             .resizableImage(withCapInsets:

@@ -16,6 +16,7 @@ class RecivedMessagesCell: UITableViewCell {
         super.awakeFromNib()
         messageText.textContainer.heightTracksTextView = true
         messageText.isScrollEnabled = false
+        
         setBackground()
     }
 
@@ -26,7 +27,7 @@ class RecivedMessagesCell: UITableViewCell {
     
     
     public func setBackground() {
-        let imageName = "recived-message-background"
+        let imageName = Constants.RECIVED_MESSAGE_CELL_BACKGROUND_RESOUCE_NAME
         
         guard let image = UIImage(named: imageName) else { return }
         backgroundImage.image = image

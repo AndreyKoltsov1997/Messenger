@@ -17,7 +17,6 @@ class ConversationViewController: UIViewController {
     // MARK: - Properties
     var contact: Contact! {
         didSet {
-            print("Contact name will be set: \(contact.name)")
             navigationItem.title = contact.name
         }
     }
@@ -59,7 +58,7 @@ class ConversationViewController: UIViewController {
 
 extension ConversationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // NOTE: Do nothing
+        return
     }
 }
 

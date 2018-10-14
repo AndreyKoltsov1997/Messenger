@@ -21,6 +21,9 @@ struct Constants {
     static let ROUNDED_BUTTONS_DEFAULT_RADIUS = CGFloat(12)
     static let BUTTON_BORDER_DEFAULT_WIDTH = CGFloat(1.5)
     
+    static let SENT_MESSAGE_CELL_BACKGROUND_RESOUCE_NAME = "sent-message-background"
+    static let RECIVED_MESSAGE_CELL_BACKGROUND_RESOUCE_NAME = "recived-message-background"
+    
     static let ONLINE_USERS_SECTION_HEADER = "Online"
     static let OFFLINE_USERS_SECTION_HEADER = "History"
     

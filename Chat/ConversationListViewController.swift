@@ -19,7 +19,7 @@ class ConversationListViewController: UIViewController {
     
     @IBAction func userPicTapped(_ sender: Any) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() {
-            // получили доступ к storyboard, а точнее - к его initial VC
+            // получили доступ к storyboard,x а точнее - к его initial VC
             self.present(vc, animated: true)
         }
         
@@ -31,9 +31,7 @@ class ConversationListViewController: UIViewController {
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
     
     private var contactsInfo = [[Contact]]()
-    // NOTE: PARAM @User - encapsulates default user info
-    private let user = User()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
