@@ -16,23 +16,6 @@ struct User {
     
     init() {
         self.initWithDefaultContacts()
-        self.fillUpTestMessages()
-    }
-    
-    private mutating func fillUpTestMessages() {
-        for i in 0 ..< self.contacts.count {
-            let currentDate = Date()
-            let newMessage = Message(withText: "msg num \(i)", from: self.contacts[i])
-            // NOTE: Some test messages will be marked as unread if they're deviding by 3
-            if (i%3) == 0 {
-                newMessage.isUnread = true
-              //  newMessage.date = Date(timeIntervalSinceReferenceDate: -123456789.0) // Feb 2, 1997, 10:26 AM
-            } else if (i%3) == 1 {
-                newMessage.text = ""
-            }
-            
-            self.recivedMessages.append(newMessage)
-        }
     }
     
     public func getLastRecivedMessage(from contact: Contact!) -> Message {
@@ -65,16 +48,8 @@ struct User {
     }
     
     private mutating func initWithDefaultContacts() {
-        let MINIMAL_AMOUNT_OF_TEST_CONTACTS = 20
-        for i in 1 ... MINIMAL_AMOUNT_OF_TEST_CONTACTS {
-            let currentContact = Contact()
-            currentContact.name = "User num. \(i)"
-            contacts.append(currentContact)
-            // NOTE: Some conctacts will be marked as offline if their ID is deviding by 2
-            if (i % 2) == 0 {
-                currentContact.isOnline = true
-            }
-        }
+        
+        
     }
     
     public func getRequiredContacts(isOnline requiredOnlineStatus: Bool) -> [Contact] {

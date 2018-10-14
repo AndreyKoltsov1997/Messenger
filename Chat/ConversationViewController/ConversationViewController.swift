@@ -37,7 +37,7 @@ class ConversationViewController: UIViewController {
     }
     
     private func createDisplayingMessages() {
-        let currentContact = Contact()
+        let currentContact = Contact(name: "John", message: "Doe", date: Date(), hasUnreadMessages: false)
         displayingMessages.append(Message(withText: "Hey! I'm writing you a 30-symbol message.", from: nil))
         displayingMessages.append(Message(withText: "O", from: currentContact))
         displayingMessages.append(Message(withText: "That's nice to hear. By the way, I want to respond with a bigger message. Such as this one. Wooh, that's so nice to see how much letters we can put in a text like this one. Do you find it so attractive either? I think you do. Otherwise, you won't be chatting with a person like myself.", from: currentContact))
@@ -64,7 +64,6 @@ extension ConversationViewController: UITableViewDelegate {
 
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Dislaying messages:\(displayingMessages.count)")
         return displayingMessages.count
     }
     

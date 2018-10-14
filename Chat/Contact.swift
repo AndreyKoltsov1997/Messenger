@@ -9,10 +9,16 @@
 
 import Foundation
 
-class Contact {
+class Contact: ConversationCellConfiguration {
     public let identifier: Int
-    public var name: String = "Unknown number"
+    
+    var name: String?
+    var message: String?
+    var date: Date?
+    var hasUnreadMessages: Bool
     var isOnline: Bool = false
+
+
     var hasProfilePicture: Bool = false
     
     private static var identifierFactory = 0
@@ -21,7 +27,11 @@ class Contact {
         return Contact.identifierFactory
     }
     
-    init() {
+    init(name: String?, message: String?, date:Date?, hasUnreadMessages: Bool) {
+        self.name = name
+        self.message = message
+        self.date = date
+        self.hasUnreadMessages = hasUnreadMessages
         self.identifier = Contact.getUniqueIdentifier()
     }
     
