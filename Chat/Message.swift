@@ -17,9 +17,9 @@ class Message {
         if let text = text {
             self.text = text
         } else {
-            self.text = Constants.EMPTY_MESSAGE_HISTORY_TAG
+            let defaultMessage = "..."
+            self.text = defaultMessage
         }
         self.sender = contact
     }
-
 }

@@ -29,12 +29,19 @@ class Contact: ConversationCellConfiguration {
     
     init(name: String?, message: String?, date:Date?, hasUnreadMessages: Bool, isOnline: Bool) {
         self.name = name
-        self.message = message
-        self.date = date
         self.hasUnreadMessages = hasUnreadMessages
+        if (message != nil) && (message!.isEmpty) {
+            self.message = Constants.EMPTY_MESSAGE_HISTORY_TAG
+            self.hasUnreadMessages = false
+        } else if (message != nil) {
+            self.message = message
+        }
+
+        self.date = date
         self.isOnline = isOnline
         self.identifier = Contact.getUniqueIdentifier()
     }
+    
     
     static func ==(lhs: Contact, rhs: Contact) -> Bool {
         return lhs.identifier == rhs.identifier
