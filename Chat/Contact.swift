@@ -27,11 +27,12 @@ class Contact: ConversationCellConfiguration {
         return Contact.identifierFactory
     }
     
-    init(name: String?, message: String?, date:Date?, hasUnreadMessages: Bool) {
+    init(name: String?, message: String?, date:Date?, hasUnreadMessages: Bool, isOnline: Bool) {
         self.name = name
         self.message = message
         self.date = date
         self.hasUnreadMessages = hasUnreadMessages
+        self.isOnline = isOnline
         self.identifier = Contact.getUniqueIdentifier()
     }
     

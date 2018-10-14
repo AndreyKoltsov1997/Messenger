@@ -27,18 +27,20 @@ class ConversationListViewController: UIViewController {
     
     // MARK: - Properties
     public weak var delegate: ConversationListViewControllerDelegate?
-    
     private let identifier = String(describing: ConversationsListCell.self)
-    
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
+    
+    private var contactsInfo = [[Contact]]()
     // NOTE: PARAM @User - encapsulates default user info
     private let user = User()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // NOTE: register the cell in the table
-        
+        configureTableView()
+        generateTestUsers()
+    }
+    
+    private func configureTableView() {
         // PARAM "bundle" is nill because we're using it within the app.
         // nibName and identifier are equals because of the file names.
         tableView.register(UINib(nibName: identifier, bundle: nil), forCellReuseIdentifier: identifier)
@@ -47,57 +49,63 @@ class ConversationListViewController: UIViewController {
         tableView.delegate = self
     }
     
+    private func generateTestUsers() {
+        
+        // NOTE: Generating offline contacts
+        contactsInfo.append(generateOnlineUsers())
+        contactsInfo.append(generateOfflineUsers())
+        
+        // NOTE: Generating online contacts
+
+    }
+    
+    private func generateOfflineUsers() -> [Contact] {
+        var offlineUsers = [Contact]()
+        offlineUsers.append(Contact(name: "John Doe", message: "Let's hang out!", date: Date(), hasUnreadMessages: false, isOnline: false))
+        offlineUsers.append(Contact(name: "Terry Williams", message: "I'm going to SF tonights. Will you come?", date: Date(timeIntervalSinceNow: 2222), hasUnreadMessages: true, isOnline: false))
+        offlineUsers.append(Contact(name: "Alba Hetrow", message: "I've been trying to get into FaceBook lately.", date: Date(timeIntervalSince1970: 33333333), hasUnreadMessages: false, isOnline: false))
+        offlineUsers.append(Contact(name: "Gokzu Guz", message: "I want to surf tommorow.", date: Date(), hasUnreadMessages: false, isOnline: false))
+        offlineUsers.append(Contact(name: "Garry Rosherd", message: "That steak we bought yesterday wasn't that great..", date: Date(timeIntervalSinceNow: 44444), hasUnreadMessages: false, isOnline: false))
+        
+        offlineUsers.append(Contact(name: "Alexey Kushirov", message: "THere's a deadline approaching. Hurry up!", date: Date(timeIntervalSince1970: 55555), hasUnreadMessages: true, isOnline: false))
+        offlineUsers.append(Contact(name: "Herby Authrey", message: "have you done your homework?", date: Date(), hasUnreadMessages: true, isOnline: false))
+        offlineUsers.append(Contact(name: "Donald Trump", message: "Do not make memes of me.", date: Date(timeIntervalSince1970: 666666), hasUnreadMessages: false, isOnline: false))
+        offlineUsers.append(Contact(name: "Harley Davidson", message: "I like cars better.", date: Date(), hasUnreadMessages: true, isOnline: false))
+        offlineUsers.append(Contact(name: "David Russie", message: "Yes, Paris is an amazing city.", date: Date(timeIntervalSince1970: 7777), hasUnreadMessages: false, isOnline: false))
+        return offlineUsers
+    }
+    
+    private func generateOnlineUsers() -> [Contact] {
+        var onlineUsers = [Contact]();
+        onlineUsers.append(Contact(name: "Mark Nerrow", message: "What? Not even thought about it", date: Date(), hasUnreadMessages: true, isOnline: true))
+        onlineUsers.append(Contact(name: "Anastasia Tssvetkova", message: "DO NOT send me photos like this. Ewww..", date: Date(timeIntervalSince1970: 88888), hasUnreadMessages: false, isOnline: true))
+        onlineUsers.append(Contact(name: "David Rasberry", message: "Why is Nastya so pissed off?", date: Date(), hasUnreadMessages: true, isOnline: true))
+        onlineUsers.append(Contact(name: "Anatoly Nestvetay", message: "LMAO I've seen that picture you've sent to Anastatia", date: Date(timeIntervalSince1970: 8888), hasUnreadMessages: false, isOnline: true))
+        onlineUsers.append(Contact(name: "Ivan Orlandov", message: "Why is everybody discussing a picture of a naked man?", date: Date(), hasUnreadMessages: false, isOnline: true))
+        
+        onlineUsers.append(Contact(name: "David Johnson", message: "What's up with the visa?", date: Date(), hasUnreadMessages: false, isOnline: true))
+        onlineUsers.append((Contact(name: "Katya Jurkina", message: "Yes!!! Would be fun.", date: Date(timeIntervalSince1970: 77777), hasUnreadMessages: true, isOnline: true)))
+        onlineUsers.append(Contact(name: "Aubrey Gragham", message: "You should listen to a better music, man.", date: Date(timeIntervalSince1970: 39393939), hasUnreadMessages: false, isOnline: true))
+        onlineUsers.append((Contact(name: "Barack Fedorov", message: "Are u ok?", date: Date(), hasUnreadMessages: false, isOnline: true)))
+        onlineUsers.append(Contact(name: "Abel Koltsov", message: "Dude, I'm still waiting.", date: Date(), hasUnreadMessages: true, isOnline: true))
+        return onlineUsers
+    }
+    
     private func resetCellData(_ cell: ConversationsListCell) {
         cell.usernameLabel.text = ""
         cell.messageTextLabel.text = ""
         cell.messageDateLabel.text = ""
     }
-    private func fillUpCellData(_ cell: ConversationsListCell, withIndex index: IndexPath) {
-        var requiredUsers = getUsersForSection(withNumber: index.section)
-        
-        // NOTE: if no users of the specified group has been found
-        if (requiredUsers.count == 0) {
-            return;
-        }
-        let number = index.row
-        let currentContact = requiredUsers[number]
-        if (currentContact.isOnline) {
-            cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
-        } else {
-            cell.backgroundColor = Constants.OFFLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
-        }
-        cell.name = currentContact.name
-        let lastRecivedMessage = user.getLastRecivedMessage(from: currentContact)
-        cell.message = lastRecivedMessage.text
-        let messageFontSize = cell.messageTextLabel.font.pointSize
-        if lastRecivedMessage.isUnread {
-            cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: messageFontSize)
-        } else {
-            cell.messageTextLabel.font = UIFont.systemFont(ofSize: messageFontSize)
-        }
-//        cell.date = lastRecivedMessage.date
-    }
+
     
-    private func getUsersForSection(withNumber number: Int) -> [Contact] {
-        let sectionHeader = chatSections[number]
-        var requiredUsers = [Contact]()
-        switch sectionHeader {
-        case Constants.ONLINE_USERS_SECTION_HEADER:
-            requiredUsers = user.getRequiredContacts(isOnline: true)
-        case Constants.OFFLINE_USERS_SECTION_HEADER:
-            requiredUsers = user.getRequiredContacts(isOnline: false)
-            break
-        default:
-            break
-        }
-        return requiredUsers
-    }
     
 }
 
 // MARK: - UITableViewDelegate
 extension ConversationListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
         // Когда ячейка нажата, нам нужно перейти на новый viewController;
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -107,17 +115,7 @@ extension ConversationListViewController: UITableViewDelegate {
             // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
             return
         }
-        conversationViewController.userName = cell.usernameLabel.text!
-        var requiredUsers = getUsersForSection(withNumber: indexPath.section)
-        
-        // NOTE: if no users of the specified group has been found
-        if (requiredUsers.count == 0) {
-            return;
-        }
-        let number = indexPath.row
-        let currentContact = requiredUsers[number]
-        
-        conversationViewController.recivedMessages = user.getRecivedMessages(from: currentContact)
+        // TODO: Add name delegation here
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
 }
@@ -132,7 +130,7 @@ extension ConversationListViewController: UITableViewDataSource {
         return chatSections[section]
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getUsersForSection(withNumber: section).count
+        return contactsInfo[0].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,9 +139,19 @@ extension ConversationListViewController: UITableViewDataSource {
             // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
             return UITableViewCell()
         }
-        self.resetCellData(cell)
-        // NOTE: configuring the cell
-        self.fillUpCellData(cell, withIndex: indexPath)
+        
+        let processingCellInfo = contactsInfo[indexPath.section][indexPath.row]
+        cell.name = processingCellInfo.name
+        cell.message = processingCellInfo.message
+        cell.isOnline = processingCellInfo.isOnline
+        if (cell.isOnline) {
+            cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
+        } else {
+            cell.backgroundColor = Constants.OFFLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
+        }
+        cell.date = processingCellInfo.date
+        cell.hasUnreadMessages = processingCellInfo.hasUnreadMessages
+        
         return cell
     }
     
