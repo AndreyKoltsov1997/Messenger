@@ -8,23 +8,27 @@
 
 import UIKit
 
-class RecivedMessagesCell: UITableViewCell {
-
-    @IBOutlet weak var messageText: UITextView!
+class RecivedMessagesCell: UITableViewCell, MessageCellConfiguration {
+    
+    @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var backgroundImage: UIImageView!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        messageText.textContainer.heightTracksTextView = true
-        messageText.isScrollEnabled = false
-        
-        setBackground()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        return
-        // Configure the view for the selected state
+    internal var messageText: String? {
+        didSet {
+            messageTextView.text = messageText
+        }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        messageTextView.textContainer.heightTracksTextView = true
+        messageTextView.isScrollEnabled = false
+        setBackground()
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        // NOTE: Do nothing
+        return
+    }
     
     public func setBackground() {
         let imageName = Constants.RECIVED_MESSAGE_CELL_BACKGROUND_RESOUCE_NAME

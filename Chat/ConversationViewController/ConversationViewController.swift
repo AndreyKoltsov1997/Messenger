@@ -15,11 +15,7 @@ class ConversationViewController: UIViewController {
     
     
     // MARK: - Properties
-    var contact: Contact! {
-        didSet {
-            navigationItem.title = contact.name
-        }
-    }
+    var contact: Contact!
     private let sentMessageIdentifier = String(describing: SentMessageCell.self)
     private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
     
@@ -56,12 +52,14 @@ class ConversationViewController: UIViewController {
     
 }
 
+// MARK: - UITableViewDelegate
 extension ConversationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         return
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayingMessages.count
@@ -74,13 +72,13 @@ extension ConversationViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: recivingMessageIdentifier, for: indexPath) as? RecivedMessagesCell else {
                 return UITableViewCell()
             }
-            cell.messageText.text = processingMessage.text
+            cell.messageText = processingMessage.text
             displayingCell = cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: sentMessageIdentifier, for: indexPath) as? SentMessageCell else {
                 return UITableViewCell()
             }
-            cell.messageTextView.text = processingMessage.text
+            cell.messageText = processingMessage.text
             displayingCell = cell
         }
         

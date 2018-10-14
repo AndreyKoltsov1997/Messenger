@@ -10,22 +10,16 @@ import Foundation
 
 class Message {
     let sender: Contact?
-    //var date: Date
     var text: String
     public var isUnread = false
     
-//    init(withText text: String, from contact: Contact?, recivedIn date: Date) {
-    init(withText text: String, from contact: Contact?) {
+    init(withText text: String?, from contact: Contact?) {
+        if let text = text {
+            self.text = text
+        } else {
+            self.text = Constants.EMPTY_MESSAGE_HISTORY_TAG
+        }
         self.sender = contact
-        self.text = text
-//        self.date = Calendar.current.date(byAdding: .day, value: contact.identifier, to: Date())!
     }
-    
 
-    
-    init() {
-        self.text = "No messages yet"
-       // self.date = Date()
-        self.sender = nil
-    }
 }

@@ -8,15 +8,18 @@
 
 import UIKit
 
-class SentMessageCell: UITableViewCell {
+class SentMessageCell: UITableViewCell, MessageCellConfiguration {
     
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var messageBackgroundImage: UIImageView!
+    internal var messageText: String? {
+        didSet {
+            messageTextView.text = messageText
+        }
+    }
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
-       messageTextView.text = ""
         super.layoutIfNeeded()
         super.updateConstraints()
         messageTextView.textContainer.heightTracksTextView = true
@@ -24,11 +27,8 @@ class SentMessageCell: UITableViewCell {
         setBackground()
     }
     
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-
+        // NOTE: Do nothing
     }
     
     public func setBackground() {
@@ -39,6 +39,5 @@ class SentMessageCell: UITableViewCell {
                 UIEdgeInsetsMake(17, 21, 17, 21),
                             resizingMode: .stretch)
             .withRenderingMode(.alwaysTemplate)
-    }
-    
+    }    
 }

@@ -7,5 +7,5 @@
 //
 
 protocol MessageCellConfiguration: class {
-    var text: String? {get set}
+    var messageText: String? {get set}
 }

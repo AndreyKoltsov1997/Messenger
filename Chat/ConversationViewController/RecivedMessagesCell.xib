@@ -49,7 +49,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="backgroundImage" destination="fjm-Wd-Ufy" id="Pgp-Ze-HbV"/>
-                <outlet property="messageText" destination="XXe-di-sLz" id="Hqr-sx-1gC"/>
+                <outlet property="messageTextView" destination="XXe-di-sLz" id="seX-tB-jz4"/>
             </connections>
         </tableViewCell>
     </objects>

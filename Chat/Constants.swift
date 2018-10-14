@@ -27,6 +27,8 @@ struct Constants {
     static let ONLINE_USERS_SECTION_HEADER = "Online"
     static let OFFLINE_USERS_SECTION_HEADER = "History"
     
+    static let EMPTY_MESSAGE_HISTORY_TAG = "No messages yet..."
+    
     // NOTE: There's 2 formats of displaying date possible:
     // ... 1. Message has been recived within the current day => hours and minutes would be displayed; (@param MESSAGE_RECIVED_TODAY_DATE_FORMAT)
     // ... 2. Message was has been recived in other day => date and month would be dispalyed; (@Param MESSAGE_RECIVED_IN_THE_PAST_DATE_FORMAT)
