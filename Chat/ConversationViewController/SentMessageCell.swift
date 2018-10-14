@@ -21,6 +21,7 @@ class SentMessageCell: UITableViewCell {
         super.updateConstraints()
         messageTextView.textContainer.heightTracksTextView = true
         messageTextView.isScrollEnabled = false
+        setBackground()
     }
     
     
@@ -30,9 +31,8 @@ class SentMessageCell: UITableViewCell {
 
     }
     
-    public func setBackground(forState isRecived: Bool) {
-        let imageName = isRecived ? "sent-message-background" : "recived-message-background"
-        
+    public func setBackground() {
+        let imageName = "sent-message-background"
         guard let image = UIImage(named: imageName) else { return }
         messageBackgroundImage.image = image
             .resizableImage(withCapInsets:

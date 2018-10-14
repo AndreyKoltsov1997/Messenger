@@ -9,7 +9,7 @@
 import Foundation
 
 struct User {
-    private var name: String?
+    public var name: String?
     private var isOnline: Bool = false
     private(set) var contacts = [Contact]()
     public var recivedMessages = [Message]()
@@ -22,11 +22,11 @@ struct User {
     private mutating func fillUpTestMessages() {
         for i in 0 ..< self.contacts.count {
             let currentDate = Date()
-            let newMessage = Message(withText: "msg num \(i)", from: self.contacts[i], recivedIn: currentDate)
+            let newMessage = Message(withText: "msg num \(i)", from: self.contacts[i])
             // NOTE: Some test messages will be marked as unread if they're deviding by 3
             if (i%3) == 0 {
                 newMessage.isUnread = true
-                newMessage.date = Date(timeIntervalSinceReferenceDate: -123456789.0) // Feb 2, 1997, 10:26 AM
+              //  newMessage.date = Date(timeIntervalSinceReferenceDate: -123456789.0) // Feb 2, 1997, 10:26 AM
             } else if (i%3) == 1 {
                 newMessage.text = ""
             }

@@ -75,7 +75,7 @@ class ConversationListViewController: UIViewController {
         } else {
             cell.messageTextLabel.font = UIFont.systemFont(ofSize: messageFontSize)
         }
-        cell.date = lastRecivedMessage.date
+//        cell.date = lastRecivedMessage.date
     }
     
     private func getUsersForSection(withNumber number: Int) -> [Contact] {

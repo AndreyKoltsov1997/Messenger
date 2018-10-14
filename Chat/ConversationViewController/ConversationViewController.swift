@@ -13,32 +13,47 @@ class ConversationViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var chatTableView: UITableView!
     
+    
     // MARK: - Properties
-    private let identifier = String(describing: SentMessageCell.self)
+    var contact: Contact! {
+        didSet {
+            navigationItem.title = contact.name
+        }
+    }
+    private let sentMessageIdentifier = String(describing: SentMessageCell.self)
+    private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
+    
+    private var displayingMessages = [Message]()
     
     public var recivedMessages = [Message]()
     private var sentMessages = [Message]()
     public var userName: String = ""
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-       self.title = userName
-        chatTableView.register(UINib(nibName: identifier, bundle: nil), forCellReuseIdentifier: identifier)
-        chatTableView.register(UINib(nibName: String(describing: RecivedMessagesCell.self), bundle: nil), forCellReuseIdentifier: "reivecMessageCell")
-        chatTableView.dataSource = self
-        chatTableView.delegate = self
+        configureChatTableView()
+        createDisplayingMessages()
+    }
+    
+    private func createDisplayingMessages() {
+        let currentContact = Contact()
+        displayingMessages.append(Message(withText: "Hey! I'm writing you a 30-symbol message.", from: nil))
+        displayingMessages.append(Message(withText: "O", from: currentContact))
+        displayingMessages.append(Message(withText: "That's nice to hear. By the way, I want to respond with a bigger message. Such as this one. Wooh, that's so nice to see how much letters we can put in a text like this one. Do you find it so attractive either? I think you do. Otherwise, you won't be chatting with a person like myself.", from: currentContact))
+        displayingMessages.append(Message(withText: "Well umm...talk to you later. Maybe in next life or so.", from: nil))
+    }
+    
+    private func configureChatTableView() {
+        chatTableView.register(UINib(nibName: sentMessageIdentifier, bundle: nil), forCellReuseIdentifier: sentMessageIdentifier)
+        chatTableView.register(UINib(nibName: recivingMessageIdentifier, bundle: nil), forCellReuseIdentifier: recivingMessageIdentifier)
         chatTableView.rowHeight = UITableViewAutomaticDimension
         chatTableView.estimatedRowHeight = 60
         chatTableView.separatorColor = UIColor.clear
-        let currentUser = Contact()
-        for i in 0 ..< recivedMessages.count {
-            let message = Message(withText: "Answer \(i)", from: currentUser, recivedIn: Date())
-            sentMessages.append(message)
-        }
-        
+        chatTableView.dataSource = self
+        self.title = userName
     }
+    
 }
 
 extension ConversationViewController: UITableViewDelegate {
@@ -49,32 +64,26 @@ extension ConversationViewController: UITableViewDelegate {
 
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let amountOfMessagesInChat = 5;
-        return amountOfMessagesInChat
+        print("Dislaying messages:\(displayingMessages.count)")
+        return displayingMessages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var displayingCell: UITableViewCell?
-        if (indexPath.row % 2) == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? SentMessageCell else {
-                // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
+        let processingMessage = displayingMessages[indexPath.row];
+        if processingMessage.sender != nil {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: recivingMessageIdentifier, for: indexPath) as? RecivedMessagesCell else {
                 return UITableViewCell()
             }
-            cell.setBackground(forState: true)
-            // NOTE: I'm sorry, I don't have time to get the text into [Messages] array until deadline :(
-            cell.messageTextView.text = "Answer for num \(indexPath.row) with approx 300 symbols: Turkish police said in a statement Saturday that 15 Saudis, including several officials, arrived in Istanbul on two planes and visited the consulate while Khashoggi was inside, the official Anadolu agency reported. A Saudi official said Khashoggi left the consulate shortly after he visited. The Saudis did not, however, release any surveillance footage or other evidence. ce. The crackdowns have targeted clerics, journalists, academics and activists, some of whom were detained outside Saudi Arabia."
+            cell.messageText.text = processingMessage.text
             displayingCell = cell
         } else {
-            // NOTE: I'm sorry, I don't have time to get the text into [Messages] array until deadline :(
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: String("reivecMessageCell"), for: indexPath) as? RecivedMessagesCell else {
-                // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: sentMessageIdentifier, for: indexPath) as? SentMessageCell else {
                 return UITableViewCell()
             }
-            cell.recivedMessageText.text = "Msg for num \(indexPath.row) with approx 30 symbols: hashoggi, known in part for his interviews with terror mastermind Osama bin Laden, was a Saudi royal court insider before he left Saudi Arabia in 2017 for Washington. He began to contribute opinion pieces to The Washington Post."
-            cell.setBackground(forState: false)
+            cell.messageTextView.text = processingMessage.text
             displayingCell = cell
         }
-        
         
         return displayingCell!
     }
