@@ -14,7 +14,8 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var chatTableView: UITableView!
     
     // MARK: - Properties
-    private let identifier = String(describing: ConversationCell.self)
+    private let identifier = String(describing: SentMessageCell.self)
+    
     public var recivedMessages = [Message]()
     private var sentMessages = [Message]()
     public var userName: String = ""
@@ -24,7 +25,6 @@ class ConversationViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
        self.title = userName
-        
         chatTableView.register(UINib(nibName: identifier, bundle: nil), forCellReuseIdentifier: identifier)
         chatTableView.register(UINib(nibName: String(describing: RecivedMessagesCell.self), bundle: nil), forCellReuseIdentifier: "reivecMessageCell")
         chatTableView.dataSource = self

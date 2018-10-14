@@ -1,12 +1,12 @@
 version: "Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)"
 options: "832d7ec3349e1d284e5cd5c1397adf13"
-build_time: [1539509868, 769791000]
+build_time: [1539510560, 581719000]
 inputs:
-  "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationsListCell.swift": !dirty [1539509734, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationsListCell.swift": !dirty [1539510438, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationViewController/RecivedMessagesCell.swift": !dirty [1539509734, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationViewController/ConversationCell.swift": !dirty [1539509734, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationCellConfiguration.swift": !dirty [1539509734, 0]
-  "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationViewController/ConversationViewController.swift": !dirty [1539509734, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationViewController/ConversationViewController.swift": !dirty [1539510448, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/AppDelegate.swift": !dirty [1538425763, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationListViewController.swift": !dirty [1539509734, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationViewController/MessageCellConfiguration.swift": !dirty [1539509734, 0]

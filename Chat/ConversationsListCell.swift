@@ -80,5 +80,4 @@ class ConversationsListCell: UITableViewCell, ConversationCellConfiguration {
 
         // Configure the view for the selected state
     }
-    
 }
