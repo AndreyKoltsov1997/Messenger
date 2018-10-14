@@ -17,6 +17,7 @@ class ConversationViewController: UIViewController {
     // MARK: - Properties
     var contact: Contact! {
         didSet {
+            print("Contact name will be set: \(contact.name)")
             navigationItem.title = contact.name
         }
     }
@@ -34,6 +35,7 @@ class ConversationViewController: UIViewController {
         // Do any additional setup after loading the view.
         configureChatTableView()
         createDisplayingMessages()
+        navigationItem.title = contact.name
     }
     
     private func createDisplayingMessages() {

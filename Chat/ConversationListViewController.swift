@@ -104,18 +104,12 @@ class ConversationListViewController: UIViewController {
 // MARK: - UITableViewDelegate
 extension ConversationListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
         // Когда ячейка нажата, нам нужно перейти на новый viewController;
         tableView.deselectRow(at: indexPath, animated: true)
         
         let conversationViewController = ConversationViewController()
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? ConversationsListCell else {
-            // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
-            return
-        }
         // TODO: Add name delegation here
+        conversationViewController.contact = contactsInfo[indexPath.section][indexPath.row]
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
 }
@@ -151,6 +145,9 @@ extension ConversationListViewController: UITableViewDataSource {
         }
         cell.date = processingCellInfo.date
         cell.hasUnreadMessages = processingCellInfo.hasUnreadMessages
+        if (cell.hasUnreadMessages) {
+            cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
+        }
         
         return cell
     }
