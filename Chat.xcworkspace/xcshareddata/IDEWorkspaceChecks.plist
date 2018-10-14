@@ -2,11 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>application-identifier</key>
-	<string>YRDT5BG45Z.ru.spbstu.hsse.Chat</string>
-	<key>keychain-access-groups</key>
-	<array>
-		<string>YRDT5BG45Z.ru.spbstu.hsse.Chat</string>
-	</array>
+	<key>IDEDidComputeMac32BitWarning</key>
+	<true/>
 </dict>
 </plist>

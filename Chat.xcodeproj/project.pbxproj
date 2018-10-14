@@ -39,6 +39,7 @@
 		550995902157955700D377E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		550995922157955700D377E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		550995982157A18600D377E5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		551858CF2173AC000075AC1F /* ChatPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ChatPlayground.playground; sourceTree = SOURCE_ROOT; };
 		552810A0216529ED001A304A /* ConversationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewController.swift; sourceTree = "<group>"; };
 		552810A421652A4E001A304A /* ConversationListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationListViewController.storyboard; sourceTree = "<group>"; };
 		552810A721652B77001A304A /* ConversationsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListCell.swift; sourceTree = "<group>"; };
@@ -85,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				550995862157955600D377E5 /* AppDelegate.swift */,
+				551858CF2173AC000075AC1F /* ChatPlayground.playground */,
 				558252552161079300AA3FD0 /* Supporting files */,
 				550995982157A18600D377E5 /* Constants.swift */,
 				552810A621652AB4001A304A /* ConversationList */,
