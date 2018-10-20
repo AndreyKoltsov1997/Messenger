@@ -13,8 +13,8 @@ import Photos
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: Outlets
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var userDiscriptionLabel: UILabel!
+//    @IBOutlet weak var userNameLabel: UILabel!
+//    @IBOutlet weak var userDiscriptionLabel: UILabel!
     @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var profilePictureImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -186,12 +186,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         profilePictureImage.image = UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
         
         // userNameLabel sources
-        userNameLabel.text = Constants.DEFAULT_USERNAME
+       // userNameLabel.text = Constants.DEFAULT_USERNAME
         
         // userDiscriptionLabel sources
-        userDiscriptionLabel.text = Constants.DEFAULT_USER_DISCRIPTION
-        userDiscriptionLabel.textColor = Constants.USER_DISCRIPTION_TEXT_DEFAULT_COLOR
-        userDiscriptionLabel.textAlignment = .justified
+//        userDiscriptionLabel.text = Constants.DEFAULT_USER_DISCRIPTION
+//        userDiscriptionLabel.textColor = Constants.USER_DISCRIPTION_TEXT_DEFAULT_COLOR
+//        userDiscriptionLabel.textAlignment = .justified
         
         // editProfileButton sources
         editProfileButton.backgroundColor = .white
@@ -226,7 +226,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // ... but it was too big for iPhone SE. By dividing it's font size by its frame height I've got the value and then adjusted it by testing.        l
         let multiplierForRelativeUserNameFontSize = CGFloat(0.046)
         let userNameFontSize = self.view.frame.height * multiplierForRelativeUserNameFontSize
-        userNameLabel.font = UIFont.boldSystemFont(ofSize: userNameFontSize)
+       // userNameLabel.font = UIFont.boldSystemFont(ofSize: userNameFontSize)
         
         // NOTE: configuring userDiscriptionLabel
 
@@ -234,7 +234,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // ... but it was too big for iPhone SE. By dividing it's font size by its frame height I've got the value and then adjusted it by testing.
         let multiplierForRelativeFontDiscriptionFontSize = CGFloat(0.03)
         let userDiscriptionFontSize = self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize
-        userDiscriptionLabel.font = UIFont.systemFont(ofSize: userDiscriptionFontSize, weight: .regular)
+      //  userDiscriptionLabel.font = UIFont.systemFont(ofSize: userDiscriptionFontSize, weight: .regular)
         
         
         // NOTE: configuring editProfileButton

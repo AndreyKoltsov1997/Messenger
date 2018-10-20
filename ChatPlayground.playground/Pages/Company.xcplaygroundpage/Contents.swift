@@ -266,10 +266,28 @@ func getCompanyInstance() -> Company {
 
 // MARK: - Entry point
 
+class Person {
+    var dog: Dog?
+    
+    deinit {
+        print("Person is deinitialized")
+    }
+}
+
+class Dog {
+    var person: Person?
+    
+    deinit {
+        print("Dog is deinitialized")
+    }
+}
+
 func main() {
-    let company = getCompanyInstance()
-    company.ceo?.printHierarchy()
-    company.simulateCommunaction()
+    var person: Person? = Person()
+    let dog = Dog()
+    person?.dog = dog
+    dog.person = person
+    person = nil
 }
 
 main()

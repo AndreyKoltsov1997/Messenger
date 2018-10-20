@@ -26,18 +26,6 @@
                                     <constraint firstAttribute="width" secondItem="nOh-ET-JOx" secondAttribute="height" multiplier="1:1" id="F9a-0y-N7h"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjr-xF-fQh" userLabel="UserName">
-                                <rect key="frame" x="20" y="340" width="280" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="252" text="Label дщкуь ыгвгь ыфвдыфдвфд фывд фыдв дфыд фыдв ыфдв ыфдв дфыв дфы двфыдвфыдвфы" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfG-x6-YyV" userLabel="UserDiscription">
-                                <rect key="frame" x="20" y="370.5" width="280" height="61"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsN-7l-xPL" userLabel="EditProfileButton">
                                 <rect key="frame" x="20" y="504" width="280" height="44"/>
                                 <constraints>
@@ -62,28 +50,35 @@
                                     <action selector="dismissBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TXU-bA-8H5"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pK3-rj-UkK" userLabel="UserName">
+                                <rect key="frame" x="112" y="341" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nMP-sm-rW3" userLabel="UserDiscription">
+                                <rect key="frame" x="112" y="400" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bj8-cK-0iG" secondAttribute="trailing" constant="20" id="3wB-3b-B4j"/>
                             <constraint firstItem="nOh-ET-JOx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="54S-2v-Uvv"/>
-                            <constraint firstItem="Vjr-xF-fQh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="56C-70-m4e"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="trailing" secondItem="nOh-ET-JOx" secondAttribute="trailing" id="9cV-zf-X3n"/>
-                            <constraint firstItem="Vjr-xF-fQh" firstAttribute="top" secondItem="nOh-ET-JOx" secondAttribute="bottom" constant="20" id="9wU-4U-qB9"/>
                             <constraint firstItem="bj8-cK-0iG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="BA3-98-NQu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YsN-7l-xPL" secondAttribute="bottom" constant="20" id="BA6-uH-CqM"/>
                             <constraint firstItem="bj8-cK-0iG" firstAttribute="height" secondItem="YsN-7l-xPL" secondAttribute="height" id="CDd-qU-DmG"/>
                             <constraint firstItem="nOh-ET-JOx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="EBe-qm-owT"/>
                             <constraint firstItem="YsN-7l-xPL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="KCs-RA-9jq"/>
                             <constraint firstItem="bj8-cK-0iG" firstAttribute="width" secondItem="YsN-7l-xPL" secondAttribute="width" id="L5e-Jx-M6o"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Vjr-xF-fQh" secondAttribute="trailing" constant="20" id="LJe-IY-kgs"/>
-                            <constraint firstItem="dfG-x6-YyV" firstAttribute="top" secondItem="Vjr-xF-fQh" secondAttribute="bottom" constant="10" id="SLB-pE-yqa"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="height" secondItem="nOh-ET-JOx" secondAttribute="height" multiplier="0.2" id="cXH-lD-wUk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YsN-7l-xPL" secondAttribute="trailing" constant="20" id="cui-ru-AK7"/>
-                            <constraint firstItem="dfG-x6-YyV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="gn0-ce-dap"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dfG-x6-YyV" secondAttribute="trailing" constant="20" id="gyP-gQ-bFu"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="width" secondItem="nOh-ET-JOx" secondAttribute="width" multiplier="0.2" id="j9x-1Y-ZcN"/>
-                            <constraint firstItem="YsN-7l-xPL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="dfG-x6-YyV" secondAttribute="bottom" constant="20" id="k0B-WP-Yoq"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="bottom" secondItem="nOh-ET-JOx" secondAttribute="bottom" id="n6R-ip-ORf"/>
                             <constraint firstItem="YsN-7l-xPL" firstAttribute="top" secondItem="bj8-cK-0iG" secondAttribute="bottom" constant="5" id="paU-pZ-0AL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nOh-ET-JOx" secondAttribute="trailing" constant="20" id="r9y-ug-o7S"/>
@@ -95,8 +90,6 @@
                         <outlet property="dismissButton" destination="bj8-cK-0iG" id="Lhy-wt-rUV"/>
                         <outlet property="editProfileButton" destination="YsN-7l-xPL" id="API-mN-PgE"/>
                         <outlet property="profilePictureImage" destination="nOh-ET-JOx" id="09t-Nq-qg3"/>
-                        <outlet property="userDiscriptionLabel" destination="dfG-x6-YyV" id="izY-ts-7K9"/>
-                        <outlet property="userNameLabel" destination="Vjr-xF-fQh" id="NmD-3S-dlF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
