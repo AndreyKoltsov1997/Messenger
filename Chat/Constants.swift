@@ -61,5 +61,5 @@ struct Constants {
     static let STATE_REMAINS_ADDITIONAL_TAG = "(transition not completed yet)"
     
     // MARK: Other constants
-    static let CHOOSE_IMAGE_BTN_PRESSED_LOG = "Выбери изображение профися"
+    static let CHOOSE_IMAGE_BTN_PRESSED_LOG = "Выбери изображение профиля"
 }

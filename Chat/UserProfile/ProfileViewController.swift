@@ -51,16 +51,36 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 self.userName = userNameField.text
                 self.discription = userDiscriptionField.text
                 self.image = profilePictureImage.image
-                
+                self.setButtonInteraction(avaliable: self.isUserDataUpdated())
 //                self.changeButtonState(enable: true, all: true)
 //                self.changeButtonState(enable: isChange, all: false)
                 
             } else {
                 self.showActionNotAvaliableAlert(message: "Data couldn't be saved.")
             }
-            
-            
         }
+    }
+    
+    private func isUserDataUpdated() -> Bool {
+        return ((self.userNameField.text != userName) || (self.userDiscriptionField.text != discription) || (self.profilePictureImage != image))
+    }
+    
+    private func setButtonInteraction(avaliable isEnabled: Bool) {
+        sendViaOperationsButton.isEnabled = isEnabled
+        sendViaGCDbutton.isEnabled = isEnabled
+    }
+    
+    @IBAction func onSaveVuaGCDclicked(_ sender: UIButton) {
+        if (isUserDataUpdated()) {
+            self.saveViaGCD()
+        } else {
+            print("Data hasn't been changed...")
+        }
+    }
+    
+    private func saveViaGCD() {
+        let gcdDataManager = GCDDataManager()
+        gcdDataManager.main(sender: self, operation: .save)
     }
     
     @IBAction func dismissBtnClicked(_ sender: Any) {

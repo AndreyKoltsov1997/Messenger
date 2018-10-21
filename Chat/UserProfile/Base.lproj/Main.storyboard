@@ -61,6 +61,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yek-vT-xCj">
                                 <rect key="frame" x="20" y="483" width="33" height="30"/>
                                 <state key="normal" title="GCD"/>
+                                <connections>
+                                    <action selector="onSaveVuaGCDclicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6xI-k8-5lU"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z0Y-xG-jlW">
                                 <rect key="frame" x="224" y="483" width="76" height="30"/>

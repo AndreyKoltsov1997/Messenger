@@ -21,12 +21,13 @@ class GCDDataManager {
     
     var profileInfo: ProfileInfo?
     
-    func main(sender: Any, type: SenderType, operation: OperaionType, profile: [String: Any]? = nil) {
+    func main(sender: Any, operation: OperaionType, profile: [String: Any]? = nil) {
         switch operation {
         case .save:
-            saveProfile(sender: sender, type: type, profile: profile!)
+            self.saveProfile(sender: sender)
         case .load:
-            loadProfile(sender: sender, type: type)
+            print("Loading data...")
+            //loadProfile(sender: sender, type: type)
         }
     }
     
@@ -72,7 +73,7 @@ class GCDDataManager {
         
     }
     
-    internal func saveProfile(sender: Any, type: SenderType, profile: [String: Any]) {
+    internal func saveProfile(sender: Any) {
         let group = DispatchGroup()
         
         let username = profileInfo?.userName
