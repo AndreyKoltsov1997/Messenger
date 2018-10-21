@@ -9,35 +9,32 @@
 import UIKit
 
 class OperationDataManager {
-    
-   // var isSave: Bool? = true
-    
+        
     let userNameSavingOperation = UsernameSavingOperation()
     let discriptionSavingOperation = DiscriptionSavingOperation()
     let imageSavingOperation = ImageSavingOperation()
     
     let operationQueue: OperationQueue = {
         let queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 3
+        let AMOUNT_OF_USER_PROPERTIES = 3
+        queue.maxConcurrentOperationCount = AMOUNT_OF_USER_PROPERTIES
         return queue
     }()
     
     
-    
-    internal func saveProfile(sender: Any, profile: ProfileInfo) {
+    internal func saveProfile(sender: UIViewController, profile: ProfileInfo) {
         userNameSavingOperation.userName = profile.userName
         discriptionSavingOperation.discription = profile.discription
         imageSavingOperation.image = profile.profilePicture
         
         let updatingDataOperationComplete = BlockOperation {
-            let vc = sender as! ProfileViewController
-            vc.hasDataChanged = true
+            let distinationViewController = sender as! ProfileViewController
+            distinationViewController.hasDataChanged = true
         }
         
         updatingDataOperationComplete.addDependency(userNameSavingOperation)
         updatingDataOperationComplete.addDependency(discriptionSavingOperation)
         updatingDataOperationComplete.addDependency(imageSavingOperation)
-        
         operationQueue.addOperations([userNameSavingOperation, discriptionSavingOperation, imageSavingOperation], waitUntilFinished: false)
         
         OperationQueue.main.addOperation(updatingDataOperationComplete)

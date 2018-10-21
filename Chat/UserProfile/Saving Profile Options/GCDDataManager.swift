@@ -8,17 +8,11 @@
 
 import UIKit
 
-struct ProfileInfo {
-    var userName:String?
-    var discription: String?
-    var profilePicture: UIImage?
-    
-}
 class GCDDataManager {
-    let concurrentQueue = DispatchQueue(label: "TinkoffChat.GCD.concurrent", attributes: .concurrent)
+    
+    let concurrentQueue = DispatchQueue(label: "Tinkoff.GCDDataManager.concurrent", attributes: .concurrent)
     var profileInfo: ProfileInfo?
     var hasValueChanged: Bool? = true
-    
     
     public func loadProfile(sender: UIViewController) {
         let group = DispatchGroup()
@@ -26,34 +20,33 @@ class GCDDataManager {
         
         group.enter()
         concurrentQueue.async {
-            self.profileInfo?.userName = FileOperation.LoadData.text(filename: FileName.username.rawValue)
+            self.profileInfo?.userName = FileLoader.getText(fileName: FileName.USERNAME_FILENAME.rawValue)
             group.leave()
         }
         
         group.enter()
         concurrentQueue.async {
-            self.profileInfo?.discription = FileOperation.LoadData.text(filename: FileName.information.rawValue)
+            self.profileInfo?.discription = FileLoader.getText(fileName: FileName.USER_DISCRIPTION_FILENAME.rawValue)
             group.leave()
         }
         
         group.enter()
         concurrentQueue.async {
-            self.profileInfo?.profilePicture = FileOperation.LoadData.image(filename: FileName.image.rawValue)
+            self.profileInfo?.profilePicture = FileLoader.getImage(fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue)
             group.leave()
         }
         
         group.notify(queue: .main) {
-            let vc = sender as! ProfileViewController
+            let distinationViewController = sender as! ProfileViewController
             if let profileInfo = self.profileInfo {
-                vc.configureProfile(profileInfo: profileInfo)
+                distinationViewController.configureProfile(profileInfo: profileInfo)
             } else {
                 print("User data hasn't changed yet.")
             }
         }
-        
     }
     
-    internal func saveProfile(sender: Any) {
+    public func saveProfile(sender: UIViewController) {
         let group = DispatchGroup()
         
         let username = profileInfo?.userName
@@ -63,8 +56,7 @@ class GCDDataManager {
         group.enter()
         concurrentQueue.async {
             if let username = username {
-                self.hasValueChanged = FileOperation.SaveData.text(text: username, filename: FileName.username.rawValue)
-
+                self.hasValueChanged = FileSaver.saveText(text: username, fileName: FileName.USERNAME_FILENAME.rawValue)
             }
             group.leave()
         }
@@ -72,22 +64,22 @@ class GCDDataManager {
         group.enter()
         concurrentQueue.async {
             if let information = information {
-                self.hasValueChanged = FileOperation.SaveData.text(text: information, filename: FileName.information.rawValue)
+                self.hasValueChanged = FileSaver.saveText(text: information, fileName: FileName.USER_DISCRIPTION_FILENAME.rawValue)
             }
             group.leave()
         }
         
         group.enter()
         concurrentQueue.async {
-            if let image = image{
-                self.hasValueChanged = FileOperation.SaveData.image(image: image, filename: FileName.image.rawValue)
+            if let image = image {
+                self.hasValueChanged = FileSaver.saveImage(image: image, fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue)
             }
             group.leave()
         }
         
         group.notify(queue: .main) {
-            let vc = sender as! ProfileViewController
-            vc.hasDataChanged = self.hasValueChanged
+            let distinationViewController = sender as! ProfileViewController
+            distinationViewController.hasDataChanged = self.hasValueChanged
             
         }
     }

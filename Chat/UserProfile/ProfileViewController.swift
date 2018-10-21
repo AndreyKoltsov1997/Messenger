@@ -22,15 +22,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var sendViaGCDbutton: UIButton!
     @IBOutlet weak var sendViaOperationsButton: UIButton!
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Properies
     var userName: String? {
         didSet {
             if let userName = userName {
-                print("new username is: " + userName)
-
                 userNameField.text = userName
             } else {
                 userNameField.text = Constants.DEFAULT_USERNAME
@@ -41,8 +38,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     var discription: String? {
         didSet(newValue) {
             if let discription = discription {
-                print("New discription is: " + discription)
-
                 userDiscriptionField.text = discription
             } else {
                 userDiscriptionField.text = Constants.DEFAULT_USER_DISCRIPTION
@@ -71,16 +66,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             userNameField.text = self.userName
             self.discription = userDiscriptionField.text
             self.image = profilePictureImage.image
-            self.setButtonInteraction(avaliable: self.isUserDataUpdated())
             setButtonInteraction(avaliable: true)
-            //                self.changeButtonState(enable: true, all: true)
-            //                self.changeButtonState(enable: isChange, all: false)
-            
-//            if newValue != nil {
-//               
-//            } else {
-//                self.showActionNotAvaliableAlert(message: "Data couldn't be saved.")
-//            }
         }
     }
     
@@ -100,10 +86,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func onSaveViaOperationsClicked(_ sender: UIButton) {
-
+        
         if (self.isUserDataUpdated()) {
             self.saveViaOperations()
-
+            
         } else {
             print("Data couldn't be saved with operations.")
         }
@@ -116,16 +102,37 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func setButtonInteraction(avaliable isEnabled: Bool) {
+        print(isEnabled)
         sendViaOperationsButton.isEnabled = isEnabled
         sendViaGCDbutton.isEnabled = isEnabled
+        if (isEnabled) {
+            // sendViaGCDbutton sources
+            sendViaGCDbutton.backgroundColor = .white
+            sendViaGCDbutton.layer.borderColor = UIColor.black.cgColor
+            sendViaGCDbutton.setTitleColor(UIColor.black, for: .normal)
+            
+            // sendViaOperationsButton sources
+            sendViaOperationsButton.backgroundColor = .white
+            sendViaOperationsButton.layer.borderColor = UIColor.black.cgColor
+            sendViaOperationsButton.setTitleColor(UIColor.black, for: .normal)
+        } else {
+            // sendViaGCDbutton sources
+            sendViaGCDbutton.backgroundColor = .lightGray
+            sendViaGCDbutton.layer.borderColor = UIColor.black.cgColor
+            sendViaGCDbutton.setTitleColor(UIColor.black, for: .normal)
+            
+            // sendViaOperationsButton sources
+            sendViaOperationsButton.backgroundColor = .lightGray
+            sendViaOperationsButton.layer.borderColor = UIColor.black.cgColor
+            sendViaOperationsButton.setTitleColor(UIColor.black, for: .normal)
+        }
+        
     }
     
     @IBAction func onSaveViaGCDclicked(_ sender: UIButton) {
         if (isUserDataUpdated()) {
             self.saveViaGCD()
-
-        } else {
-            print("Data couldn't be saved with GCD..")
+            setButtonInteraction(avaliable: false)
         }
     }
     
@@ -143,10 +150,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func dismissBtnClicked(_ sender: Any) {
         self.dismiss(animated: true)
     }
+    
     // MARK: - Outlet methods
     
     @IBAction func chooseImageButtonPressed(_ sender: UIButton) {
-        print(Constants.CHOOSE_IMAGE_BTN_PRESSED_LOG)
         let chooseImageAlertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         // NOTE: chooseImageAlertVC actions
@@ -291,7 +298,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpLayoutSources()
-        userNameField.delegate = self
         userDiscriptionField.delegate = self
     }
     
@@ -339,7 +345,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // userProfilePicture sources
         image = UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
         profilePictureImage.image = image
-    
+        
         
         // sendViaGCDbutton sources
         sendViaGCDbutton.backgroundColor = .white
@@ -383,6 +389,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let multiplierForRelativeUserNameFontSize = CGFloat(0.046)
         let userNameFontSize = self.view.frame.height * multiplierForRelativeUserNameFontSize
         userNameField.font = UIFont.boldSystemFont(ofSize: userNameFontSize)
+        userNameField.addTarget(self, action: #selector(userNameFieldDidChange(textField:)), for: .editingChanged)
         
         // NOTE: configuring userDiscriptionLabel
         
@@ -403,8 +410,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         sendViaGCDbutton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
         sendViaGCDbutton.titleLabel?.font = sendViaGCDbutton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
         
-        
-        
+        // NOTE: Set button's default avaliability to false
+        setButtonInteraction(avaliable: false)
         // NOTE: configuring dismissButton
         
         dismissButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
@@ -413,10 +420,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func onChangeUserName(_ sender: UITextField) {
-        print("New user name is: " + sender.text!)
+        checkIfSaveIsAvaliable()
     }
     
-    
+    @objc func userNameFieldDidChange(textField: UITextField) {
+        checkIfSaveIsAvaliable()
+    }
+    private func checkIfSaveIsAvaliable() {
+        isUserDataUpdated() ? setButtonInteraction(avaliable: true) : setButtonInteraction(avaliable: false)
+    }
     
     // MARK: UIImagePickerDelegate methods
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -425,20 +437,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
         picker.dismiss(animated: true, completion: nil)
     }
-}
-
-extension ProfileViewController: UITextFieldDelegate {
-    // NOTE: On the ASCII keyboard when user presses the "return" key we have to dismiss the kayboard.
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder() // dismissing the action hierarchy and disappear the view
-        return true
-    }
+    
 }
 
 extension ProfileViewController: UITextViewDelegate {
-    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        textView.resignFirstResponder()
-        return true
+    func textViewDidChange(_ textView: UITextView) {
+        checkIfSaveIsAvaliable()
     }
 }
 

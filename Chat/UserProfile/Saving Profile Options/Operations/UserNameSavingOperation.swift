@@ -9,13 +9,12 @@
 import UIKit
 
 class UsernameSavingOperation: Operation {
-    
     var userName: String?
     var isSuccess: Bool = true
 
     override func main() {
         if let userName = self.userName {
-            self.isSuccess = FileOperation.SaveData.text(text: userName, filename: FileName.username.rawValue)
+            self.isSuccess = FileSaver.saveText(text: userName, fileName: FileName.USERNAME_FILENAME.rawValue)
         }
     }
 }
