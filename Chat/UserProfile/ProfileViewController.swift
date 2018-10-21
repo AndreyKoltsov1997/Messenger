@@ -11,15 +11,57 @@ import AVFoundation
 import Photos
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    @IBOutlet weak var userDiscriptionField: UITextView!
+    
     // MARK: - Outlets
+    
+    
+    @IBOutlet weak var userDiscriptionField: UITextView!
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var profilePictureImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var sendViaGCDbutton: UIButton!
     @IBOutlet weak var sendViaOperationsButton: UIButton!
+    
+    // MARK: - Properies
+    var userName: String? {
+        didSet(newValue) {
+            userNameField.text = newValue ?? Constants.DEFAULT_USERNAME
+        }
+    }
+    
+    var discription: String? {
+        didSet(newValue) {
+            userDiscriptionField.text = newValue ?? Constants.DEFAULT_USER_DISCRIPTION
+        }
+    }
+    
+    var image: UIImage? {
+        didSet(newValue) {
+            profilePictureImage.image = newValue ?? UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
+        }
+    }
+    
+    var hasDataChanged: Bool? {
+        didSet (newValue) {
+            if newValue != nil {
+                
+               self.showActionDoneAlert(message: "Profile info has been updated")
+                
+                self.userName = userNameField.text
+                self.discription = userDiscriptionField.text
+                self.image = profilePictureImage.image
+                
+//                self.changeButtonState(enable: true, all: true)
+//                self.changeButtonState(enable: isChange, all: false)
+                
+            } else {
+                self.showActionNotAvaliableAlert(message: "Data couldn't be saved.")
+            }
+            
+            
+        }
+    }
     
     @IBAction func dismissBtnClicked(_ sender: Any) {
         self.dismiss(animated: true)
@@ -116,6 +158,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.present(alert, animated: true, completion: nil)
     }
     
+    private func showActionDoneAlert(message : String) {
+        let alert  = UIAlertController(title: "Success", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     private func openSettings() {
         UIApplication.shared.open(URL.init(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
     }
@@ -161,17 +209,26 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         super.viewDidDisappear(animated)
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpLayoutSources()
         userNameField.delegate = self
-        
         userDiscriptionField.delegate = self
-        let methodTag = "viewDidLoad"
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func configureProfile(profileInfo: ProfileInfo?) {
+        self.userName = profileInfo?.userName
+        self.discription = profileInfo?.discription
+        self.image = profileInfo?.profilePicture
+        //        self.discription = profile["information"] as? String
+        //        self.image = profile["image"] as? UIImage
+        ////        activityIndicator.stopAnimating()
+        print("Profile loaded successfully")
     }
     
     // when we recive a touch event, we can do something
@@ -185,13 +242,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // NOTE: Here I'm setting up initial values for sources that could be changed in a runtime
         
         // profilePictureImage sources
-        profilePictureImage.image = UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
+        profilePictureImage.image = self.image
         
         // userNameLabel sources
-        userNameField.text = Constants.DEFAULT_USERNAME
+        userNameField.text = userName
         
         // userDiscriptionLabel sources
-   //     userDiscriptionField.text = Constants.DEFAULT_USER_DISCRIPTION
+        userDiscriptionField.text = discription
         userDiscriptionField.textColor = Constants.USER_DISCRIPTION_TEXT_DEFAULT_COLOR
         userDiscriptionField.textAlignment = .justified
         
@@ -211,7 +268,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     private func configureLayout() {
         let multiplierToFormCircle = CGFloat(0.5)
         let CORNER_RADIUS_FOR_PROFILE_ICON = chooseImageButton.bounds.height * multiplierToFormCircle
-   
+        
         
         
         // NOTE: configuring chooseImageButton
@@ -238,7 +295,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         userNameField.font = UIFont.boldSystemFont(ofSize: userNameFontSize)
         
         // NOTE: configuring userDiscriptionLabel
-
+        
         // NOTE: multiplierForRelativeFontDiscriptionFontSize was calculated manually (I realized font size 20 works fine for iPhone 8 Plus, ...
         // ... but it was too big for iPhone SE. By dividing it's font size by its frame height I've got the value and then adjusted it by testing.
         let multiplierForRelativeFontDiscriptionFontSize = CGFloat(0.03)
@@ -259,7 +316,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         
         // NOTE: configuring dismissButton
-
+        
         dismissButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
         dismissButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
         dismissButton.titleLabel?.font = dismissButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
