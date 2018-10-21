@@ -90,8 +90,6 @@
 				558252552161079300AA3FD0 /* Supporting files */,
 				550995982157A18600D377E5 /* Constants.swift */,
 				552810A621652AB4001A304A /* ConversationList */,
-				558252532160224800AA3FD0 /* ProfileViewController.swift */,
-				5509958A2157955600D377E5 /* Main.storyboard */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -105,6 +103,7 @@
 				552810A0216529ED001A304A /* ConversationListViewController.swift */,
 				55E23629216A387B0040E4DB /* Message.swift */,
 				55E2362B216A38CE0040E4DB /* Contact.swift */,
+				55A6D21C217B520A00B9A135 /* UserProfile */,
 			);
 			name = ConversationList;
 			sourceTree = "<group>";
@@ -117,6 +116,15 @@
 				550995922157955700D377E5 /* Info.plist */,
 			);
 			name = "Supporting files";
+			sourceTree = "<group>";
+		};
+		55A6D21C217B520A00B9A135 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				5509958A2157955600D377E5 /* Main.storyboard */,
+				558252532160224800AA3FD0 /* ProfileViewController.swift */,
+			);
+			path = UserProfile;
 			sourceTree = "<group>";
 		};
 		55E2362D216A40260040E4DB /* ConversationListCell */ = {

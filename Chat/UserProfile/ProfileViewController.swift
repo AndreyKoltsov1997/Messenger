@@ -11,10 +11,10 @@ import AVFoundation
 import Photos
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    // MARK: Outlets
-//    @IBOutlet weak var userNameLabel: UILabel!
-//    @IBOutlet weak var userDiscriptionLabel: UILabel!
+
+    @IBOutlet weak var userDiscriptionField: UITextView!
+    // MARK: - Outlets
+    @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var profilePictureImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -23,7 +23,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func dismissBtnClicked(_ sender: Any) {
         self.dismiss(animated: true)
     }
-    // MARK: Outlet methods
+    // MARK: - Outlet methods
     
     @IBAction func chooseImageButtonPressed(_ sender: UIButton) {
         print(Constants.CHOOSE_IMAGE_BTN_PRESSED_LOG)
@@ -49,7 +49,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-    // MARK: ViewController methods
+    // MARK: - ViewController methods
     
     @objc func actionDismissChooseImageAlert() {
         self.dismiss(animated: true, completion: nil)
@@ -169,12 +169,20 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpLayoutSources()
+        userNameField.delegate = self
+        
+        userDiscriptionField.delegate = self
         let methodTag = "viewDidLoad"
         print("[ProfileViewController.\(methodTag)] Edit button configuration: \(editProfileButton.frame)")
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // when we recive a touch event, we can do something
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        userDiscriptionField.resignFirstResponder() // when we touch outside of the field, the keyboard will dismiss and handle here
     }
     
     // MARK: UI configuring methods
@@ -186,12 +194,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         profilePictureImage.image = UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
         
         // userNameLabel sources
-       // userNameLabel.text = Constants.DEFAULT_USERNAME
+        userNameField.text = Constants.DEFAULT_USERNAME
         
         // userDiscriptionLabel sources
-//        userDiscriptionLabel.text = Constants.DEFAULT_USER_DISCRIPTION
-//        userDiscriptionLabel.textColor = Constants.USER_DISCRIPTION_TEXT_DEFAULT_COLOR
-//        userDiscriptionLabel.textAlignment = .justified
+   //     userDiscriptionField.text = Constants.DEFAULT_USER_DISCRIPTION
+        userDiscriptionField.textColor = Constants.USER_DISCRIPTION_TEXT_DEFAULT_COLOR
+        userDiscriptionField.textAlignment = .justified
         
         // editProfileButton sources
         editProfileButton.backgroundColor = .white
@@ -226,7 +234,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // ... but it was too big for iPhone SE. By dividing it's font size by its frame height I've got the value and then adjusted it by testing.        l
         let multiplierForRelativeUserNameFontSize = CGFloat(0.046)
         let userNameFontSize = self.view.frame.height * multiplierForRelativeUserNameFontSize
-       // userNameLabel.font = UIFont.boldSystemFont(ofSize: userNameFontSize)
+        userNameField.font = UIFont.boldSystemFont(ofSize: userNameFontSize)
         
         // NOTE: configuring userDiscriptionLabel
 
@@ -234,7 +242,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // ... but it was too big for iPhone SE. By dividing it's font size by its frame height I've got the value and then adjusted it by testing.
         let multiplierForRelativeFontDiscriptionFontSize = CGFloat(0.03)
         let userDiscriptionFontSize = self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize
-      //  userDiscriptionLabel.font = UIFont.systemFont(ofSize: userDiscriptionFontSize, weight: .regular)
+        userDiscriptionField.font = UIFont.systemFont(ofSize: userDiscriptionFontSize, weight: .regular)
         
         
         // NOTE: configuring editProfileButton
@@ -249,6 +257,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         dismissButton.titleLabel?.font = editProfileButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
     }
     
+    @IBAction func onChangeUserName(_ sender: UITextField) {
+        print("New user name is: " + sender.text!)
+    }
+    
+    @IBAction func onChangeUserDiscription(_ sender: UITextField) {
+        print("New user discription is: " + sender.text!)
+    }
+    
+    
     // MARK: UIImagePickerDelegate methods
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -257,3 +274,21 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         picker.dismiss(animated: true, completion: nil)
     }
 }
+
+extension ProfileViewController: UITextFieldDelegate {
+    // NOTE: On the ASCII keyboard when user presses the "return" key we have to dismiss the kayboard.
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print(textField.text)
+        textField.resignFirstResponder() // dismissing the action hierarchy and disappear the view
+        return true
+    }
+}
+
+extension ProfileViewController: UITextViewDelegate {
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        print("New text is: " + textView.text)
+        textView.resignFirstResponder()
+        return true
+    }
+}
+
