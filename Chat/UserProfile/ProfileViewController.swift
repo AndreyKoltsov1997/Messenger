@@ -15,10 +15,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var userDiscriptionField: UITextView!
     // MARK: - Outlets
     @IBOutlet weak var userNameField: UITextField!
-    @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var profilePictureImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var sendViaGCDbutton: UIButton!
+    @IBOutlet weak var sendViaOperationsButton: UIButton!
     
     @IBAction func dismissBtnClicked(_ sender: Any) {
         self.dismiss(animated: true)
@@ -141,12 +142,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let methodTag = "viewDidAppear"
-        print("[ProfileViewController.\(methodTag)] Edit button configuration: \(editProfileButton.frame)")
-        /* Изменились значения: minY, width. Это происзошло из-за того, что, после загрузки view из файла интерфейс билдера (.xib), беруться значения frame'a superview того девайся, который был использован при проектировании (в нашем случае - iPhone SE). После того, как view появилось на запускаемом девайсе, размера editProfileButton (кнопки редактирования) изменяются. В нашем случае, произошли следующие изменения:
-         minY - изменился в соответствии с указанными констрейнтами (и приоритетами) по отношению к userDiscriptionLabel, учитывая бОльший экран iPhone 8 Plus;
-         width - изменился, т.к. отступы по краям остались такими же (20), а ширина самого экрана увеличилась;
-         */
     }
     
     override func viewWillLayoutSubviews() {
@@ -173,7 +168,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         userDiscriptionField.delegate = self
         let methodTag = "viewDidLoad"
-        print("[ProfileViewController.\(methodTag)] Edit button configuration: \(editProfileButton.frame)")
     }
     
     override func didReceiveMemoryWarning() {
@@ -201,10 +195,17 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         userDiscriptionField.textColor = Constants.USER_DISCRIPTION_TEXT_DEFAULT_COLOR
         userDiscriptionField.textAlignment = .justified
         
-        // editProfileButton sources
-        editProfileButton.backgroundColor = .white
-        editProfileButton.layer.borderColor = UIColor.black.cgColor
-        editProfileButton.setTitleColor(UIColor.black, for: .normal)
+        
+        // sendViaGCDbutton sources
+        sendViaGCDbutton.backgroundColor = .white
+        sendViaGCDbutton.layer.borderColor = UIColor.black.cgColor
+        sendViaGCDbutton.setTitleColor(UIColor.black, for: .normal)
+        
+        // sendViaOperationsButton sources
+        sendViaOperationsButton.backgroundColor = .white
+        sendViaOperationsButton.layer.borderColor = UIColor.black.cgColor
+        sendViaOperationsButton.setTitleColor(UIColor.black, for: .normal)
+        
     }
     
     private func configureLayout() {
@@ -245,16 +246,23 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         userDiscriptionField.font = UIFont.systemFont(ofSize: userDiscriptionFontSize, weight: .regular)
         
         
-        // NOTE: configuring editProfileButton
-        editProfileButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
-        editProfileButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
-        editProfileButton.titleLabel?.font = editProfileButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
+        // NOTE: configuring sendViaOperationsButton
+        sendViaOperationsButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
+        sendViaOperationsButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
+        sendViaOperationsButton.titleLabel?.font = sendViaOperationsButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
+        
+        // NOTE: configuring sendViaGCDbutton
+        sendViaGCDbutton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
+        sendViaGCDbutton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
+        sendViaGCDbutton.titleLabel?.font = sendViaGCDbutton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
+        
+        
         
         // NOTE: configuring dismissButton
 
         dismissButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
         dismissButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
-        dismissButton.titleLabel?.font = editProfileButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
+        dismissButton.titleLabel?.font = dismissButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
     }
     
     @IBAction func onChangeUserName(_ sender: UITextField) {
