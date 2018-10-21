@@ -61,8 +61,32 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
+    var profileInfo: ProfileInfo {
+        get {
+            // NOTE: Getting updated user data. If no data has been updated, returns nil
+            var updatedInfo = ProfileInfo()
+            updatedInfo.userName = (userNameField.text != self.userName) ? userNameField.text : nil
+            updatedInfo.discription = (userDiscriptionField.text != self.discription) ? userDiscriptionField.text : nil
+            updatedInfo.profilePicture = (self.profilePictureImage != image) ? profilePictureImage.image : nil
+            return updatedInfo
+        }
+    }
+    
     private func isUserDataUpdated() -> Bool {
         return ((self.userNameField.text != userName) || (self.userDiscriptionField.text != discription) || (self.profilePictureImage != image))
+    }
+    
+    @IBAction func onSaveViaOperationsClicked(_ sender: UIButton) {
+        if (self.isUserDataUpdated()) {
+            self.saveViaOperations()
+        } else {
+            print("Data couldn't be saved with operations.")
+        }
+    }
+    
+    private func saveViaOperations() {
+        let operationManager = OperationDataManager()
+        operationManager.saveProfile(sender: self, profile: self.profileInfo)
     }
     
     private func setButtonInteraction(avaliable isEnabled: Bool) {
@@ -70,11 +94,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         sendViaGCDbutton.isEnabled = isEnabled
     }
     
-    @IBAction func onSaveVuaGCDclicked(_ sender: UIButton) {
+    @IBAction func onSaveViaGCDclicked(_ sender: UIButton) {
         if (isUserDataUpdated()) {
             self.saveViaGCD()
         } else {
-            print("Data hasn't been changed...")
+            print("Data couldn't be saved with GCD..")
         }
     }
     

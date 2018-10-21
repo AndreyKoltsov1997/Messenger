@@ -62,12 +62,15 @@
                                 <rect key="frame" x="20" y="483" width="33" height="30"/>
                                 <state key="normal" title="GCD"/>
                                 <connections>
-                                    <action selector="onSaveVuaGCDclicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6xI-k8-5lU"/>
+                                    <action selector="onSaveViaGCDclicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E4O-NF-EUe"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z0Y-xG-jlW">
                                 <rect key="frame" x="224" y="483" width="76" height="30"/>
                                 <state key="normal" title="Operations"/>
+                                <connections>
+                                    <action selector="onSaveViaOperationsClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mk2-Vc-9nb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
