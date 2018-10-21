@@ -15,7 +15,7 @@ class ImageSavingOperation: Operation {
     
     override func main() {
         if let image = self.image {
-            self.isSuccess = FileOperation.save.image(image: image, filename: FileName.image.rawValue)
+            self.isSuccess = FileOperation.SaveData.image(image: image, filename: FileName.image.rawValue)
         }
     }
 }

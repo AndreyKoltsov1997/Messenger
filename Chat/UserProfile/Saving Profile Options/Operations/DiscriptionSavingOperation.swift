@@ -16,7 +16,7 @@ class DiscriptionSavingOperation: Operation {
 
     override func main() {
         if let discription = self.discription {
-            self.isSuccess = FileOperation.save.text(text: discription, filename: FileName.information.rawValue)
+            self.isSuccess = FileOperation.SaveData.text(text: discription, filename: FileName.information.rawValue)
         }
     }
 }

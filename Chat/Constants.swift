@@ -62,4 +62,6 @@ struct Constants {
     
     // MARK: Other constants
     static let CHOOSE_IMAGE_BTN_PRESSED_LOG = "Выбери изображение профиля"
+    static let DOCUMENT_DIRECTORY_PATH = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+
 }

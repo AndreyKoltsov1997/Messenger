@@ -10,7 +10,7 @@ import UIKit
 
 class OperationDataManager {
     
-    var isSave: Bool? = true
+   // var isSave: Bool? = true
     
     let userNameSavingOperation = UsernameSavingOperation()
     let discriptionSavingOperation = DiscriptionSavingOperation()
@@ -29,19 +29,18 @@ class OperationDataManager {
         discriptionSavingOperation.discription = profile.discription
         imageSavingOperation.image = profile.profilePicture
         
-        let completionOperation = BlockOperation {
+        let updatingDataOperationComplete = BlockOperation {
             let vc = sender as! ProfileViewController
-            vc.hasDataChanged = self.isSave
+            vc.hasDataChanged = true
         }
         
-        completionOperation.addDependency(userNameSavingOperation)
-        completionOperation.addDependency(discriptionSavingOperation)
-        completionOperation.addDependency(imageSavingOperation)
-        
+        updatingDataOperationComplete.addDependency(userNameSavingOperation)
+        updatingDataOperationComplete.addDependency(discriptionSavingOperation)
+        updatingDataOperationComplete.addDependency(imageSavingOperation)
         
         operationQueue.addOperations([userNameSavingOperation, discriptionSavingOperation, imageSavingOperation], waitUntilFinished: false)
         
-        OperationQueue.main.addOperation(completionOperation)
+        OperationQueue.main.addOperation(updatingDataOperationComplete)
     }
     
 }

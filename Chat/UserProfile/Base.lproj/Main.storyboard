@@ -72,9 +72,13 @@
                                     <action selector="onSaveViaOperationsClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mk2-Vc-9nb"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iFZ-cS-e8b">
+                                <rect key="frame" x="150" y="274" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="z0Y-xG-jlW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Yek-vT-xCj" secondAttribute="trailing" constant="20" id="2x8-4u-gLU"/>
                             <constraint firstItem="Yek-vT-xCj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="3cZ-Lj-hVu"/>
                             <constraint firstItem="bj8-cK-0iG" firstAttribute="top" secondItem="z0Y-xG-jlW" secondAttribute="bottom" constant="5" id="420-iQ-VnX"/>
                             <constraint firstItem="Hf1-gV-Paa" firstAttribute="top" secondItem="pK3-rj-UkK" secondAttribute="bottom" constant="8" symbolic="YES" id="4dd-JN-a2x"/>
@@ -86,7 +90,9 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bj8-cK-0iG" secondAttribute="trailing" constant="20" id="FZD-ff-MEw"/>
                             <constraint firstItem="pK3-rj-UkK" firstAttribute="top" secondItem="nOh-ET-JOx" secondAttribute="bottom" constant="15" id="JrG-Il-opH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bj8-cK-0iG" secondAttribute="bottom" constant="20" id="Maa-qt-fAc"/>
+                            <constraint firstItem="iFZ-cS-e8b" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="PDJ-SR-A26"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="z0Y-xG-jlW" secondAttribute="trailing" constant="20" id="VxG-FC-0dl"/>
+                            <constraint firstItem="iFZ-cS-e8b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a4B-ee-RWG"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="height" secondItem="nOh-ET-JOx" secondAttribute="height" multiplier="0.2" id="cXH-lD-wUk"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="width" secondItem="nOh-ET-JOx" secondAttribute="width" multiplier="0.2" id="j9x-1Y-ZcN"/>
                             <constraint firstItem="Hf1-gV-Paa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="ku5-r3-56U"/>
@@ -100,6 +106,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="iFZ-cS-e8b" id="BjL-Zo-3Zr"/>
                         <outlet property="chooseImageButton" destination="UIo-W8-LaN" id="b0R-GB-axt"/>
                         <outlet property="dismissButton" destination="bj8-cK-0iG" id="Lhy-wt-rUV"/>
                         <outlet property="profilePictureImage" destination="nOh-ET-JOx" id="09t-Nq-qg3"/>

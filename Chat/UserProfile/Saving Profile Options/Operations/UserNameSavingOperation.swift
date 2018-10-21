@@ -15,7 +15,7 @@ class UsernameSavingOperation: Operation {
 
     override func main() {
         if let userName = self.userName {
-            self.isSuccess = FileOperation.save.text(text: userName, filename: FileName.username.rawValue)
+            self.isSuccess = FileOperation.SaveData.text(text: userName, filename: FileName.username.rawValue)
         }
     }
 }

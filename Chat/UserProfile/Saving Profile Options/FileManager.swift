@@ -8,21 +8,6 @@
 
 import UIKit
 
-
-// MARK: Operation type: load or save data
-
-enum OperaionType {
-    case save
-    case load
-}
-
-// MARK: Sender types
-
-enum SenderType {
-    case editProfileViewController
-    case profileViewController
-}
-
 // MARK: Save alert messages
 
 enum SaveResult {
@@ -45,28 +30,33 @@ enum FileName: String {
 class FileOperation {
     
     // MARK: Save to file
-    
-    class save {
+    class SaveData {
         
         static func text(text: String, filename: String) -> Bool {
-            let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let url = dir.appendingPathComponent(filename)
+            let url = Constants.DOCUMENT_DIRECTORY_PATH.appendingPathComponent(filename)
             
             do {
                 try text.write(to: url, atomically: false, encoding: .utf8)
-            } catch { return false }
+            } catch {
+                print("An error has occured while saving text data onto the document.")
+
+                return false
+                
+            }
             
             return true
         }
         
         static func image(image: UIImage, filename: String) -> Bool {
-            let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let url = dir.appendingPathComponent(filename)
+            let url = Constants.DOCUMENT_DIRECTORY_PATH.appendingPathComponent(filename)
             
             if let data = UIImagePNGRepresentation(image) {
                 do {
                     try data.write(to: url)
-                } catch { return false }
+                } catch {
+                    print("An error has occured while saving image info onto the document.")
+                    return false
+                }
             } else {
                 return false
             }
@@ -75,27 +65,34 @@ class FileOperation {
         }
     }
     
-    // MARK: Load from file
     
-    class load {
+    class LoadData {
         static func text(filename: String) -> String? {
-            let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let url = dir.appendingPathComponent(filename)
+            let url = Constants.DOCUMENT_DIRECTORY_PATH.appendingPathComponent(filename)
             
             do {
                 let data = try String(contentsOf: url, encoding: .utf8)
                 return data
-            } catch { return nil }
+            } catch {
+                print("An error has occured while loading text data from the document.")
+                return nil
+                
+            }
         }
         
         static func image(filename: String) -> UIImage? {
-            let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let url = dir.appendingPathComponent(filename)
+            
+            let url = Constants.DOCUMENT_DIRECTORY_PATH.appendingPathComponent(filename)
             
             do {
                 let data = try Data(contentsOf: url)
                 return UIImage(data: data)
-            } catch { return nil }
+            } catch {
+                print("An error has occured while loading image info from the document.")
+
+                return nil
+                
+            }
         }
     }
 }

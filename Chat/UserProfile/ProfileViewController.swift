@@ -23,41 +23,64 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var sendViaGCDbutton: UIButton!
     @IBOutlet weak var sendViaOperationsButton: UIButton!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     // MARK: - Properies
     var userName: String? {
-        didSet(newValue) {
-            userNameField.text = newValue ?? Constants.DEFAULT_USERNAME
+        didSet {
+            if let userName = userName {
+                print("new username is: " + userName)
+
+                userNameField.text = userName
+            } else {
+                userNameField.text = Constants.DEFAULT_USERNAME
+            }
         }
     }
     
     var discription: String? {
         didSet(newValue) {
-            userDiscriptionField.text = newValue ?? Constants.DEFAULT_USER_DISCRIPTION
+            if let discription = discription {
+                print("New discription is: " + discription)
+
+                userDiscriptionField.text = discription
+            } else {
+                userDiscriptionField.text = Constants.DEFAULT_USER_DISCRIPTION
+            }
         }
     }
     
     var image: UIImage? {
         didSet(newValue) {
-            profilePictureImage.image = newValue ?? UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
+            
+            if let image = image {
+                
+                profilePictureImage.image = image
+            } else {
+                profilePictureImage.image =  UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
+            }
         }
     }
     
     var hasDataChanged: Bool? {
         didSet (newValue) {
-            if newValue != nil {
-                
-               self.showActionDoneAlert(message: "Profile info has been updated")
-                
-                self.userName = userNameField.text
-                self.discription = userDiscriptionField.text
-                self.image = profilePictureImage.image
-                self.setButtonInteraction(avaliable: self.isUserDataUpdated())
-//                self.changeButtonState(enable: true, all: true)
-//                self.changeButtonState(enable: isChange, all: false)
-                
-            } else {
-                self.showActionNotAvaliableAlert(message: "Data couldn't be saved.")
-            }
+            activityIndicator.stopAnimating()
+            self.showActionDoneAlert(message: "Profile info has been updated")
+            
+            self.userName = userNameField.text
+            userNameField.text = self.userName
+            self.discription = userDiscriptionField.text
+            self.image = profilePictureImage.image
+            self.setButtonInteraction(avaliable: self.isUserDataUpdated())
+            setButtonInteraction(avaliable: true)
+            //                self.changeButtonState(enable: true, all: true)
+            //                self.changeButtonState(enable: isChange, all: false)
+            
+//            if newValue != nil {
+//               
+//            } else {
+//                self.showActionNotAvaliableAlert(message: "Data couldn't be saved.")
+//            }
         }
     }
     
@@ -73,18 +96,21 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func isUserDataUpdated() -> Bool {
-        return ((self.userNameField.text != userName) || (self.userDiscriptionField.text != discription) || (self.profilePictureImage != image))
+        return ((self.userNameField.text != userName) || (self.userDiscriptionField.text != discription) || (self.profilePictureImage.image != image))
     }
     
     @IBAction func onSaveViaOperationsClicked(_ sender: UIButton) {
+
         if (self.isUserDataUpdated()) {
             self.saveViaOperations()
+
         } else {
             print("Data couldn't be saved with operations.")
         }
     }
     
     private func saveViaOperations() {
+        activityIndicator.startAnimating()
         let operationManager = OperationDataManager()
         operationManager.saveProfile(sender: self, profile: self.profileInfo)
     }
@@ -97,14 +123,21 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func onSaveViaGCDclicked(_ sender: UIButton) {
         if (isUserDataUpdated()) {
             self.saveViaGCD()
+
         } else {
             print("Data couldn't be saved with GCD..")
         }
     }
     
+    private func updateProfileData(){
+        userName = self.userNameField.text
+        discription = self.userDiscriptionField.text
+        image = profilePictureImage.image
+    }
+    
     private func saveViaGCD() {
         let gcdDataManager = GCDDataManager()
-        gcdDataManager.main(sender: self, operation: .save)
+        gcdDataManager.saveProfile(sender: self)
     }
     
     @IBAction func dismissBtnClicked(_ sender: Any) {
@@ -230,6 +263,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadProfileData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -265,14 +299,18 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         super.didReceiveMemoryWarning()
     }
     
+    private func loadProfileData() {
+        activityIndicator.startAnimating()
+        
+        let gcdDataManager = GCDDataManager()
+        gcdDataManager.loadProfile(sender: self)
+    }
+    
     func configureProfile(profileInfo: ProfileInfo?) {
         self.userName = profileInfo?.userName
         self.discription = profileInfo?.discription
         self.image = profileInfo?.profilePicture
-        //        self.discription = profile["information"] as? String
-        //        self.image = profile["image"] as? UIImage
-        ////        activityIndicator.stopAnimating()
-        print("Profile loaded successfully")
+        activityIndicator.stopAnimating()
     }
     
     // when we recive a touch event, we can do something
@@ -289,13 +327,19 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         profilePictureImage.image = self.image
         
         // userNameLabel sources
+        userName = Constants.DEFAULT_USERNAME
         userNameField.text = userName
         
         // userDiscriptionLabel sources
+        discription = Constants.DEFAULT_USER_DISCRIPTION
         userDiscriptionField.text = discription
         userDiscriptionField.textColor = Constants.USER_DISCRIPTION_TEXT_DEFAULT_COLOR
         userDiscriptionField.textAlignment = .justified
         
+        // userProfilePicture sources
+        image = UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
+        profilePictureImage.image = image
+    
         
         // sendViaGCDbutton sources
         sendViaGCDbutton.backgroundColor = .white
@@ -310,6 +354,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func configureLayout() {
+        activityIndicator.hidesWhenStopped = true
+        
         let multiplierToFormCircle = CGFloat(0.5)
         let CORNER_RADIUS_FOR_PROFILE_ICON = chooseImageButton.bounds.height * multiplierToFormCircle
         
@@ -370,9 +416,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         print("New user name is: " + sender.text!)
     }
     
-    @IBAction func onChangeUserDiscription(_ sender: UITextField) {
-        print("New user discription is: " + sender.text!)
-    }
     
     
     // MARK: UIImagePickerDelegate methods
@@ -387,7 +430,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
 extension ProfileViewController: UITextFieldDelegate {
     // NOTE: On the ASCII keyboard when user presses the "return" key we have to dismiss the kayboard.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print(textField.text)
         textField.resignFirstResponder() // dismissing the action hierarchy and disappear the view
         return true
     }
@@ -395,7 +437,6 @@ extension ProfileViewController: UITextFieldDelegate {
 
 extension ProfileViewController: UITextViewDelegate {
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        print("New text is: " + textView.text)
         textView.resignFirstResponder()
         return true
     }
