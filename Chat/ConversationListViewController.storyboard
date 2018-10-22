@@ -33,7 +33,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile-vc-userpic-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="QUl-ZS-Sqg">
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile-vc-userpic-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="QUl-ZS-Sqg" userLabel="ProfilePicture Preview">
                                         <rect key="frame" x="331.5" y="0.0" width="33.5" height="33.5"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -70,6 +70,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="CS1-re-Tux"/>
                     <connections>
+                        <outlet property="profilePicturePreview" destination="QUl-ZS-Sqg" id="xhW-ES-ghb"/>
                         <outlet property="tableView" destination="GMs-sS-ZA6" id="lT9-nM-xcv"/>
                     </connections>
                 </viewController>
