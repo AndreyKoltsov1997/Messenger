@@ -14,6 +14,8 @@ class ConversationListViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var profilePicturePreview: UIImageView!
+    
     @IBAction func userPicTapped(_ sender: Any) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() {
             self.present(vc, animated: true)
@@ -26,12 +28,31 @@ class ConversationListViewController: UIViewController {
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
     private var contactsInfo = [[Contact]]()
     
+    var image: UIImage? {
+        didSet(newValue) {
+            if let image = image {
+                profilePicturePreview.image = image
+            } else {
+                profilePicturePreview.image =  UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
+            }
+        }
+    }
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
         generateTestUsers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadUserPic()
+    }
+    private func loadUserPic() {
+        // TODO: LOAD USER PIC HERE
+        let gcdDataManager = GCDDataManager()
+        gcdDataManager.loadProfile(sender: self)
     }
     
     private func configureTableView() {
@@ -78,6 +99,11 @@ class ConversationListViewController: UIViewController {
         onlineUsers.append((Contact(name: "Barack Fedorov", message: "Are u ok?", date: Date(), hasUnreadMessages: false, isOnline: true)))
         onlineUsers.append(Contact(name: "Abel Koltsov", message: "Dude, I'm still waiting.", date: Date(), hasUnreadMessages: true, isOnline: true))
         return onlineUsers
+    }
+    
+    public func configureProfile(profileInfo: ProfileInfo?) {
+        self.image = profileInfo?.profilePicture
+       // activityIndicator.stopAnimating()
     }
 
 }

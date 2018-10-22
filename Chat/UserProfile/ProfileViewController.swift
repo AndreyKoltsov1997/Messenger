@@ -293,11 +293,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-    func configureProfile(profileInfo: ProfileInfo?) {
+    public func configureProfile(profileInfo: ProfileInfo?) {
         self.userName = profileInfo?.userName
         self.discription = profileInfo?.discription
         self.image = profileInfo?.profilePicture
-        
         activityIndicator.stopAnimating()
     }
     

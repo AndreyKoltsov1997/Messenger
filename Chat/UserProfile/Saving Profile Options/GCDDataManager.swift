@@ -37,12 +37,20 @@ class GCDDataManager {
         }
         
         group.notify(queue: .main) {
-            let distinationViewController = sender as! ProfileViewController
-            if let profileInfo = self.profileInfo {
-                distinationViewController.configureProfile(profileInfo: profileInfo)
-            } else {
-                print("User data hasn't changed yet.")
+            if let distinationViewController = sender as? ProfileViewController {
+                if let profileInfo = self.profileInfo {
+                    distinationViewController.configureProfile(profileInfo: profileInfo)
+                } else {
+                    print("User data hasn't changed yet.")
+                }
+            } else if let distinationViewController = sender as? ConversationListViewController {
+                if let profileInfo = self.profileInfo {
+                    distinationViewController.configureProfile(profileInfo: profileInfo)
+                } else {
+                    print("User data hasn't changed yet.")
+                }
             }
+            
         }
     }
     
