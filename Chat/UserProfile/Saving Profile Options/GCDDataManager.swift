@@ -56,7 +56,14 @@ class GCDDataManager {
     
     public func saveProfile(sender: UIViewController) {
         let group = DispatchGroup()
-
+        
+        if let distinationViewController = sender as? ProfileViewController {
+            profileInfo = distinationViewController.profileInfo
+        } else {
+            print("Data couldn't be saved within requested view controller.")
+            return
+        }
+        
         let username = profileInfo?.userName
         let information = profileInfo?.discription
         let image = profileInfo?.profilePicture

@@ -49,6 +49,7 @@ class ConversationListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         loadUserPic()
     }
+    
     private func loadUserPic() {
         // TODO: LOAD USER PIC HERE
         let gcdDataManager = GCDDataManager()
