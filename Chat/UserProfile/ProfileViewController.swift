@@ -25,6 +25,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Properies
+    
     var userName: String? {
         didSet {
             if let userName = userName {
@@ -47,9 +48,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     var image: UIImage? {
         didSet(newValue) {
-            
             if let image = image {
-                
                 profilePictureImage.image = image
             } else {
                 profilePictureImage.image =  UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
@@ -63,7 +62,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.showActionDoneAlert(message: "Profile info has been updated")
             
             self.userName = userNameField.text
-            userNameField.text = self.userName
             self.discription = userDiscriptionField.text
             self.image = profilePictureImage.image
             setButtonInteraction(avaliable: true)
@@ -76,57 +74,19 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             var updatedInfo = ProfileInfo()
             updatedInfo.userName = (userNameField.text != self.userName) ? userNameField.text : nil
             updatedInfo.discription = (userDiscriptionField.text != self.discription) ? userDiscriptionField.text : nil
-            updatedInfo.profilePicture = (self.profilePictureImage != image) ? profilePictureImage.image : nil
+            updatedInfo.profilePicture = (self.profilePictureImage.image != image) ? profilePictureImage.image : nil
             return updatedInfo
         }
     }
     
-    private func isUserDataUpdated() -> Bool {
-        return ((self.userNameField.text != userName) || (self.userDiscriptionField.text != discription) || (self.profilePictureImage.image != image))
-    }
+    // MARK: - Outlet methods
     
     @IBAction func onSaveViaOperationsClicked(_ sender: UIButton) {
-        
         if (self.isUserDataUpdated()) {
             self.saveViaOperations()
-            
         } else {
             print("Data couldn't be saved with operations.")
         }
-    }
-    
-    private func saveViaOperations() {
-        activityIndicator.startAnimating()
-        let operationManager = OperationDataManager()
-        operationManager.saveProfile(sender: self, profile: self.profileInfo)
-    }
-    
-    private func setButtonInteraction(avaliable isEnabled: Bool) {
-        print(isEnabled)
-        sendViaOperationsButton.isEnabled = isEnabled
-        sendViaGCDbutton.isEnabled = isEnabled
-        if (isEnabled) {
-            // sendViaGCDbutton sources
-            sendViaGCDbutton.backgroundColor = .white
-            sendViaGCDbutton.layer.borderColor = UIColor.black.cgColor
-            sendViaGCDbutton.setTitleColor(UIColor.black, for: .normal)
-            
-            // sendViaOperationsButton sources
-            sendViaOperationsButton.backgroundColor = .white
-            sendViaOperationsButton.layer.borderColor = UIColor.black.cgColor
-            sendViaOperationsButton.setTitleColor(UIColor.black, for: .normal)
-        } else {
-            // sendViaGCDbutton sources
-            sendViaGCDbutton.backgroundColor = .lightGray
-            sendViaGCDbutton.layer.borderColor = UIColor.black.cgColor
-            sendViaGCDbutton.setTitleColor(UIColor.black, for: .normal)
-            
-            // sendViaOperationsButton sources
-            sendViaOperationsButton.backgroundColor = .lightGray
-            sendViaOperationsButton.layer.borderColor = UIColor.black.cgColor
-            sendViaOperationsButton.setTitleColor(UIColor.black, for: .normal)
-        }
-        
     }
     
     @IBAction func onSaveViaGCDclicked(_ sender: UIButton) {
@@ -136,22 +96,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-    private func updateProfileData(){
-        userName = self.userNameField.text
-        discription = self.userDiscriptionField.text
-        image = profilePictureImage.image
-    }
-    
-    private func saveViaGCD() {
-        let gcdDataManager = GCDDataManager()
-        gcdDataManager.saveProfile(sender: self)
-    }
-    
     @IBAction func dismissBtnClicked(_ sender: Any) {
         self.dismiss(animated: true)
     }
-    
-    // MARK: - Outlet methods
     
     @IBAction func chooseImageButtonPressed(_ sender: UIButton) {
         let chooseImageAlertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -175,6 +122,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             chooseImageAlertVC.view.superview?.subviews.first?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.actionDismissChooseImageAlert)))
         }
     }
+    
     
     // MARK: - ViewController methods
     
@@ -260,8 +208,39 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.present(imagePicker, animated: true, completion: nil)
     }
     
+    private func isUserDataUpdated() -> Bool {
+        return ((self.userNameField.text != userName) || (self.userDiscriptionField.text != discription) || (self.profilePictureImage.image != image))
+    }
+    
+    private func saveViaOperations() {
+        activityIndicator.startAnimating()
+        let operationManager = OperationDataManager()
+        operationManager.saveProfile(sender: self, profile: self.profileInfo)
+    }
+    
+    private func setButtonInteraction(avaliable isEnabled: Bool) {
+        sendViaOperationsButton.isEnabled = isEnabled
+        sendViaGCDbutton.isEnabled = isEnabled
+        
+        if (isEnabled) {
+            sendViaGCDbutton.backgroundColor = .white
+            sendViaOperationsButton.backgroundColor = .white
+        } else {
+            sendViaGCDbutton.backgroundColor = .lightGray
+            sendViaOperationsButton.backgroundColor = .lightGray
+        }
+    }
+    
+    private func saveViaGCD() {
+        let gcdDataManager = GCDDataManager()
+        gcdDataManager.saveProfile(sender: self)
+    }
+    
     // MARK: ProfileViewController lifecycle
     
+    @IBAction func userNameDidChange(_ sender: Any) {
+        checkIfSaveIsAvaliable()
+    }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         // Возникла проблема: мы не можем распечатать свойства frame'a. На этом этапе компилятор связывает файл интерфейс-билдера (.xib) c  ViewController'ом, чтобы затем загружать из него нужные нам View.
@@ -294,7 +273,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         super.viewDidDisappear(animated)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpLayoutSources()
@@ -307,15 +285,19 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     private func loadProfileData() {
         activityIndicator.startAnimating()
-        
         let gcdDataManager = GCDDataManager()
-        gcdDataManager.loadProfile(sender: self)
+        if (!isUserDataUpdated()) {
+            gcdDataManager.loadProfile(sender: self)
+        } else {
+            setButtonInteraction(avaliable: true)
+        }
     }
     
     func configureProfile(profileInfo: ProfileInfo?) {
         self.userName = profileInfo?.userName
         self.discription = profileInfo?.discription
         self.image = profileInfo?.profilePicture
+        
         activityIndicator.stopAnimating()
     }
     
@@ -365,8 +347,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let multiplierToFormCircle = CGFloat(0.5)
         let CORNER_RADIUS_FOR_PROFILE_ICON = chooseImageButton.bounds.height * multiplierToFormCircle
         
-        
-        
         // NOTE: configuring chooseImageButton
         let paddingValueInPercentage = CGFloat(0.1)
         let paddingForBackgroundPicture = self.chooseImageButton.frame.size.width * paddingValueInPercentage
@@ -389,7 +369,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let multiplierForRelativeUserNameFontSize = CGFloat(0.046)
         let userNameFontSize = self.view.frame.height * multiplierForRelativeUserNameFontSize
         userNameField.font = UIFont.boldSystemFont(ofSize: userNameFontSize)
-        userNameField.addTarget(self, action: #selector(userNameFieldDidChange(textField:)), for: .editingChanged)
         
         // NOTE: configuring userDiscriptionLabel
         
@@ -410,8 +389,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         sendViaGCDbutton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
         sendViaGCDbutton.titleLabel?.font = sendViaGCDbutton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
         
-        // NOTE: Set button's default avaliability to false
-        setButtonInteraction(avaliable: false)
+        // NOTE: DO NOT set default's avaliability to false, because when the page reloads, it re-configures the buttons.
+        
+        checkIfSaveIsAvaliable()
         // NOTE: configuring dismissButton
         
         dismissButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
@@ -419,13 +399,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         dismissButton.titleLabel?.font = dismissButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
     }
     
-    @IBAction func onChangeUserName(_ sender: UITextField) {
-        checkIfSaveIsAvaliable()
-    }
     
-    @objc func userNameFieldDidChange(textField: UITextField) {
-        checkIfSaveIsAvaliable()
-    }
     private func checkIfSaveIsAvaliable() {
         isUserDataUpdated() ? setButtonInteraction(avaliable: true) : setButtonInteraction(avaliable: false)
     }
@@ -434,11 +408,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.profilePictureImage.image = selectedImage
+            setButtonInteraction(avaliable: true)
         }
         picker.dismiss(animated: true, completion: nil)
     }
-    
 }
+
 
 extension ProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {

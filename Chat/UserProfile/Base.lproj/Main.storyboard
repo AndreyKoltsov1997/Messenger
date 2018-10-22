@@ -40,7 +40,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                 <connections>
-                                    <action selector="onChangeUserName:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="Ums-yN-iCs"/>
+                                    <action selector="userNameDidChange:" destination="BYZ-38-t0r" eventType="editingChanged" id="np5-8B-pPK"/>
                                 </connections>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="252" text="N/A" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Hf1-gV-Paa" userLabel="UserDiscription">

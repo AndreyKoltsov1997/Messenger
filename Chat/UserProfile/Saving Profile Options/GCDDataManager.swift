@@ -48,7 +48,7 @@ class GCDDataManager {
     
     public func saveProfile(sender: UIViewController) {
         let group = DispatchGroup()
-        
+
         let username = profileInfo?.userName
         let information = profileInfo?.discription
         let image = profileInfo?.profilePicture
