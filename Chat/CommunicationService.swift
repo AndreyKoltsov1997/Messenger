@@ -128,6 +128,10 @@ extension CommunicationService: MCSessionDelegate {
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         // TODO: impliment peer change state
+        if (self.activePeers.values.contains(peerID)) {
+            // NOTE: pear already exist. Return.
+            return
+        }
         let peer = Peer(name: peerID.displayName)
         let isConfirmed = (state.rawValue != 0)
         if (isConfirmed) {
@@ -171,7 +175,9 @@ extension CommunicationService: MCSessionDelegate {
 extension CommunicationService: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         // TODO: impliment peer discovering behaviour
-        browser.invitePeer(peerID, to: self.session, withContext: self.serviceType.data(using: .utf8), timeout: 600)
+        if (!session.connectedPeers.contains(peerID)) {
+            browser.invitePeer(peerID, to: self.session, withContext: self.serviceType.data(using: .utf8), timeout: 300)
+        }
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {

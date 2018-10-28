@@ -1,6 +1,6 @@
 version: "Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)"
 options: "832d7ec3349e1d284e5cd5c1397adf13"
-build_time: [1540754640, 663999000]
+build_time: [1540754989, 401047000]
 inputs:
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationsListCell.swift": [1539531207, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/Saving Profile Options/Operations/ImageSavingOperation.swift": [1540154351, 0]
@@ -28,4 +28,4 @@ inputs:
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/Saving Profile Options/Operations/OperationDataManager.swift": [1540154695, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/Constants.swift": [1540145350, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/Contact.swift": [1540750178, 0]
-  "/Users/Andrey/Developer/ChatGitHub/Chat/CommunicationService.swift": [1540754578, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/CommunicationService.swift": [1540754989, 0]
