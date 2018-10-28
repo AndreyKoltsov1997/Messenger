@@ -10,6 +10,8 @@ import UIKit
 
 
 class ConversationListViewController: UIViewController {
+
+    
     
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
@@ -26,6 +28,9 @@ class ConversationListViewController: UIViewController {
     private let identifier = String(describing: ConversationsListCell.self)
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
     private var contactsInfo = [[Contact]]()
+    
+    private var onlineContacts = [Contact]()
+    
     private var communicationService: CommunicationService  = CommunicationService(displayingName: "Andrey Koltsov")
     
     var image: UIImage? {
@@ -83,8 +88,7 @@ class ConversationListViewController: UIViewController {
     
     private func addUserToList(userPeer user: Peer) {
         let foundContact = Contact(peer: user, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
-        let onlineUsersIndex = 0
-        self.contactsInfo[onlineUsersIndex].append(foundContact)
+        self.onlineContacts.append(foundContact)
         self.tableView.reloadData()
     }
     
@@ -160,7 +164,8 @@ extension ConversationListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let conversationViewController = ConversationViewController()
-        conversationViewController.contact = contactsInfo[indexPath.section][indexPath.row]
+        conversationViewController.delegate = self
+        conversationViewController.contact = onlineContacts[indexPath.row]
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
 }
@@ -175,7 +180,7 @@ extension ConversationListViewController: UITableViewDataSource {
         return chatSections[section]
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contactsInfo[0].count
+        return onlineContacts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -184,24 +189,26 @@ extension ConversationListViewController: UITableViewDataSource {
             // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
             return UITableViewCell()
         }
-        let isIndexValid = contactsInfo[indexPath.section].indices.contains(indexPath.row)
+        let onlineContactsSection = 0
+        if indexPath.section != onlineContactsSection {
+            // NOTE: In this case, we're processing only online users
+            return UITableViewCell()
+        }
+        
+        let isIndexValid = onlineContacts.indices.contains(indexPath.row)
         if (isIndexValid) {
-            let processingCellInfo = contactsInfo[indexPath.section][indexPath.row]
-            cell.name = processingCellInfo.name
-            cell.message = processingCellInfo.message
-            cell.isOnline = processingCellInfo.isOnline
-            if (cell.isOnline) {
-                cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
-            } else {
-                cell.backgroundColor = Constants.OFFLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
-            }
-            cell.date = processingCellInfo.date
-            cell.hasUnreadMessages = processingCellInfo.hasUnreadMessages
-            if (cell.hasUnreadMessages) {
+            let user = onlineContacts[indexPath.row]
+            cell.name = user.name
+            cell.message = user.getLastMessageFromDialog()
+            cell.date = user.getLastMessageDate()
+            cell.isOnline = true
+            cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
+
+            if (user.hasUnreadMessages) {
                 cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
             }
         } else {
-            // TODO: return "no string has been found" 
+            // TODO: handle situation when "no message has been found"
             return UITableViewCell()
         }
         
@@ -229,9 +236,6 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         // todo: handle error with start browsing
     }
     
-    func processAction() {
-        
-    }
     
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: (Bool) -> Void) {
@@ -258,6 +262,21 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
         // TODO: handle message receiving process
+    }
+    
+    
+}
+
+// MARK: - ConversationListViewControllerDelegate
+extension ConversationListViewController: ConversationListViewControllerDelegate {
+    func updateDialogues(for contact: Contact) {
+    
+        for user in self.onlineContacts {
+            if user == contact {
+                user.dialoque = contact.dialoque
+            }
+        }
+        self.tableView.reloadData()
     }
     
     

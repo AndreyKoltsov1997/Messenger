@@ -9,24 +9,26 @@
 
 import Foundation
 
-class Contact: ConversationCellConfiguration {
-    public let identifier: String
+class Contact {
+    
     var name: String?
     var peer: Peer!
+    
+    // NOTE: last message in dialogue
     var message: String?
+    var dialoque: [Message] = []
     var date: Date?
+    
     var hasUnreadMessages: Bool
     var isOnline: Bool = false
 
-
-
     
+
     init(peer: Peer!, message: String?, date: Date?, hasUnreadMessages: Bool, isOnline: Bool) {
         self.name = peer.name
-        self.identifier = peer.identifier
 
         self.hasUnreadMessages = hasUnreadMessages
-        if (message != nil) && (message!.isEmpty) {
+        if (message != nil) && (dialoque.isEmpty) {
             self.message = Constants.EMPTY_MESSAGE_HISTORY_TAG
             self.hasUnreadMessages = false
         } else if (message != nil) {
@@ -38,11 +40,27 @@ class Contact: ConversationCellConfiguration {
         } else {
             self.date = date
         }
+        self.peer = peer
         self.isOnline = isOnline
     }
     
+    public func getLastMessageFromDialog() -> String {
+        if let lastMessage = self.dialoque.last?.text {
+            return lastMessage
+        }
+        return Constants.EMPTY_MESSAGE_HISTORY_TAG
+    }
+    
+    public func getLastMessageDate() -> Date {
+        if let lastMessageDate = self.dialoque.last?.date {
+            return lastMessageDate
+        }
+        return Date()
+    }
+    
+    
     
     static func ==(lhs: Contact, rhs: Contact) -> Bool {
-        return lhs.identifier == rhs.identifier
+        return lhs.peer.identifier == rhs.peer.identifier
     }
 }

@@ -31,6 +31,8 @@ struct Message {
     }
     let identifier: String
     let text: String
+    let isRecived: Bool
+    let date: Date
 }
 
 

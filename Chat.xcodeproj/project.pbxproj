@@ -22,6 +22,7 @@
 		5539671F2184BADA00AA4D05 /* CommunicationServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539671E2184BADA00AA4D05 /* CommunicationServiceDelegate.swift */; };
 		553967222184BB3E00AA4D05 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553967212184BB3E00AA4D05 /* Peer.swift */; };
 		553967242185CFA600AA4D05 /* CommunicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553967232185CFA600AA4D05 /* CommunicationService.swift */; };
+		5539672721862E6600AA4D05 /* ConversationListViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539672621862E6600AA4D05 /* ConversationListViewControllerDelegate.swift */; };
 		553A880C217D1868004B8EC6 /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A880B217D1868004B8EC6 /* ProfileInfo.swift */; };
 		553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A880E217D19E3004B8EC6 /* FileSaver.swift */; };
 		553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A8810217D1A00004B8EC6 /* FileLoader.swift */; };
@@ -61,6 +62,7 @@
 		5539671E2184BADA00AA4D05 /* CommunicationServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationServiceDelegate.swift; sourceTree = "<group>"; };
 		553967212184BB3E00AA4D05 /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		553967232185CFA600AA4D05 /* CommunicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationService.swift; sourceTree = "<group>"; };
+		5539672621862E6600AA4D05 /* ConversationListViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerDelegate.swift; sourceTree = "<group>"; };
 		553A880B217D1868004B8EC6 /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
 		553A880E217D19E3004B8EC6 /* FileSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSaver.swift; sourceTree = "<group>"; };
 		553A8810217D1A00004B8EC6 /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			children = (
 				552810A421652A4E001A304A /* ConversationListViewController.storyboard */,
 				552810A0216529ED001A304A /* ConversationListViewController.swift */,
+				5539672621862E6600AA4D05 /* ConversationListViewControllerDelegate.swift */,
 			);
 			path = ConversationListViewController;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				55E23626216A30230040E4DB /* ConversationCellConfiguration.swift in Sources */,
 				553A880C217D1868004B8EC6 /* ProfileInfo.swift in Sources */,
 				55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */,
+				5539672721862E6600AA4D05 /* ConversationListViewControllerDelegate.swift in Sources */,
 				55A6D237217CF21D00B9A135 /* UserNameSavingOperation.swift in Sources */,
 				553967222184BB3E00AA4D05 /* Peer.swift in Sources */,
 				5539671F2184BADA00AA4D05 /* CommunicationServiceDelegate.swift in Sources */,
