@@ -4,6 +4,7 @@
 <array>
 	<string>MultipeerConnectivity</string>
 	<string>AVFoundation</string>
+	<string>CoreBluetooth</string>
 	<string>Photos</string>
 	<string>UIKit</string>
 	<string>Foundation</string>

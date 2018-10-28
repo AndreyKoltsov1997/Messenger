@@ -8,11 +8,12 @@
 
 import Foundation
 import MultipeerConnectivity
+import CoreBluetooth
 
 class CommunicationService: NSObject, ICommunicationService {
     
     var delegate: CommunicationServiceDelegate?
-    var online: Bool
+    var online: Bool = true
     
     // Multipeer Connectivity Properties
     
@@ -20,26 +21,34 @@ class CommunicationService: NSObject, ICommunicationService {
     var mcSession: MCSession!
     let serviceType = "tinkoff-chat"
     
+    // Bluetooth Manager
+    var bluetoothManager: CBCentralManager!
+    var isBluetoothAvaliable: Bool = false
+    
     let discoveryInfo: [String: String]!
+    // @serviceAdvertiser publishes invitations to join self as a host
     var serviceAdvertiser: MCNearbyServiceAdvertiser!
+    // @serviceBrowser searches for services provided by nearby devices
     var serviceBrowser: MCNearbyServiceBrowser!
-    var mcAdvertiserAssistant:MCAdvertiserAssistant!
+    var mcAdvertiserAssistant: MCAdvertiserAssistant!
+    
     lazy var session : MCSession! = {
         let session = MCSession(peer: self.peerID, securityIdentity: nil, encryptionPreference: .required)
         session.delegate = self
         return session
     }()
     
-    init(status online: Bool, displayingName name: String) {
-        self.online = online
+    init(displayingName name: String) {
+
+        self.online = false
         self.discoveryInfo = ["userName": name]
         
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: self.peerID, discoveryInfo: self.discoveryInfo, serviceType: self.serviceType)
         self.serviceBrowser = MCNearbyServiceBrowser(peer: self.peerID, serviceType: self.serviceType)
-
-        
         super.init()
         
+        self.configureNetworkManagers()
+
         self.serviceAdvertiser.delegate = self
         self.serviceAdvertiser.startAdvertisingPeer()
         
@@ -51,6 +60,11 @@ class CommunicationService: NSObject, ICommunicationService {
     deinit {
         self.serviceAdvertiser.stopAdvertisingPeer()
         self.serviceBrowser.stopBrowsingForPeers()
+    }
+    
+    private func configureNetworkManagers() {
+        self.bluetoothManager = CBCentralManager()
+        bluetoothManager.delegate = self
     }
     
     public func pauseSearchingNewUsers() {
@@ -77,7 +91,7 @@ extension CommunicationService: MCSessionDelegate {
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        // TODO: imp;iment receiving data from peer
+        // TODO: impliment receiving data from peer
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
@@ -100,8 +114,21 @@ extension CommunicationService: MCNearbyServiceBrowserDelegate {
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-        // TODO: impliment peer loss behavior 
+        // TODO: impliment peer loss behavior
     }
     
-    
+}
+
+// MARK: - CBCentralManagerDelegate
+extension CommunicationService: CBCentralManagerDelegate {
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        switch central.state {
+        case .poweredOn:
+            self.isBluetoothAvaliable = true
+            break
+        default:
+            self.isBluetoothAvaliable = false
+            break
+        }
+    }
 }

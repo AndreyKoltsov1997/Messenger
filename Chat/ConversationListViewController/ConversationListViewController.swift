@@ -13,7 +13,6 @@ class ConversationListViewController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var profilePicturePreview: UIImageView!
     
     @IBAction func userPicTapped(_ sender: Any) {
@@ -27,6 +26,7 @@ class ConversationListViewController: UIViewController {
     private let identifier = String(describing: ConversationsListCell.self)
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
     private var contactsInfo = [[Contact]]()
+    private var communicationService: CommunicationService!
     
     var image: UIImage? {
         didSet(newValue) {
@@ -42,12 +42,28 @@ class ConversationListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCommunicationService()
         configureTableView()
         generateTestUsers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         loadUserPic()
+    }
+    
+    private func configureCommunicationService() {
+            self.communicationService = CommunicationService(displayingName: "Andrey Koltsov")
+        if (!self.communicationService.online) {
+            // TODO: Add options to turn the bluetooth on
+            let misleadingMsg = "Bluetooth is not avaliable. Couldn't scan for users."
+            showNetworkErrorAlert(message: misleadingMsg)
+        }
+    }
+    
+    private func showNetworkErrorAlert(message:String) {
+        let alert  = UIAlertController(title: "Netowrk Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     private func loadUserPic() {

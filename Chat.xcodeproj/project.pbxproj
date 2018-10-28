@@ -126,9 +126,8 @@
 			isa = PBXGroup;
 			children = (
 				55E2362D216A40260040E4DB /* ConversationListCell */,
-				552810A421652A4E001A304A /* ConversationListViewController.storyboard */,
+				553967252185DD3500AA4D05 /* ConversationListViewController */,
 				55E23630216A7B0D0040E4DB /* ConversationViewController */,
-				552810A0216529ED001A304A /* ConversationListViewController.swift */,
 				55E23629216A387B0040E4DB /* Message.swift */,
 				55E2362B216A38CE0040E4DB /* Contact.swift */,
 				55A6D21C217B520A00B9A135 /* UserProfile */,
@@ -152,6 +151,15 @@
 				553967212184BB3E00AA4D05 /* Peer.swift */,
 			);
 			name = MultipeerFunctionality;
+			sourceTree = "<group>";
+		};
+		553967252185DD3500AA4D05 /* ConversationListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				552810A421652A4E001A304A /* ConversationListViewController.storyboard */,
+				552810A0216529ED001A304A /* ConversationListViewController.swift */,
+			);
+			path = ConversationListViewController;
 			sourceTree = "<group>";
 		};
 		553A880D217D19C5004B8EC6 /* FileManager */ = {
