@@ -117,8 +117,9 @@ extension ConversationViewController: UITextFieldDelegate {
         guard let text = textField.text else {
             return true
         }
-        self.contact.dialoque.append(Message(identifier: generateMessageID(), text: text, isRecived: false, date: Date()))
-        
+        let newMessage = Message(identifier: generateMessageID(), text: text, isRecived: false, date: Date())
+        self.contact.dialoque.append(newMessage)
+        delegate?.sendMessage(newMessage, to: contact.peer)
         let clearedText = ""
         textField.text = clearedText
         chatTableView.reloadData()

@@ -8,4 +8,5 @@
 
 protocol ConversationListViewControllerDelegate: class {
     func updateDialogues(for contact: Contact)
+    func sendMessage(_ message: Message, to peer: Peer)
 }

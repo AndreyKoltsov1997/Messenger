@@ -217,6 +217,11 @@ extension ConversationListViewController: UITableViewDataSource {
 
 // MARK: - CommunicationServiceDelegate
 extension ConversationListViewController: CommunicationServiceDelegate {
+    func communicationService(_ communicationService: ICommunicationService, didAcceptInvite isAccepted: Bool, from peer: Peer) {
+        // todo: handle invite acceptance here
+        self.addUserToList(userPeer: peer)
+    }
+    
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
         // TODO: handle peer discovering
     }
@@ -264,6 +269,10 @@ extension ConversationListViewController: CommunicationServiceDelegate {
 
 // MARK: - ConversationListViewControllerDelegate
 extension ConversationListViewController: ConversationListViewControllerDelegate {
+    func sendMessage(_ message: Message, to peer: Peer) {
+        self.communicationService.send(message, to: peer)
+    }
+    
     func updateDialogues(for contact: Contact) {
     
         for user in self.onlineContacts {

@@ -23,6 +23,7 @@
 		553967222184BB3E00AA4D05 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553967212184BB3E00AA4D05 /* Peer.swift */; };
 		553967242185CFA600AA4D05 /* CommunicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553967232185CFA600AA4D05 /* CommunicationService.swift */; };
 		5539672721862E6600AA4D05 /* ConversationListViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539672621862E6600AA4D05 /* ConversationListViewControllerDelegate.swift */; };
+		5539672921863A7300AA4D05 /* CodableMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539672821863A7300AA4D05 /* CodableMessage.swift */; };
 		553A880C217D1868004B8EC6 /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A880B217D1868004B8EC6 /* ProfileInfo.swift */; };
 		553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A880E217D19E3004B8EC6 /* FileSaver.swift */; };
 		553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A8810217D1A00004B8EC6 /* FileLoader.swift */; };
@@ -63,6 +64,7 @@
 		553967212184BB3E00AA4D05 /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		553967232185CFA600AA4D05 /* CommunicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationService.swift; sourceTree = "<group>"; };
 		5539672621862E6600AA4D05 /* ConversationListViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerDelegate.swift; sourceTree = "<group>"; };
+		5539672821863A7300AA4D05 /* CodableMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMessage.swift; sourceTree = "<group>"; };
 		553A880B217D1868004B8EC6 /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
 		553A880E217D19E3004B8EC6 /* FileSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSaver.swift; sourceTree = "<group>"; };
 		553A8810217D1A00004B8EC6 /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				553967212184BB3E00AA4D05 /* Peer.swift */,
+				5539672821863A7300AA4D05 /* CodableMessage.swift */,
 			);
 			name = MultipeerFunctionality;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				55A6D237217CF21D00B9A135 /* UserNameSavingOperation.swift in Sources */,
 				553967222184BB3E00AA4D05 /* Peer.swift in Sources */,
 				5539671F2184BADA00AA4D05 /* CommunicationServiceDelegate.swift in Sources */,
+				5539672921863A7300AA4D05 /* CodableMessage.swift in Sources */,
 				553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */,
 				550995872157955600D377E5 /* AppDelegate.swift in Sources */,
 				552810A2216529ED001A304A /* ConversationListViewController.swift in Sources */,

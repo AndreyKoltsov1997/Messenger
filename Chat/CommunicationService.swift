@@ -73,7 +73,22 @@ class CommunicationService: NSObject, ICommunicationService {
         self.serviceBrowser.stopBrowsingForPeers();
     }
     
-    func send(_ message: Message, to peer: Peer) {}
+    func send(_ message: Message, to peer: Peer) {
+        do {
+            let codableMessage = CodableMessage(eventType: "textMessage", messageID: message.identifier, text: message.text)
+            let jsonEncoder = JSONEncoder()
+            let jsonData = try jsonEncoder.encode(codableMessage)
+            if !self.activePeers.keys.contains(peer) {
+                print("User hasn't been found")
+                return
+            }
+            
+           // let json = String(data: jsonData, encoding: String.Encoding.utf16)
+            try session.send(jsonData, toPeers: [activePeers[peer]!], with: .reliable)
+        }catch{
+            fatalError("Could not send todo item")
+        }
+    }
     
     func getDisappearedPeerData (_ lostPeerID: MCPeerID) -> Peer {
         var lostPeer = Peer(name: lostPeerID.displayName)
@@ -96,13 +111,13 @@ extension CommunicationService: MCNearbyServiceAdvertiserDelegate {
         // TODO: HANDLE RECIVING INVITE FROM THE USER
         print("received an nvite from peer: ", peerID.displayName)
         let inviter = Peer(name: peerID.displayName)
-        
         self.delegate?.communicationService(self, didReceiveInviteFromPeer: inviter) { [weak self] isAccepted in
             if (isAccepted) {
                 let addedUserPeer = Peer(name: peerID.displayName)
                 self?.activePeers[addedUserPeer] = peerID
                 print("User accepted")
             }
+            invitationHandler(isAccepted, self?.session)
         }
     }
     
@@ -113,10 +128,30 @@ extension CommunicationService: MCSessionDelegate {
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         // TODO: impliment peer change state
+        let peer = Peer(name: peerID.displayName)
+        let isConfirmed = (state.rawValue != 0)
+        if (isConfirmed) {
+            self.activePeers[peer] = peerID
+            delegate?.communicationService(self, didAcceptInvite: isConfirmed, from: peer)
+
+        }
+      
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         // TODO: impliment receiving data from peer
+        do {
+            let message = try JSONDecoder().decode(CodableMessage.self, from: data)
+            print(message)
+            DispatchQueue.main.async {
+                // TODO: Update UI here
+            }
+            
+        }catch{
+            fatalError("Unable to process recieved data")
+        }
+        
+        
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {

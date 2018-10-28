@@ -9,6 +9,9 @@
 import Foundation
 
 protocol CommunicationServiceDelegate: class {
+    // Session
+    func communicationService(_ communicationService: ICommunicationService, didAcceptInvite isAccepted: Bool, from peer: Peer)
+    
     /// Browsing
     func communicationService(_ communicationService: ICommunicationService,
                               didFoundPeer peer: Peer)
