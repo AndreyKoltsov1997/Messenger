@@ -51,7 +51,6 @@ class ConversationListViewController: UIViewController {
     }
     
     private func loadUserPic() {
-        // TODO: LOAD USER PIC HERE
         let gcdDataManager = GCDDataManager()
         gcdDataManager.loadProfile(sender: self)
     }
