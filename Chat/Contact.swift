@@ -10,25 +10,21 @@
 import Foundation
 
 class Contact: ConversationCellConfiguration {
-    public let identifier: Int
-    
+    public let identifier: String
     var name: String?
+    var peer: Peer!
     var message: String?
     var date: Date?
     var hasUnreadMessages: Bool
     var isOnline: Bool = false
 
 
-    var hasProfilePicture: Bool = false
+
     
-    private static var identifierFactory = 0
-    private static func getUniqueIdentifier() -> Int {
-        identifierFactory += 1
-        return Contact.identifierFactory
-    }
-    
-    init(name: String?, message: String?, date: Date?, hasUnreadMessages: Bool, isOnline: Bool) {
-        self.name = name
+    init(peer: Peer!, message: String?, date: Date?, hasUnreadMessages: Bool, isOnline: Bool) {
+        self.name = peer.name
+        self.identifier = peer.identifier
+
         self.hasUnreadMessages = hasUnreadMessages
         if (message != nil) && (message!.isEmpty) {
             self.message = Constants.EMPTY_MESSAGE_HISTORY_TAG
@@ -43,7 +39,6 @@ class Contact: ConversationCellConfiguration {
             self.date = date
         }
         self.isOnline = isOnline
-        self.identifier = Contact.getUniqueIdentifier()
     }
     
     

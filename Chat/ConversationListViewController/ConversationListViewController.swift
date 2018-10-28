@@ -66,14 +66,14 @@ class ConversationListViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func showInviteFromUser(withName userName: String) {
-        let title = userName + " wants to chat with you."
+    private func showInviteFromUser(withPeer peer: Peer) {
+        let title = peer.name + " wants to chat with you."
         let message = "Do you want to accept him?"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Accept", style: .default) { action in
             // todo: accept user here
             print("user accepted")
-            self.addUserToList(withName: userName)
+            self.addUserToList(userPeer: peer)
         })
         alert.addAction(UIAlertAction(title: "Decline", style: .default) { action in
             print("user declined")
@@ -81,8 +81,8 @@ class ConversationListViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func addUserToList(withName userName: String) {
-        let foundContact = Contact(name: userName, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
+    private func addUserToList(userPeer user: Peer) {
+        let foundContact = Contact(peer: user, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
         let onlineUsersIndex = 0
         self.contactsInfo[onlineUsersIndex].append(foundContact)
         self.tableView.reloadData()
@@ -222,7 +222,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: (Bool) -> Void) {
         // todo: handle invite receiving
-        showInviteFromUser(withName: peer.name)
+        showInviteFromUser(withPeer: peer)
     }
     
     func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {
