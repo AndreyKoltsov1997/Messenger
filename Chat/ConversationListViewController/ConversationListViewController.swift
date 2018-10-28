@@ -26,7 +26,7 @@ class ConversationListViewController: UIViewController {
     private let identifier = String(describing: ConversationsListCell.self)
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
     private var contactsInfo = [[Contact]]()
-    private var communicationService: CommunicationService!
+    private var communicationService: CommunicationService  = CommunicationService(displayingName: "Andrey Koltsov")
     
     var image: UIImage? {
         didSet(newValue) {
@@ -52,7 +52,8 @@ class ConversationListViewController: UIViewController {
     }
     
     private func configureCommunicationService() {
-            self.communicationService = CommunicationService(displayingName: "Andrey Koltsov")
+        communicationService.delegate = self
+//            self.communicationService = CommunicationService(displayingName: "Andrey Koltsov")
         if (!self.communicationService.online) {
             // TODO: Add options to turn the bluetooth on
             let misleadingMsg = "Bluetooth is not avaliable. Couldn't scan for users."
@@ -63,6 +64,20 @@ class ConversationListViewController: UIViewController {
     private func showNetworkErrorAlert(message:String) {
         let alert  = UIAlertController(title: "Netowrk Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showInviteFromUser(withName userName: String) {
+        let title = userName + " wants to chat with you."
+        let message = "Do you want to accept him?"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Accept", style: .default) { action in
+            // todo: accept user here
+            print("user accepted")
+        })
+        alert.addAction(UIAlertAction(title: "Decline", style: .default) { action in
+            print("user declined")
+        })
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -194,6 +209,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: (Bool) -> Void) {
         // todo: handle invite receiving
+        showInviteFromUser(withName: peer.name)
     }
     
     func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {

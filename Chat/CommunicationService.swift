@@ -81,6 +81,11 @@ class CommunicationService: NSObject, ICommunicationService {
 extension CommunicationService: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         // TODO: HANDLE RECIVING INVITE FROM THE USER
+        print("received an nvite from peer: ", peerID.displayName)
+        let inviter = Peer(name: peerID.displayName)
+        self.delegate?.communicationService(self, didReceiveInviteFromPeer: inviter, invintationClosure: { isAccepted in
+            print("Is invite accepted: ", isAccepted)
+        })
     }
 }
 
