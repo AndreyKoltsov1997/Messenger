@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Peer  {
+struct Peer: Hashable  {
     let identifier: String
     let name: String
     
@@ -24,5 +24,9 @@ struct Peer  {
         // ... if I can edit types so enjoy the encoded unique identifier. :)
         let rawIdentifier = String(Peer.getUniqueIdentifier()) + self.name
         self.identifier = rawIdentifier.data(using: .utf8)!.base64EncodedString()
+    }
+    
+    static func ==(lhs: Peer, rhs: Peer) -> Bool {
+        return lhs.identifier == rhs.identifier
     }
 }

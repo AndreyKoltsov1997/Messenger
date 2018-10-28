@@ -21,12 +21,12 @@ class Contact {
     
     var hasUnreadMessages: Bool
     var isOnline: Bool = false
-
     
-
+    
+    
     init(peer: Peer!, message: String?, date: Date?, hasUnreadMessages: Bool, isOnline: Bool) {
         self.name = peer.name
-
+        
         self.hasUnreadMessages = hasUnreadMessages
         if (message != nil) && (dialoque.isEmpty) {
             self.message = Constants.EMPTY_MESSAGE_HISTORY_TAG
@@ -34,7 +34,7 @@ class Contact {
         } else if (message != nil) {
             self.message = message
         }
-
+        
         if (date == nil) {
             self.date = Date()
         } else {

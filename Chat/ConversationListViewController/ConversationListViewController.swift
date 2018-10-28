@@ -143,13 +143,7 @@ class ConversationListViewController: UIViewController {
         return onlineUsers
     }
     
-    func removeUserFromList(withPeer peer: Peer) {
-        let onlineUsersIndex = 0
-        contactsInfo[onlineUsersIndex] = contactsInfo[onlineUsersIndex].filter() {
-            $0.peer.identifier != peer.identifier
-        }
-        self.tableView.reloadData()
-    }
+   
     
     public func configureProfile(profileInfo: ProfileInfo?) {
         self.image = profileInfo?.profilePicture
@@ -229,7 +223,10 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
         // TODO: handle peer loss
-        self.removeUserFromList(withPeer: peer)
+        self.onlineContacts = self.onlineContacts.filter {
+            $0.peer == peer
+        }
+        tableView.reloadData()
     }
     
     func communicationService(_ communicationService: ICommunicationService, didNotStartBrowsingForPeers error: Error) {
@@ -238,22 +235,20 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     
     
-    func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: (Bool) -> Void) {
+    func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: @escaping (Bool) -> Void) {
         // todo: handle invite receiving
         let title = peer.name + " wants to chat with you."
         let message = "Do you want to accept him?"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Accept", style: .default) { action in
-            // todo: accept user here
-            print("user accepted")
-         //   invintationClosure(true)
+  
             self.addUserToList(userPeer: peer)
+            invintationClosure(true)
         })
         alert.addAction(UIAlertAction(title: "Decline", style: .default) { action in
             print("user declined")
         })
         self.present(alert, animated: true, completion: nil)
-       // showInviteFromUser(withPeer: peer)
     }
     
     func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {

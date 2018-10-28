@@ -20,7 +20,7 @@ class CommunicationService: NSObject, ICommunicationService {
     let peerID = MCPeerID(displayName: UIDevice.current.name)
     var mcSession: MCSession!
     let serviceType = "tinkoff-chat"
-    var activePeers: [String: MCPeerID] = [:]
+    var activePeers: [Peer: MCPeerID] = [:]
     
     // Bluetooth Manager
     var bluetoothManager: CBCentralManager!
@@ -75,7 +75,18 @@ class CommunicationService: NSObject, ICommunicationService {
     
     func send(_ message: Message, to peer: Peer) {}
     
-   
+    func getDisappearedPeerData (_ lostPeerID: MCPeerID) -> Peer {
+        var lostPeer = Peer(name: lostPeerID.displayName)
+        for user in self.activePeers {
+            if user.value == lostPeerID {
+                lostPeer = user.key
+            }
+        }
+        return lostPeer
+    }
+    
+    
+  
     
 }
 
@@ -85,12 +96,14 @@ extension CommunicationService: MCNearbyServiceAdvertiserDelegate {
         // TODO: HANDLE RECIVING INVITE FROM THE USER
         print("received an nvite from peer: ", peerID.displayName)
         let inviter = Peer(name: peerID.displayName)
-        self.delegate?.communicationService(self, didReceiveInviteFromPeer: inviter, invintationClosure: ({ isAccepted in
-            print("Is invite accepted: ", isAccepted)
-            if isAccepted {
-                
+        
+        self.delegate?.communicationService(self, didReceiveInviteFromPeer: inviter) { [weak self] isAccepted in
+            if (isAccepted) {
+                let addedUserPeer = Peer(name: peerID.displayName)
+                self?.activePeers[addedUserPeer] = peerID
+                print("User accepted")
             }
-        }))
+        }
     }
     
 }
@@ -128,8 +141,11 @@ extension CommunicationService: MCNearbyServiceBrowserDelegate {
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         // TODO: impliment peer loss behavior
-//        let lostPeer = Peer(name: lo)
-//        self.delegate?.communicationService(self, didLostPeer: pe)
+        self.delegate?.communicationService(self, didLostPeer: Peer(name: peerID.displayName))
+        if activePeers.values.contains(peerID) {
+            
+            self.delegate?.communicationService(self, didLostPeer: self.getDisappearedPeerData(peerID))
+        }
     }
     
 }

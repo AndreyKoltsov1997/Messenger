@@ -19,7 +19,7 @@ protocol CommunicationServiceDelegate: class {
     /// Advertising
     func communicationService(_ communicationService: ICommunicationService,
                               didReceiveInviteFromPeer peer: Peer,
-                              invintationClosure: (Bool) -> Void)
+                              invintationClosure: @escaping (Bool) -> Void)
     func communicationService(_ communicationService: ICommunicationService,
                               didNotStartAdvertisingForPeers error: Error)
     /// Messages
