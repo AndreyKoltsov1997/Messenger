@@ -12,7 +12,7 @@ class ConversationViewController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet weak var chatTableView: UITableView!
-    
+    @IBOutlet weak var messageInputTextField: UITextField!
     
     // MARK: - Properties
     var contact: Contact!
@@ -25,12 +25,19 @@ class ConversationViewController: UIViewController {
     private var sentMessages = [Message]()
     public var userName: String = ""
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         configureChatTableView()
         createDisplayingMessages()
         navigationItem.title = contact.name
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.messageInputTextField.placeholder = "Message..."
     }
     
     private func createDisplayingMessages() {
@@ -48,6 +55,7 @@ class ConversationViewController: UIViewController {
         chatTableView.separatorColor = UIColor.clear
         chatTableView.dataSource = self
         self.title = userName
+        self.messageInputTextField.delegate = self
     }
     
 }
@@ -90,4 +98,14 @@ extension ConversationViewController: UITableViewDataSource {
         return defaultNumberOfSections
     }
     
+}
+
+// MARK: - UITextFieldDelegate
+extension ConversationViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // TODO: send message here
+
+        textField.resignFirstResponder()
+        return true
+    }
 }
