@@ -22,8 +22,7 @@ struct Peer: Hashable  {
         self.name = name
         // NOTE: I'm generating STRING identifier because the homework text defined the Peer structure. I'm not sure ...
         // ... if I can edit types so enjoy the encoded unique identifier. :)
-        let rawIdentifier = String(Peer.getUniqueIdentifier()) + self.name
-        self.identifier = rawIdentifier.data(using: .utf8)!.base64EncodedString()
+        self.identifier = name.data(using: .utf8)!.base64EncodedString()
     }
     
     static func ==(lhs: Peer, rhs: Peer) -> Bool {

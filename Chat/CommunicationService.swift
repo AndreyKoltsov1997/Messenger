@@ -82,15 +82,14 @@ class CommunicationService: NSObject, ICommunicationService {
                 print("User hasn't been found")
                 return
             }
-            
-           // let json = String(data: jsonData, encoding: String.Encoding.utf16)
-            try session.send(jsonData, toPeers: [activePeers[peer]!], with: .reliable)
-        }catch{
-            fatalError("Could not send todo item")
+            let peerID = activePeers[peer]!
+            try session.send(jsonData, toPeers: [peerID], with: .reliable)
+        } catch{
+            print("Unable to send JSON")
         }
     }
     
-    func getDisappearedPeerData (_ lostPeerID: MCPeerID) -> Peer {
+    func getPeerByID (_ lostPeerID: MCPeerID) -> Peer {
         var lostPeer = Peer(name: lostPeerID.displayName)
         for user in self.activePeers {
             if user.value == lostPeerID {
@@ -146,29 +145,23 @@ extension CommunicationService: MCSessionDelegate {
         // TODO: impliment receiving data from peer
         do {
             let message = try JSONDecoder().decode(CodableMessage.self, from: data)
+            let decodedMessage = Message(identifier: message.messageID, text: message.text, isRecived: true, date: Date())
             print(message)
             DispatchQueue.main.async {
-                // TODO: Update UI here
+                self.delegate?.communicationService(self, didReceiveMessage: decodedMessage, from: self.getPeerByID(peerID))
             }
-            
-        }catch{
-            fatalError("Unable to process recieved data")
+        } catch {
+            print("Unable to process recieved data")
         }
         
         
     }
     
-    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
-        // todo: impliment receiving data from stream
-    }
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {}
     
-    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
-        // todo: impliment start receiving resources
-    }
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {}
     
-    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
-        // todo: imppliment finish receiving resources
-    }
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {}
 }
 
 // MARK: - MCNearbyServiceBrowserDelegate
@@ -185,7 +178,7 @@ extension CommunicationService: MCNearbyServiceBrowserDelegate {
         self.delegate?.communicationService(self, didLostPeer: Peer(name: peerID.displayName))
         if activePeers.values.contains(peerID) {
             
-            self.delegate?.communicationService(self, didLostPeer: self.getDisappearedPeerData(peerID))
+            self.delegate?.communicationService(self, didLostPeer: self.getPeerByID(peerID))
         }
     }
     

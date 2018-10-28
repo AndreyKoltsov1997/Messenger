@@ -15,7 +15,13 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var messageInputTextField: UITextField!
     
     // MARK: - Properties
-    var contact: Contact!
+    var contact: Contact! {
+        didSet {
+            if (chatTableView != nil) {
+                chatTableView.reloadData()
+            }
+        }
+    }
     weak var delegate: ConversationListViewControllerDelegate?
     private let sentMessageIdentifier = String(describing: SentMessageCell.self)
     private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
