@@ -68,6 +68,7 @@ extension ConversationViewController: UITableViewDelegate {
 }
 
 // MARK: - UITableViewDataSource
+
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayingMessages.count
@@ -103,9 +104,12 @@ extension ConversationViewController: UITableViewDataSource {
 // MARK: - UITextFieldDelegate
 extension ConversationViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // TODO: send message here
-
+        // TODO: Impliment message sending here
         textField.resignFirstResponder()
+        displayingMessages.append(Message(withText: textField.text, from: nil))
+        let clearedText = ""
+        textField.text = clearedText
+        chatTableView.reloadData()
         return true
     }
 }
