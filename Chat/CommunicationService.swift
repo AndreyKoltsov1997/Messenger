@@ -117,7 +117,6 @@ extension CommunicationService: MCSessionDelegate {
 extension CommunicationService: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         // TODO: impliment peer discovering behaviour
-        print("Found peer with info: ", info)
         browser.invitePeer(peerID, to: self.session, withContext: self.serviceType.data(using: .utf8), timeout: 600)
     }
     

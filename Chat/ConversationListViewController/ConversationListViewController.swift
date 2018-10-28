@@ -74,11 +74,18 @@ class ConversationListViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Accept", style: .default) { action in
             // todo: accept user here
             print("user accepted")
+            self.addUserToList(withName: userName)
         })
         alert.addAction(UIAlertAction(title: "Decline", style: .default) { action in
             print("user declined")
         })
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func addUserToList(withName userName: String) {
+        let foundContact = Contact(name: userName, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
+        self.contactsInfo[0].append(foundContact)
+        self.tableView.reloadData()
     }
     
     private func loadUserPic() {
@@ -102,33 +109,33 @@ class ConversationListViewController: UIViewController {
     
     private func generateOfflineUsers() -> [Contact] {
         var offlineUsers = [Contact]()
-        offlineUsers.append(Contact(name: "John Doe", message: "Let's hang out!", date: Date(), hasUnreadMessages: false, isOnline: false))
-        offlineUsers.append(Contact(name: "Terry Williams", message: "I'm going to SF tonights. Will you come?", date: Date(timeIntervalSinceNow: 2222), hasUnreadMessages: true, isOnline: false))
-        offlineUsers.append(Contact(name: "Alba Hetrow", message: "I've been trying to get into FaceBook lately.", date: Date(timeIntervalSince1970: 33333333), hasUnreadMessages: false, isOnline: false))
-        offlineUsers.append(Contact(name: "Gokzu Guz", message: "", date: Date(), hasUnreadMessages: false, isOnline: false))
-        offlineUsers.append(Contact(name: "Garry Rosherd", message: "That steak we bought yesterday wasn't that great..", date: Date(timeIntervalSinceNow: 44444), hasUnreadMessages: false, isOnline: false))
-        
-        offlineUsers.append(Contact(name: "Alexey Kushirov", message: "There's a deadline approaching. Hurry up!", date: Date(timeIntervalSince1970: 55555), hasUnreadMessages: true, isOnline: false))
-        offlineUsers.append(Contact(name: "Herby Authrey", message: "have you done your homework?", date: Date(), hasUnreadMessages: true, isOnline: false))
-        offlineUsers.append(Contact(name: "Donald Trump", message: "Do not make memes of me.", date: Date(timeIntervalSince1970: 666666), hasUnreadMessages: false, isOnline: false))
-        offlineUsers.append(Contact(name: "Harley Davidson", message: "I like cars better.", date: Date(), hasUnreadMessages: true, isOnline: false))
-        offlineUsers.append(Contact(name: "David Russie", message: "Yes, Paris is an amazing city.", date: Date(timeIntervalSince1970: 7777), hasUnreadMessages: false, isOnline: false))
+//        offlineUsers.append(Contact(name: "John Doe", message: "Let's hang out!", date: Date(), hasUnreadMessages: false, isOnline: false))
+//        offlineUsers.append(Contact(name: "Terry Williams", message: "I'm going to SF tonights. Will you come?", date: Date(timeIntervalSinceNow: 2222), hasUnreadMessages: true, isOnline: false))
+//        offlineUsers.append(Contact(name: "Alba Hetrow", message: "I've been trying to get into FaceBook lately.", date: Date(timeIntervalSince1970: 33333333), hasUnreadMessages: false, isOnline: false))
+//        offlineUsers.append(Contact(name: "Gokzu Guz", message: "", date: Date(), hasUnreadMessages: false, isOnline: false))
+//        offlineUsers.append(Contact(name: "Garry Rosherd", message: "That steak we bought yesterday wasn't that great..", date: Date(timeIntervalSinceNow: 44444), hasUnreadMessages: false, isOnline: false))
+//
+//        offlineUsers.append(Contact(name: "Alexey Kushirov", message: "There's a deadline approaching. Hurry up!", date: Date(timeIntervalSince1970: 55555), hasUnreadMessages: true, isOnline: false))
+//        offlineUsers.append(Contact(name: "Herby Authrey", message: "have you done your homework?", date: Date(), hasUnreadMessages: true, isOnline: false))
+//        offlineUsers.append(Contact(name: "Donald Trump", message: "Do not make memes of me.", date: Date(timeIntervalSince1970: 666666), hasUnreadMessages: false, isOnline: false))
+//        offlineUsers.append(Contact(name: "Harley Davidson", message: "I like cars better.", date: Date(), hasUnreadMessages: true, isOnline: false))
+//        offlineUsers.append(Contact(name: "David Russie", message: "Yes, Paris is an amazing city.", date: Date(timeIntervalSince1970: 7777), hasUnreadMessages: false, isOnline: false))
         return offlineUsers
     }
     
     private func generateOnlineUsers() -> [Contact] {
         var onlineUsers = [Contact]();
-        onlineUsers.append(Contact(name: "Mark Nerrow", message: "", date: Date(), hasUnreadMessages: true, isOnline: true))
-        onlineUsers.append(Contact(name: "Anastasia Tssvetkova", message: "DO NOT send me photos like this. Ewww..", date: Date(timeIntervalSince1970: 88888), hasUnreadMessages: false, isOnline: true))
-        onlineUsers.append(Contact(name: "David Rasberry", message: "Why is Nastya so pissed off?", date: Date(), hasUnreadMessages: true, isOnline: true))
-        onlineUsers.append(Contact(name: "Anatoly Nestvetay", message: "LMAO I've seen that picture you've sent to Anastatia", date: Date(timeIntervalSince1970: 8888), hasUnreadMessages: false, isOnline: true))
-        onlineUsers.append(Contact(name: "Ivan Orlandov", message: "Why is everybody discussing a picture of a naked man?", date: Date(), hasUnreadMessages: false, isOnline: true))
-        
-        onlineUsers.append(Contact(name: "David Johnson", message: "What's up with the visa?", date: Date(), hasUnreadMessages: false, isOnline: true))
-        onlineUsers.append((Contact(name: "Katya Jurkina", message: "Yes!!! Would be fun.", date: Date(timeIntervalSince1970: 77777), hasUnreadMessages: true, isOnline: true)))
-        onlineUsers.append(Contact(name: "Aubrey Gragham", message: "You should listen to a better music, man.", date: Date(timeIntervalSince1970: 39393939), hasUnreadMessages: false, isOnline: true))
-        onlineUsers.append((Contact(name: "Barack Fedorov", message: "Are u ok?", date: Date(), hasUnreadMessages: false, isOnline: true)))
-        onlineUsers.append(Contact(name: "Abel Koltsov", message: "Dude, I'm still waiting.", date: Date(), hasUnreadMessages: true, isOnline: true))
+//        onlineUsers.append(Contact(name: "Mark Nerrow", message: "", date: Date(), hasUnreadMessages: true, isOnline: true))
+//        onlineUsers.append(Contact(name: "Anastasia Tssvetkova", message: "DO NOT send me photos like this. Ewww..", date: Date(timeIntervalSince1970: 88888), hasUnreadMessages: false, isOnline: true))
+//        onlineUsers.append(Contact(name: "David Rasberry", message: "Why is Nastya so pissed off?", date: Date(), hasUnreadMessages: true, isOnline: true))
+//        onlineUsers.append(Contact(name: "Anatoly Nestvetay", message: "LMAO I've seen that picture you've sent to Anastatia", date: Date(timeIntervalSince1970: 8888), hasUnreadMessages: false, isOnline: true))
+//        onlineUsers.append(Contact(name: "Ivan Orlandov", message: "Why is everybody discussing a picture of a naked man?", date: Date(), hasUnreadMessages: false, isOnline: true))
+//
+//        onlineUsers.append(Contact(name: "David Johnson", message: "What's up with the visa?", date: Date(), hasUnreadMessages: false, isOnline: true))
+//        onlineUsers.append((Contact(name: "Katya Jurkina", message: "Yes!!! Would be fun.", date: Date(timeIntervalSince1970: 77777), hasUnreadMessages: true, isOnline: true)))
+//        onlineUsers.append(Contact(name: "Aubrey Gragham", message: "You should listen to a better music, man.", date: Date(timeIntervalSince1970: 39393939), hasUnreadMessages: false, isOnline: true))
+//        onlineUsers.append((Contact(name: "Barack Fedorov", message: "Are u ok?", date: Date(), hasUnreadMessages: false, isOnline: true)))
+//        onlineUsers.append(Contact(name: "Abel Koltsov", message: "Dude, I'm still waiting.", date: Date(), hasUnreadMessages: true, isOnline: true))
         return onlineUsers
     }
     
@@ -169,21 +176,27 @@ extension ConversationListViewController: UITableViewDataSource {
             // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
             return UITableViewCell()
         }
-        
-        let processingCellInfo = contactsInfo[indexPath.section][indexPath.row]
-        cell.name = processingCellInfo.name
-        cell.message = processingCellInfo.message
-        cell.isOnline = processingCellInfo.isOnline
-        if (cell.isOnline) {
-            cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
+        let isIndexValid = contactsInfo[indexPath.section].indices.contains(indexPath.row)
+        if (isIndexValid) {
+            let processingCellInfo = contactsInfo[indexPath.section][indexPath.row]
+            cell.name = processingCellInfo.name
+            cell.message = processingCellInfo.message
+            cell.isOnline = processingCellInfo.isOnline
+            if (cell.isOnline) {
+                cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
+            } else {
+                cell.backgroundColor = Constants.OFFLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
+            }
+            cell.date = processingCellInfo.date
+            cell.hasUnreadMessages = processingCellInfo.hasUnreadMessages
+            if (cell.hasUnreadMessages) {
+                cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
+            }
         } else {
-            cell.backgroundColor = Constants.OFFLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
+            // TODO: return "no string has been found" 
+            return UITableViewCell()
         }
-        cell.date = processingCellInfo.date
-        cell.hasUnreadMessages = processingCellInfo.hasUnreadMessages
-        if (cell.hasUnreadMessages) {
-            cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
-        }
+        
         return cell
     }
     
