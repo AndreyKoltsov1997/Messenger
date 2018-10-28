@@ -11,8 +11,6 @@ import UIKit
 
 class ConversationListViewController: UIViewController {
     
-    
-    
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var profilePicturePreview: UIImageView!
@@ -61,13 +59,13 @@ class ConversationListViewController: UIViewController {
         communicationService.delegate = self
         if (!self.communicationService.online) {
             // TODO: Add options to turn the bluetooth on
-            let misleadingMsg = "Bluetooth is not avaliable. Couldn't scan for users."
+            let misleadingMsg = "Bluetooth is not avaliable. Turn it on in order to improve connection."
             showNetworkErrorAlert(message: misleadingMsg)
         }
     }
     
     private func showNetworkErrorAlert(message:String) {
-        let alert  = UIAlertController(title: "Netowrk Error", message: message, preferredStyle: .alert)
+        let alert  = UIAlertController(title: "Netowrk Alert", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
@@ -138,6 +136,7 @@ extension ConversationListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         conversationViewController.contact = onlineContacts[indexPath.row]
+        conversationViewController.contact.hasUnreadMessages = false
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
 }
@@ -156,6 +155,7 @@ extension ConversationListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        self.onlineContacts.sort(by: <)
         // guard is used for type cast of the UITableViewCell to ConversationsListCell
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationsListCell else {
             // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
@@ -206,8 +206,17 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
         // TODO: handle peer loss
+        for contact in self.onlineContacts {
+            if contact.peer == peer {
+                contact.isOnline = false
+            }
+        }
         self.onlineContacts = self.onlineContacts.filter {
-            $0.peer == peer
+            $0.peer.identifier != peer.identifier
+        }
+
+        if self.conversationViewController.viewIfLoaded?.window != nil {
+            self.conversationViewController.blockUserInput()
         }
         tableView.reloadData()
     }
@@ -220,16 +229,22 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: @escaping (Bool) -> Void) {
         // todo: handle invite receiving
+        self.addUserToList(userPeer: peer)
+
         let title = peer.name + " wants to chat with you."
         let message = "Do you want to accept him?"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Accept", style: .default) { action in
-            
-            self.addUserToList(userPeer: peer)
             invintationClosure(true)
         })
         alert.addAction(UIAlertAction(title: "Decline", style: .default) { action in
-            print("user declined")
+            // Removing user from the list. The task said we have to initially add everyone we discovered.
+            self.onlineContacts = self.onlineContacts.filter {
+                $0.peer.identifier != peer.identifier
+            }
+            self.tableView.reloadData()
+            invintationClosure(false)
+
         })
         self.present(alert, animated: true, completion: nil)
     }
@@ -243,6 +258,9 @@ extension ConversationListViewController: CommunicationServiceDelegate {
             contact.dialoque.append(message)
             if self.conversationViewController.viewIfLoaded?.window != nil {
                 self.conversationViewController.contact.dialoque = contact.dialoque
+                self.conversationViewController.updateView()
+            } else {
+                contact.hasUnreadMessages = true
             }
             
             tableView.reloadData()

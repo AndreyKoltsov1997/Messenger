@@ -15,13 +15,7 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var messageInputTextField: UITextField!
     
     // MARK: - Properties
-    var contact: Contact! {
-        didSet {
-            if (chatTableView != nil) {
-                chatTableView.reloadData()
-            }
-        }
-    }
+    var contact: Contact! 
     weak var delegate: ConversationListViewControllerDelegate?
     private let sentMessageIdentifier = String(describing: SentMessageCell.self)
     private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
@@ -58,9 +52,27 @@ class ConversationViewController: UIViewController {
         chatTableView.dataSource = self
         self.title = userName
         self.messageInputTextField.delegate = self
+        self.messageInputTextField.isEnabled = contact.isOnline
     }
     
-
+    private func showAlert(message:String) {
+        let alert  = UIAlertController(title: "Netowrk Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    public func updateView() {
+        self.chatTableView.reloadData()
+        self.messageInputTextField.isEnabled = contact.isOnline
+    }
+    
+    public func blockUserInput() {
+        contact.isOnline = false
+        let username = self.contact?.name ?? "User"
+        self.messageInputTextField.placeholder =  username + " is not avaliable."
+        showAlert(message: username + " is no longer avaliable.")
+        self.messageInputTextField.isEnabled = false
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -113,10 +125,22 @@ extension ConversationViewController: UITableViewDataSource {
         let string = "\(arc4random_uniform(UINT32_MAX))+\(Date.timeIntervalSinceReferenceDate)+\(arc4random_uniform(UINT32_MAX))".data(using: .utf8)?.base64EncodedString()
         return string!
     }
+    
 }
 
 // MARK: - UITextFieldDelegate
 extension ConversationViewController: UITextFieldDelegate {
+    
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if (!self.contact.isOnline) {
+            let userName =  self.contact?.name ?? "User"
+            showAlert(message: userName + "is offline and not avaliable for conversation.")
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // TODO: Impliment message sending here
         textField.resignFirstResponder()

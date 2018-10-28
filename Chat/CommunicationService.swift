@@ -75,9 +75,9 @@ class CommunicationService: NSObject, ICommunicationService {
     
     func send(_ message: Message, to peer: Peer) {
         do {
-            let codableMessage = CodableMessage(eventType: "textMessage", messageID: message.identifier, text: message.text)
-            let jsonEncoder = JSONEncoder()
-            let jsonData = try jsonEncoder.encode(codableMessage)
+            let jsonEncodedMessage = ["eventType": "TextMessage", "messageId": message.identifier, "text": message.text]
+            let jsonData = try JSONSerialization.data(withJSONObject: jsonEncodedMessage, options: .prettyPrinted)
+         
             if !self.activePeers.keys.contains(peer) {
                 print("User hasn't been found")
                 return
@@ -98,8 +98,6 @@ class CommunicationService: NSObject, ICommunicationService {
         }
         return lostPeer
     }
-    
-    
   
     
 }
@@ -107,14 +105,17 @@ class CommunicationService: NSObject, ICommunicationService {
 // MARK: - MCNearbyServiceAdvertiserDelegate
 extension CommunicationService: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        // TODO: HANDLE RECIVING INVITE FROM THE USER
-        print("received an nvite from peer: ", peerID.displayName)
+        if session.connectedPeers.contains(peerID) {
+            return
+        }
+        
         let inviter = Peer(name: peerID.displayName)
+
         self.delegate?.communicationService(self, didReceiveInviteFromPeer: inviter) { [weak self] isAccepted in
             if (isAccepted) {
+                // NOTE: Accepting invite from the user
                 let addedUserPeer = Peer(name: peerID.displayName)
                 self?.activePeers[addedUserPeer] = peerID
-                print("User accepted")
             }
             invitationHandler(isAccepted, self?.session)
         }
@@ -136,7 +137,7 @@ extension CommunicationService: MCSessionDelegate {
         if (isConfirmed) {
             self.activePeers[peer] = peerID
             delegate?.communicationService(self, didAcceptInvite: isConfirmed, from: peer)
-
+            print("active peers, session:", self.activePeers.values)
         }
       
     }
@@ -144,14 +145,16 @@ extension CommunicationService: MCSessionDelegate {
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         // TODO: impliment receiving data from peer
         do {
-            let message = try JSONDecoder().decode(CodableMessage.self, from: data)
-            let decodedMessage = Message(identifier: message.messageID, text: message.text, isRecived: true, date: Date())
-            print(message)
+            let rawJsonMessage = try JSONSerialization.jsonObject(with: data, options: []) as! [String:String]
+            let decodedMessage = Message(identifier: rawJsonMessage["messageId"]!, text: rawJsonMessage["text"]!, isRecived: true, date: Date())
+            
+            print(decodedMessage)
             DispatchQueue.main.async {
                 self.delegate?.communicationService(self, didReceiveMessage: decodedMessage, from: self.getPeerByID(peerID))
             }
         } catch {
             print("Unable to process recieved data")
+            return
         }
         
         

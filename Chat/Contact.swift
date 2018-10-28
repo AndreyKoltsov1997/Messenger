@@ -59,8 +59,16 @@ class Contact {
     }
     
     
+    // MARK: - Comparators
     
     static func ==(lhs: Contact, rhs: Contact) -> Bool {
         return lhs.peer.identifier == rhs.peer.identifier
+    }
+    
+    static func < (lhs: Contact, rhs: Contact) -> Bool {
+        let lhsDate = lhs.date ?? Date(timeIntervalSince1970: 0)
+        let rhsDate = rhs.date ?? Date(timeIntervalSince1970: 0)
+        
+        return  lhsDate == rhsDate ? lhs.name ?? "" < rhs.name ?? "" : lhsDate > rhsDate
     }
 }
