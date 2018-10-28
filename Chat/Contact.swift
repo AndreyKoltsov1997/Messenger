@@ -27,7 +27,7 @@ class Contact: ConversationCellConfiguration {
         return Contact.identifierFactory
     }
     
-    init(name: String?, message: String?, date:Date?, hasUnreadMessages: Bool, isOnline: Bool) {
+    init(name: String?, message: String?, date: Date?, hasUnreadMessages: Bool, isOnline: Bool) {
         self.name = name
         self.hasUnreadMessages = hasUnreadMessages
         if (message != nil) && (message!.isEmpty) {
@@ -37,7 +37,11 @@ class Contact: ConversationCellConfiguration {
             self.message = message
         }
 
-        self.date = date
+        if (date == nil) {
+            self.date = Date()
+        } else {
+            self.date = date
+        }
         self.isOnline = isOnline
         self.identifier = Contact.getUniqueIdentifier()
     }

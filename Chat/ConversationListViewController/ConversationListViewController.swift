@@ -53,7 +53,6 @@ class ConversationListViewController: UIViewController {
     
     private func configureCommunicationService() {
         communicationService.delegate = self
-//            self.communicationService = CommunicationService(displayingName: "Andrey Koltsov")
         if (!self.communicationService.online) {
             // TODO: Add options to turn the bluetooth on
             let misleadingMsg = "Bluetooth is not avaliable. Couldn't scan for users."
@@ -84,7 +83,8 @@ class ConversationListViewController: UIViewController {
     
     private func addUserToList(withName userName: String) {
         let foundContact = Contact(name: userName, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
-        self.contactsInfo[0].append(foundContact)
+        let onlineUsersIndex = 0
+        self.contactsInfo[onlineUsersIndex].append(foundContact)
         self.tableView.reloadData()
     }
     
