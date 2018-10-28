@@ -177,3 +177,32 @@ extension ConversationListViewController: UITableViewDataSource {
         return defaultEstimatedRowHeight
     }
 }
+
+// MARK: - CommunicationServiceDelegate
+extension ConversationListViewController: CommunicationServiceDelegate {
+    func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
+        // TODO: handle peer discovering
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
+        // TODO: handle peer loss
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didNotStartBrowsingForPeers error: Error) {
+        // todo: handle error with start browsing
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: (Bool) -> Void) {
+        // todo: handle invite receiving
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {
+        // todo: handle searching for users process
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
+        // TODO: handle message receiving process
+    }
+    
+    
+}

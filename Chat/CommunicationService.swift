@@ -13,7 +13,7 @@ import CoreBluetooth
 class CommunicationService: NSObject, ICommunicationService {
     
     var delegate: CommunicationServiceDelegate?
-    var online: Bool = true
+    var online: Bool = true // TODO: change value depend on bluetooth / WiFi accessability
     
     // Multipeer Connectivity Properties
     
@@ -65,6 +65,7 @@ class CommunicationService: NSObject, ICommunicationService {
     private func configureNetworkManagers() {
         self.bluetoothManager = CBCentralManager()
         bluetoothManager.delegate = self
+        // TODO: check bluetooth connection here
     }
     
     public func pauseSearchingNewUsers() {
@@ -111,6 +112,8 @@ extension CommunicationService: MCSessionDelegate {
 extension CommunicationService: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         // TODO: impliment peer discovering behaviour
+        print("Found peer with info: ", info)
+        browser.invitePeer(peerID, to: self.session, withContext: self.serviceType.data(using: .utf8), timeout: 600)
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
