@@ -9,41 +9,66 @@
 
 import Foundation
 
-class Contact: ConversationCellConfiguration {
-    public let identifier: Int
+class Contact {
     
     var name: String?
+    var peer: Peer!
+    
+    // NOTE: last message in dialogue
     var message: String?
+    var dialoque: [Message] = []
     var date: Date?
+    
     var hasUnreadMessages: Bool
     var isOnline: Bool = false
-
-
-    var hasProfilePicture: Bool = false
     
-    private static var identifierFactory = 0
-    private static func getUniqueIdentifier() -> Int {
-        identifierFactory += 1
-        return Contact.identifierFactory
-    }
     
-    init(name: String?, message: String?, date:Date?, hasUnreadMessages: Bool, isOnline: Bool) {
-        self.name = name
+    
+    init(peer: Peer!, message: String?, date: Date?, hasUnreadMessages: Bool, isOnline: Bool) {
+        self.name = peer.name
+        
         self.hasUnreadMessages = hasUnreadMessages
-        if (message != nil) && (message!.isEmpty) {
+        if (message != nil) && (dialoque.isEmpty) {
             self.message = Constants.EMPTY_MESSAGE_HISTORY_TAG
             self.hasUnreadMessages = false
         } else if (message != nil) {
             self.message = message
         }
-
-        self.date = date
+        
+        if (date == nil) {
+            self.date = Date()
+        } else {
+            self.date = date
+        }
+        self.peer = peer
         self.isOnline = isOnline
-        self.identifier = Contact.getUniqueIdentifier()
+    }
+    
+    public func getLastMessageFromDialog() -> String {
+        if let lastMessage = self.dialoque.last?.text {
+            return lastMessage
+        }
+        return Constants.EMPTY_MESSAGE_HISTORY_TAG
+    }
+    
+    public func getLastMessageDate() -> Date {
+        if let lastMessageDate = self.dialoque.last?.date {
+            return lastMessageDate
+        }
+        return Date()
     }
     
     
+    // MARK: - Comparators
+    
     static func ==(lhs: Contact, rhs: Contact) -> Bool {
-        return lhs.identifier == rhs.identifier
+        return lhs.peer.identifier == rhs.peer.identifier
+    }
+    
+    static func < (lhs: Contact, rhs: Contact) -> Bool {
+        let lhsDate = lhs.date ?? Date(timeIntervalSince1970: 0)
+        let rhsDate = rhs.date ?? Date(timeIntervalSince1970: 0)
+        
+        return  lhsDate == rhsDate ? lhs.name ?? "" < rhs.name ?? "" : lhsDate > rhsDate
     }
 }

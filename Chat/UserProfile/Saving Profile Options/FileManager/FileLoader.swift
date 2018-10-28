@@ -15,6 +15,7 @@ class FileLoader {
             let data = try Data(contentsOf: url)
             return UIImage(data: data)
         } catch {
+            // TODO: Handle situation when device hasn't had any saved info - it's not an error
             print("An error has occured while loading image info from the document.")
             return nil
         }
