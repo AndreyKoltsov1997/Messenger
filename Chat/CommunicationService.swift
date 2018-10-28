@@ -20,6 +20,7 @@ class CommunicationService: NSObject, ICommunicationService {
     let peerID = MCPeerID(displayName: UIDevice.current.name)
     var mcSession: MCSession!
     let serviceType = "tinkoff-chat"
+    var activePeers: [String: MCPeerID] = [:]
     
     // Bluetooth Manager
     var bluetoothManager: CBCentralManager!
@@ -74,6 +75,7 @@ class CommunicationService: NSObject, ICommunicationService {
     
     func send(_ message: Message, to peer: Peer) {}
     
+   
     
 }
 
@@ -83,10 +85,14 @@ extension CommunicationService: MCNearbyServiceAdvertiserDelegate {
         // TODO: HANDLE RECIVING INVITE FROM THE USER
         print("received an nvite from peer: ", peerID.displayName)
         let inviter = Peer(name: peerID.displayName)
-        self.delegate?.communicationService(self, didReceiveInviteFromPeer: inviter, invintationClosure: { isAccepted in
+        self.delegate?.communicationService(self, didReceiveInviteFromPeer: inviter, invintationClosure: ({ isAccepted in
             print("Is invite accepted: ", isAccepted)
-        })
+            if isAccepted {
+                
+            }
+        }))
     }
+    
 }
 
 // MARK: - MCSessionDelegate
@@ -122,6 +128,8 @@ extension CommunicationService: MCNearbyServiceBrowserDelegate {
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         // TODO: impliment peer loss behavior
+//        let lostPeer = Peer(name: lo)
+//        self.delegate?.communicationService(self, didLostPeer: pe)
     }
     
 }
