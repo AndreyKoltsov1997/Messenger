@@ -1,4 +1,5 @@
-# Messenger
-## A project is developing during the course of "iOS Development" in Tinkoff FinTech school, fall 2018. 
-Simple messenger written fully on Swift.
+# Peer-to-Peer iOS Messanger Application
+## Chat could host up to 8 users within the same network, either bluetooth, WiFi or USB connected to the same device.
+
+Feel free to create issues or Pull Requests. 
 
