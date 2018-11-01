@@ -22,6 +22,11 @@ class ConversationListViewController: UIViewController {
     }
     
     // MARK: - Properties
+    
+    enum NetworkType {
+        case bluetooth
+        case wifi
+    }
     var conversationViewController = ConversationViewController()
     private let identifier = String(describing: ConversationsListCell.self)
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
@@ -60,8 +65,25 @@ class ConversationListViewController: UIViewController {
         if (!self.communicationService.online) {
             // TODO: Add options to turn the bluetooth on
             let misleadingMsg = "Bluetooth is not avaliable. Turn it on in order to improve connection."
-            showNetworkErrorAlert(message: misleadingMsg)
+            showNetworkSettingsAlert(message: misleadingMsg, for: .bluetooth)
         }
+    }
+    
+    private func openBluetooth() {
+        let pathToSettings = URL(string: UIApplicationOpenSettingsURLString)
+        let application = UIApplication.shared
+        application.open(pathToSettings!, options: [:], completionHandler: nil)
+    }
+    
+    private func showNetworkSettingsAlert(message: String, for network: NetworkType) {
+        let alert  = UIAlertController(title: "Netowrk Alert", message: message, preferredStyle: .alert)
+        if (network == .bluetooth) {
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Open settings", style: .default) { action in
+                self.openBluetooth()
+            })
+        }
+        self.present(alert, animated: true, completion: nil)
     }
     
     private func showNetworkErrorAlert(message:String) {
