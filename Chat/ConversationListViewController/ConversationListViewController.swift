@@ -224,6 +224,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
         // TODO: handle peer discovering
+        self.tableView.reloadData()
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
@@ -244,7 +245,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didNotStartBrowsingForPeers error: Error) {
-        // todo: handle error with start browsing
+        showNetworkErrorAlert(message: "Unable to search users. Reason:" + error.localizedDescription)
     }
     
     
@@ -273,6 +274,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {
         // todo: handle searching for users process
+        showNetworkErrorAlert(message: "Unable to host users. Reason:" + error.localizedDescription)
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
