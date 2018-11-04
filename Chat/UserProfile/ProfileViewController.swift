@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 import Photos
-import CoreData
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -27,7 +26,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - Properies
     
-    private var profile = ProfileModel()
+    private lazy var profile = ProfileModel()
     public func getProfileModel() -> ProfileModel {
         return profile
     }
@@ -40,7 +39,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             activityIndicator.startAnimating()
             self.profile.discripton = userDiscriptionField.text
             self.profile.name = userNameField.text!
-            self.profile.saveIntoCoreData()
+            self.profile.saveIntoSQLite()
+            //self.profile.saveIntoCoreData()
         } else {
             print("Data couldn't be saved with operations.")
         }

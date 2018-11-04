@@ -11,8 +11,6 @@ import CoreData
 
 class StorageCoreData {
     
-    // MARK: - Properties
-    
     // MARK: - Core Data stack
     
     public static let TAG = String(describing: StorageCoreData.self)
@@ -112,16 +110,13 @@ class StorageCoreData {
     static func isEntityExist(withName name: String) -> Bool {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
         fetchRequest.includesSubentities = false
-        
         var entitiesCount = 0
-        
         do {
             entitiesCount = try StorageCoreData.context.count(for: fetchRequest)
         }
         catch {
             print("error executing fetch request: \(error)")
         }
-        
         return entitiesCount > 0
     }
     

@@ -26,6 +26,7 @@
 		5539672921863A7300AA4D05 /* CodableMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539672821863A7300AA4D05 /* CodableMessage.swift */; };
 		553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A880E217D19E3004B8EC6 /* FileSaver.swift */; };
 		553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A8810217D1A00004B8EC6 /* FileLoader.swift */; };
+		5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */; };
 		558252542160224800AA3FD0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558252532160224800AA3FD0 /* ProfileViewController.swift */; };
 		55A6D223217CDDCA00B9A135 /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6D222217CDDCA00B9A135 /* GCDDataManager.swift */; };
 		55A6D225217CDE0E00B9A135 /* FileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6D224217CDE0E00B9A135 /* FileName.swift */; };
@@ -72,6 +73,7 @@
 		5539672821863A7300AA4D05 /* CodableMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMessage.swift; sourceTree = "<group>"; };
 		553A880E217D19E3004B8EC6 /* FileSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSaver.swift; sourceTree = "<group>"; };
 		553A8810217D1A00004B8EC6 /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
+		5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorageSQLite.swift; sourceTree = "<group>"; };
 		558252532160224800AA3FD0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		55A6D222217CDDCA00B9A135 /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		55A6D224217CDE0E00B9A135 /* FileName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileName.swift; sourceTree = "<group>"; };
@@ -127,7 +129,6 @@
 			children = (
 				55A6D221217CDDAE00B9A135 /* File System Opetations */,
 				55A6D21C217B520A00B9A135 /* UserProfile */,
-				550995862157955600D377E5 /* AppDelegate.swift */,
 				551858CF2173AC000075AC1F /* ChatPlayground.playground */,
 				558252552161079300AA3FD0 /* Supporting files */,
 				550995982157A18600D377E5 /* Constants.swift */,
@@ -195,6 +196,7 @@
 			children = (
 				5509958D2157955700D377E5 /* Assets.xcassets */,
 				5509958F2157955700D377E5 /* LaunchScreen.storyboard */,
+				550995862157955600D377E5 /* AppDelegate.swift */,
 				550995922157955700D377E5 /* Info.plist */,
 			);
 			name = "Supporting files";
@@ -239,6 +241,7 @@
 				55D2AED1218EF1F200625FFB /* UserProfile+CoreDataProperties.swift */,
 				55D2AECD218EF06C00625FFB /* ProfileModel.xcdatamodeld */,
 				55D2AED4218EF25B00625FFB /* StorageCoreData.swift */,
+				5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */,
 				55D2AED5218EF25B00625FFB /* StorageCoreData.swift in Sources */,
 				552810A921652B77001A304A /* ConversationsListCell.swift in Sources */,
 				55A6D233217CF19600B9A135 /* ImageSavingOperation.swift in Sources */,

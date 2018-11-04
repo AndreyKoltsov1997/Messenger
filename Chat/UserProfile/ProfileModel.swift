@@ -12,7 +12,8 @@ class ProfileModel {
     public static let TAG = String(describing: ProfileModel.self)
 
     // MARK: - Properties
-    
+    private var coreDataSQLiteStorge = CoreDataStorageSQLite()
+
     public var name = Constants.DEFAULT_USERNAME {
         didSet {
             delegate?.updateName(self.name)
@@ -38,7 +39,9 @@ class ProfileModel {
     // MARK: - Constructor
     
     init() {
-        self.loadFromCoreData()
+        print("init")
+        self.loadFromSQLite()
+       // self.loadFromCoreData()
     }
     
     // MARK: - Methods
@@ -48,7 +51,7 @@ class ProfileModel {
             DispatchQueue.main.async {
                 if let fetchedName = fetchedName {
                     self.name = fetchedName
-                    print(ProfileModel.TAG, "Fetched name", fetchedName)
+                    print(ProfileModel.TAG, "Fetched name from core data", fetchedName)
                 }
                 
                 if let fetchedDiscription = fetchedDiscription {
@@ -65,6 +68,30 @@ class ProfileModel {
         }
     }
     
+    public func loadFromSQLite() {
+        DispatchQueue.main.async {
+             self.coreDataSQLiteStorge.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+                DispatchQueue.main.async {
+                    if let fetchedName = fetchedName {
+                        self.name = fetchedName
+                        print(ProfileModel.TAG, "Fetched name", fetchedName)
+                    }
+                    
+                    if let fetchedDiscription = fetchedDiscription {
+                        self.discripton = fetchedDiscription
+                    }
+                    if let fetchedImage = fetchedImage as Data? {
+                        self.image = fetchedImage
+                    } else {
+                        print(ProfileModel.TAG, "Couldn't convert binary to image.")
+                    }
+                    self.delegate?.finishLoading(self)
+                }
+            }
+        }
+    }
+
+    
     public func saveIntoCoreData() {
         
         DispatchQueue.main.async {
@@ -74,6 +101,12 @@ class ProfileModel {
                 print(ProfileModel.TAG, "Unable to save profile picture.")
             }
             self.delegate?.onFinishSaving()
+        }
+    }
+    
+    public func saveIntoSQLite() {
+        DispatchQueue.main.async {
+            self.coreDataSQLiteStorge.save(profile: self)
         }
     }
     
