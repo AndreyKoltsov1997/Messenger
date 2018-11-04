@@ -31,7 +31,7 @@ class StorageCoreData: ProfileStorageManager {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
          */
-        let container = NSPersistentContainer(name: "ProfileModel")
+        let container = NSPersistentContainer(name: Constants.PROFILE_MODEL_TAG)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 
@@ -58,8 +58,7 @@ class StorageCoreData: ProfileStorageManager {
                 try context.save()
                 print(StorageCoreData.TAG, "Context has been updated")
             } catch {
-                let nserror = error as NSError
-                print(StorageCoreData.TAG,"An error has pccured while saveing the data \(nserror), \(nserror.userInfo)")
+                print(StorageCoreData.TAG,"An error has pccured while saveing the data:", error.localizedDescription)
             }
         }
     }
@@ -126,7 +125,7 @@ class StorageCoreData: ProfileStorageManager {
             entitiesCount = try StorageCoreData.context.count(for: fetchRequest)
         }
         catch {
-            print("error executing fetch request: \(error)")
+            print(TAG, "An error has occured while counting required entities:", error.localizedDescription)
         }
         return entitiesCount > 0
     }

@@ -1,9 +1,9 @@
 version: "Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)"
 options: "832d7ec3349e1d284e5cd5c1397adf13"
-build_time: [1541364234, 284959000]
+build_time: [1541364698, 661837000]
 inputs:
-  "/Users/Andrey/Developer/ChatGitHub/Chat/CoreDataStorageSQLite.swift": [1541361631, 0]
-  "/Users/Andrey/Developer/ChatGitHub/Chat/StorageCoreData.swift": [1541359546, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/CoreDataStorageSQLite.swift": [1541364643, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/StorageCoreData.swift": [1541364698, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationsListCell.swift": [1539531207, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/File System Opetations/Operations/ImageSavingOperation.swift": [1541340110, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationViewController/RecivedMessagesCell.swift": [1539531207, 0]

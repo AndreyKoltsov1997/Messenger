@@ -15,6 +15,8 @@ import UIKit
 
 class CoreDataStorageSQLite: ProfileStorageManager {    
     
+    public static let TAG = String(describing: CoreDataStorageSQLite.self)
+    
     // NOTE: Constructor is private in order to confirm to Singleton pattern
     private init() {}
     
@@ -25,37 +27,30 @@ class CoreDataStorageSQLite: ProfileStorageManager {
     }()
     
     static var managedObjectModel: NSManagedObjectModel? = {
-        guard let modelURL = Bundle.main.url(forResource: Constants.PROFILE_MODEL_TAG, withExtension: "momd") else {
+        guard let targetModelPath = Bundle.main.url(forResource: Constants.PROFILE_MODEL_TAG, withExtension: "momd") else {
             return nil
         }
-        let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
-        
+        let managedObjectModel = NSManagedObjectModel(contentsOf: targetModelPath)
         return managedObjectModel
     }()
     
     static var persistentStoreURL: NSURL {
-        let storeName = "\(Constants.PROFILE_MODEL_TAG).sqlite"
+        let storageTarget = "\(Constants.PROFILE_MODEL_TAG).sqlite"
         let fileManager = FileManager.default
-        let documentDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        
-        return documentDirectoryURL.appendingPathComponent(storeName) as NSURL
+        let pathToDocumentDirictory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return pathToDocumentDirictory.appendingPathComponent(storageTarget) as NSURL
     }
     
     static var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         guard let managedObjectModel = CoreDataStorageSQLite.managedObjectModel else {
             return nil
         }
-        
-        let persistentStoreURL = CoreDataStorageSQLite.persistentStoreURL
-        
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        
         do {
-            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
-            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: persistentStoreURL as URL, options: options)
+            let persistentStoreCoordinatorParameters = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
+            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: persistentStoreURL as URL, options: persistentStoreCoordinatorParameters)
         } catch {
-            let error = error as NSError
-            print("\(error.localizedDescription)")
+            print(TAG, "An error has occured while configuring Persistent Store Coordinator:", error.localizedDescription)
         }
         return persistentStoreCoordinator
     }()
@@ -75,7 +70,7 @@ class CoreDataStorageSQLite: ProfileStorageManager {
                     userProfileInfo.last?.image = image
                 }
             } catch {
-                print("An error has occured while re-writing profile info:", error.localizedDescription)
+                print(TAG, "An error has occured while re-writing profile info:", error.localizedDescription)
             }
         } else {
             let userProfile = NSEntityDescription.insertNewObject(forEntityName: UserProfile.TAG, into: CoreDataStorageSQLite.privateManagedObjectContext) as? UserProfile
@@ -88,11 +83,10 @@ class CoreDataStorageSQLite: ProfileStorageManager {
             userProfile?.image = image
         }
         
-        
         do {
             try privateManagedObjectContext.save()
         } catch {
-            print("An error has occured while saving data into SQLite:", error.localizedDescription)
+            print(TAG, "An error has occured while saving data into SQLite:", error.localizedDescription)
         }
     }
     
@@ -128,7 +122,7 @@ extension CoreDataStorageSQLite {
             entitiesCount = try CoreDataStorageSQLite.privateManagedObjectContext.count(for: fetchRequest)
         }
         catch {
-            print("error executing fetch request: \(error)")
+            print(TAG, "error executing fetch request:", error.localizedDescription)
         }
         return entitiesCount > 0
     }
