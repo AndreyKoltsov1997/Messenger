@@ -11,6 +11,8 @@ import Foundation
 class ProfileModel {
     public static let TAG = String(describing: ProfileModel.self)
 
+    // MARK: - Properties
+    
     public var name = Constants.DEFAULT_USERNAME {
         didSet(newValue) {
             delegate?.updateName(newValue)
@@ -34,9 +36,12 @@ class ProfileModel {
     
     
     // MARK: - Constructor
+    
     init() {
         self.loadData()
     }
+    
+    // MARK: - Methods
     
     public func loadData() {
         StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in

@@ -212,26 +212,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         loadProfileData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureLayout()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -241,9 +227,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         userDiscriptionField.delegate = self
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
     private func loadProfileData() {
         activityIndicator.startAnimating()
