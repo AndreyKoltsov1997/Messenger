@@ -1,6 +1,6 @@
 version: "Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)"
 options: "832d7ec3349e1d284e5cd5c1397adf13"
-build_time: [1541336817, 138761000]
+build_time: [1541339932, 415021000]
 inputs:
   "/Users/Andrey/Developer/ChatGitHub/Chat/StorageCoreData.swift": [1541336259, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationsListCell.swift": [1539531207, 0]
@@ -17,7 +17,7 @@ inputs:
   "/Users/Andrey/Developer/ChatGitHub/Chat/CommunicationServiceDelegate.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/CodableMessage.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/File System Opetations/FileManager/FileLoader.swift": [1540805253, 0]
-  "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/ProfileModel.swift": [1541336817, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/ProfileModel.swift": [1541339932, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/AppDelegate.swift": [1538425763, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationListViewController/ConversationListViewController.swift": [1541333774, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/File System Opetations/FileManager/FileSaver.swift": [1540805253, 0]
@@ -26,10 +26,10 @@ inputs:
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile+CoreDataClass.swift": [1541323377, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/File System Opetations/Operations/DiscriptionSavingOperation.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ICommunicationService.swift": [1540805253, 0]
-  "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/ProfileViewController.swift": [1541336775, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/ProfileViewController.swift": [1541339914, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile+CoreDataProperties.swift": [1541324722, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/Message.swift": [1540805253, 0]
-  "/Users/Andrey/Developer/ChatGitHub/Chat/File System Opetations/Operations/OperationDataManager.swift": [1541335325, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/File System Opetations/Operations/OperationDataManager.swift": [1541337169, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/Constants.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/Contact.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/CommunicationService.swift": [1540805253, 0]

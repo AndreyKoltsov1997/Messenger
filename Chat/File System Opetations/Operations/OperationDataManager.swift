@@ -22,15 +22,16 @@ class OperationDataManager {
     }()
     
     
-    internal func saveProfile(sender: UIViewController, profile: ProfileModel) {
+    internal func saveProfile(profile: ProfileModel) {
         userNameSavingOperation.userName = profile.name
         discriptionSavingOperation.discription = profile.discripton
         // TODO: Add image here
-      //  imageSavingOperation.image = profile.profilePicture
+        if let image = profile.image as NSData? {
+            imageSavingOperation.image = UIImage(data: image as Data, scale: 1.0)
+        }
         
         let updatingDataOperationComplete = BlockOperation {
-            let distinationViewController = sender as! ProfileViewController
-            //distinationViewController.hasDataChanged = true
+           profile.onFinishSaving()
         }
         
         updatingDataOperationComplete.addDependency(userNameSavingOperation)

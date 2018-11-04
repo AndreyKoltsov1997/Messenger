@@ -32,15 +32,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         return profile
     }
     
-
-    
     
     // MARK: - Outlet methods
     
     @IBAction func onSaveViaOperationsClicked(_ sender: UIButton) {
         if (self.isUserDataUpdated()) {
-            //self.saveViaOperations()
-            self.profile.saveInfo()
+            activityIndicator.startAnimating()
+            self.profile.discripton = userDiscriptionField.text
+            self.profile.name = userNameField.text!
+            self.profile.saveIntoCoreData()
         } else {
             print("Data couldn't be saved with operations.")
         }
@@ -174,9 +174,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     private func saveViaOperations() {
         activityIndicator.startAnimating()
         let operationManager = OperationDataManager()
-        
+        operationManager.saveProfile(profile: profile)
         // TODO: Update profile saving
-//        operationManager.saveProfile(sender: self, profile: self.profileInfo)
     }
     
     private func setButtonInteraction(avaliable isEnabled: Bool) {
@@ -335,6 +334,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.profilePictureImage.image = selectedImage
+            self.profile.image = UIImagePNGRepresentation(selectedImage)
             setButtonInteraction(avaliable: true)
         }
         picker.dismiss(animated: true, completion: nil)
@@ -373,6 +373,7 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     }
     
     func onFinishSaving() {
+        
         self.showActionDoneAlert(message: "Profile info has been saved")
         self.activityIndicator.stopAnimating()
     }

@@ -14,20 +14,20 @@ class ProfileModel {
     // MARK: - Properties
     
     public var name = Constants.DEFAULT_USERNAME {
-        didSet(newValue) {
-            delegate?.updateName(newValue)
+        didSet {
+            delegate?.updateName(self.name)
         }
     }
     public var discripton = Constants.DEFAULT_USER_DISCRIPTION {
-        didSet(newValue) {
-            delegate?.updateDiscription(newValue)
+        didSet {
+            delegate?.updateDiscription(discripton)
         }
     }
     
     public var image: Data? {
-        didSet(newValue) {
-            if let newValue = newValue {
-                delegate?.updateImage(newValue)
+        didSet {
+            if let image = image {
+                delegate?.updateImage(image)
             }
         }
     }
@@ -38,12 +38,12 @@ class ProfileModel {
     // MARK: - Constructor
     
     init() {
-        self.loadData()
+        self.loadFromCoreData()
     }
     
     // MARK: - Methods
     
-    public func loadData() {
+    public func loadFromCoreData() {
         StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
             DispatchQueue.main.async {
                 if let fetchedName = fetchedName {
@@ -65,13 +65,15 @@ class ProfileModel {
         }
     }
     
-    public func saveInfo() {
+    public func saveIntoCoreData() {
+        
         DispatchQueue.main.async {
             if let image = self.image as NSData? {
                 StorageCoreData.saveProfile(self.name, self.discripton, image)
             } else {
                 print(ProfileModel.TAG, "Unable to save profile picture.")
             }
+            self.delegate?.onFinishSaving()
         }
     }
     
@@ -80,6 +82,13 @@ class ProfileModel {
     public func saveViaGCD() {
         let gcdDataManager = GCDDataManager()
         gcdDataManager.saveProfile(sender: self)
+    }
+    
+    // MARK: - Saving via operations methods
+    
+    public func saveViaOperations() {
+        let operationManager = OperationDataManager()
+        operationManager.saveProfile(profile: self)
     }
     
     public func onFinishSaving() {
