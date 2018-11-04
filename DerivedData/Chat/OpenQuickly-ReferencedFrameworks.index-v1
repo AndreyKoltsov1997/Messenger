@@ -6,6 +6,7 @@
 	<string>AVFoundation</string>
 	<string>CoreBluetooth</string>
 	<string>Photos</string>
+	<string>CoreData</string>
 	<string>UIKit</string>
 	<string>Foundation</string>
 </array>

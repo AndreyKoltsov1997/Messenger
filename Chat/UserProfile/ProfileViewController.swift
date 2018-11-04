@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import Photos
+import CoreData
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -60,7 +61,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         didSet (newValue) {
             activityIndicator.stopAnimating()
             self.showActionDoneAlert(message: "Profile info has been updated")
-            
             self.userName = userNameField.text
             self.discription = userDiscriptionField.text
             self.image = profilePictureImage.image
@@ -79,11 +79,20 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
+    
     // MARK: - Outlet methods
     
     @IBAction func onSaveViaOperationsClicked(_ sender: UIButton) {
         if (self.isUserDataUpdated()) {
-            self.saveViaOperations()
+            //self.saveViaOperations()
+            DispatchQueue.main.async {
+                do {
+                    try StorageCoreData.saveProfile(self.userNameField.text, self.userDiscriptionField.text, UIImagePNGRepresentation(self.profilePictureImage.image!) as! NSData)
+                    print("data has been saved")
+                } catch {
+                    print("Unable to save data, reason:", error.localizedDescription)
+                }
+            }
         } else {
             print("Data couldn't be saved with operations.")
         }
@@ -275,6 +284,19 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+            DispatchQueue.main.async {
+                self.userNameField.text = fetchedName
+                self.userDiscriptionField.text = fetchedDiscription
+                if let fetchedImage = fetchedImage as Data? {
+                    self.image = UIImage(data: fetchedImage, scale: 1.0)
+                } else {
+                    print("Couldn't convert binary to image.")
+                }
+            }
+            
+        }
+        print("viewDidLoad")
         setUpLayoutSources()
         userDiscriptionField.delegate = self
     }
@@ -419,4 +441,3 @@ extension ProfileViewController: UITextViewDelegate {
         checkIfSaveIsAvaliable()
     }
 }
-
