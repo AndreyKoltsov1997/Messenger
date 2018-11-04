@@ -148,6 +148,15 @@ class ConversationListViewController: UIViewController {
     
     public func configureProfile(profileInfo: ProfileModel?) {
         // TODO: Update user profile picture here
+        CoreDataStorageSQLite.loadProfile { name, discription, image in
+            DispatchQueue.main.async {
+                if let image = image as Data? {
+                    self.profilePicturePreview.image = UIImage(data: image, scale: 1.0)
+                }
+                
+            }
+            
+        }
     }
     
 }
