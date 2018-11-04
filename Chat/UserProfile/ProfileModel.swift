@@ -12,7 +12,6 @@ class ProfileModel {
     public static let TAG = String(describing: ProfileModel.self)
 
     // MARK: - Properties
-   // private var coreDataSQLiteStorge = CoreDataStorageSQLite()
 
     public var name = Constants.DEFAULT_USERNAME {
         didSet {
@@ -41,6 +40,7 @@ class ProfileModel {
     init() {
         print("init")
         self.loadFromSQLite()
+        // NOTE: To load using Core Data, use:
        // self.loadFromCoreData()
     }
     
@@ -95,18 +95,14 @@ class ProfileModel {
     public func saveIntoCoreData() {
         
         DispatchQueue.main.async {
-            if let image = self.image as NSData? {
-                StorageCoreData.saveProfile(self.name, self.discripton, image)
-            } else {
-                print(ProfileModel.TAG, "Unable to save profile picture.")
-            }
+             StorageCoreData.saveProfile(profile: self)
             self.delegate?.onFinishSaving()
         }
     }
     
     public func saveIntoSQLite() {
         DispatchQueue.main.async {
-            CoreDataStorageSQLite.save(profile: self)
+            CoreDataStorageSQLite.saveProfile(profile: self)
         }
     }
     

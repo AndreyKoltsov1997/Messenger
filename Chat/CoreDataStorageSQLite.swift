@@ -10,9 +10,12 @@ import Foundation
 import CoreData
 import UIKit
 
-class CoreDataStorageSQLite {
+// NOTE: @CoreDataStorageSQLite is used to manage data operations with NSPersistentContainer. It's a single-ton because ...
+// ... I think it's better to have a single instance of a class which is working with core memory.
+
+class CoreDataStorageSQLite: ProfileStorageManager {
     
-    //private init() {}
+    private init() {}
     
     static var privateManagedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
@@ -37,7 +40,7 @@ class CoreDataStorageSQLite {
         return documentDirectoryURL.appendingPathComponent(storeName) as NSURL
     }
     
-     static var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
+    static var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         guard let managedObjectModel = CoreDataStorageSQLite.managedObjectModel else {
             return nil
         }
@@ -45,7 +48,7 @@ class CoreDataStorageSQLite {
         let persistentStoreURL = CoreDataStorageSQLite.persistentStoreURL
         
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-
+        
         do {
             let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
             try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: persistentStoreURL as URL, options: options)
@@ -57,9 +60,7 @@ class CoreDataStorageSQLite {
     }()
     
     
-    
-    
-    static func save(profile: ProfileModel) {
+    static func saveProfile(profile: ProfileModel) {
         
         if (CoreDataStorageSQLite.isEntityExist(withName: UserProfile.TAG)) {
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()

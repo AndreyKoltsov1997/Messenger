@@ -9,7 +9,9 @@
 import Foundation
 import CoreData
 
-class StorageCoreData {
+// NOTE: @StorageCoreData is used to manage data operations with NSPersistentContainer. It's a single-ton because ...
+// ... I think it's better to have a single instance of a class which is working with core memory.
+class StorageCoreData: ProfileStorageManager {
     
     // MARK: - Core Data stack
     
@@ -82,15 +84,19 @@ class StorageCoreData {
         }
     }
     
-    static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
+    static func saveProfile(profile: ProfileModel) {
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             if (StorageCoreData.isEntityExist(withName: UserProfile.TAG)) {
                  let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
                 do {
                     let userProfileInfo = try StorageCoreData.context.fetch(fetchRequest)
-                    userProfileInfo.first?.name = name
-                    userProfileInfo.first?.discription = discription
-                    userProfileInfo.first?.image = image
+                    userProfileInfo.first?.name = profile.name
+                    userProfileInfo.first?.discription = profile.discripton
+                    if let image = profile.image as NSData? {
+                        userProfileInfo.first?.image = image
+                    } else {
+                        print(TAG, "Unable to save image.")
+                    }
                     StorageCoreData.saveContext()
                 } catch {
                     // TODO: Handle error correctly
@@ -99,9 +105,13 @@ class StorageCoreData {
                 return
             }
             let userProfile = UserProfile(context: StorageCoreData.context)
-            userProfile.name = name
-            userProfile.discription = discription
-            userProfile.image = image
+            userProfile.name = profile.name
+            userProfile.discription = profile.discripton
+            if let image = profile.image as NSData? {
+                userProfile.image = image
+            } else {
+                print(TAG, "Unable to save image.")
+            }
             StorageCoreData.saveContext()
             print(StorageCoreData.TAG, "Context has been saved")
         }
