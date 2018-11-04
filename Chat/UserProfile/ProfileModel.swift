@@ -19,6 +19,37 @@ class ProfileModel {
             delegate?.updateDiscription(newValue)
         }
     }
+    
+    public var image: Data? {
+        didSet(newValue) {
+            if let newValue = newValue {
+                delegate?.updateImage(newValue)
+            }
+        }
+    }
         
     weak var delegate: ProfileViewControllerDelegate?
+    
+    init() {
+        
+        StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+            DispatchQueue.main.async {
+                if let fetchedName = fetchedName {
+                    self.name = fetchedName
+                    print("Fetched name", fetchedName)
+                }
+                
+                if let fetchedDiscription = fetchedDiscription {
+                     self.discripton = fetchedDiscription
+                }
+                if let fetchedImage = fetchedImage as Data? {
+                    self.image = fetchedImage
+                } else {
+                    print("Couldn't convert binary to image.")
+                }
+                self.delegate?.finishLoading(self)
+            }
+            
+        }
+    }
 }

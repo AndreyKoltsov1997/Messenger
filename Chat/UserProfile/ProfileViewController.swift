@@ -27,7 +27,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - Properies
     
-    private lazy var profile = ProfileModel()
+    private var profile = ProfileModel()
     public func getProfileModel() -> ProfileModel {
         return profile
     }
@@ -291,18 +291,19 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
-            DispatchQueue.main.async {
-                self.userNameField.text = fetchedName
-                self.userDiscriptionField.text = fetchedDiscription
-                if let fetchedImage = fetchedImage as Data? {
-                    self.profilePictureImage.image = UIImage(data: fetchedImage, scale: 1.0)
-                } else {
-                    print("Couldn't convert binary to image.")
-                }
-            }
-            
-        }
+        self.profile.delegate = self
+//        StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+//            DispatchQueue.main.async {
+//                self.userNameField.text = fetchedName
+//                self.userDiscriptionField.text = fetchedDiscription
+//                if let fetchedImage = fetchedImage as Data? {
+//                    self.profilePictureImage.image = UIImage(data: fetchedImage, scale: 1.0)
+//                } else {
+//                    print("Couldn't convert binary to image.")
+//                }
+//            }
+//            
+//        }
         print("viewDidLoad")
         setUpLayoutSources()
         userDiscriptionField.delegate = self
@@ -441,4 +442,32 @@ extension ProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         checkIfSaveIsAvaliable()
     }
+}
+
+// MARK: - ProfileViewControllerDelegate
+extension ProfileViewController: ProfileViewControllerDelegate {
+    func updateName(_ name: String) {
+        self.userNameField.text = name
+        print("new name:", name)
+    }
+    
+    func updateDiscription(_ discription: String) {
+        self.userDiscriptionField.text = discription
+    }
+    
+    func updateImage(_ image: Data) {
+        self.profilePictureImage.image =  UIImage(data: image, scale: 1.0)
+    }
+    
+    func finishLoading(_ model: ProfileModel) {
+        self.userNameField.text = model.name
+        self.userDiscriptionField.text = model.discripton
+        if let image = model.image {
+            self.profilePictureImage.image = UIImage(data: image, scale: 1.0)
+        }
+        
+        self.activityIndicator.stopAnimating()
+    }
+    
+    
 }
