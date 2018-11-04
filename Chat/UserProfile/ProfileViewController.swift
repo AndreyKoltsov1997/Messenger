@@ -374,7 +374,6 @@ extension ProfileViewController: UITextViewDelegate {
 extension ProfileViewController: ProfileViewControllerDelegate {
     func updateName(_ name: String) {
         self.userNameField.text = name
-        print("new name:", name)
     }
     
     func updateDiscription(_ discription: String) {

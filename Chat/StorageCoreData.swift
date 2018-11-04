@@ -13,7 +13,6 @@ class StorageCoreData {
     
     // MARK: - Properties
     
-    weak var profile: ProfileViewController?
     // MARK: - Core Data stack
     
     public static let TAG = String(describing: StorageCoreData.self)

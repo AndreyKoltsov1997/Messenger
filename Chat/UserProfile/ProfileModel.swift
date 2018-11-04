@@ -32,7 +32,13 @@ class ProfileModel {
         
     weak var delegate: ProfileViewControllerDelegate?
     
+    
+    // MARK: - Constructor
     init() {
+        self.loadData()
+    }
+    
+    public func loadData() {
         StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
             DispatchQueue.main.async {
                 if let fetchedName = fetchedName {
@@ -41,7 +47,7 @@ class ProfileModel {
                 }
                 
                 if let fetchedDiscription = fetchedDiscription {
-                     self.discripton = fetchedDiscription
+                    self.discripton = fetchedDiscription
                 }
                 if let fetchedImage = fetchedImage as Data? {
                     self.image = fetchedImage
