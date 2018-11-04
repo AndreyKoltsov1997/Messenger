@@ -12,4 +12,5 @@ protocol ProfileViewControllerDelegate: class {
     func updateName(_ name: String)
     func updateDiscription(_ discription: String)
     func updateImage(_ image: NSData)
+    func finishLoading(_ model: ProfileModel)
 }

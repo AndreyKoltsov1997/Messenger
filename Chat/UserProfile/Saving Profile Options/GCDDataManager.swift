@@ -11,40 +11,51 @@ import UIKit
 class GCDDataManager {
     
     let concurrentQueue = DispatchQueue(label: "Tinkoff.GCDDataManager.concurrent", attributes: .concurrent)
-    var profileInfo: ProfileInfo?
+    var profileInfo: ProfileModel?
     var hasValueChanged: Bool? = true
+    weak var delegate: ProfileViewControllerDelegate?
     
     public func loadProfile(sender: UIViewController) {
         let group = DispatchGroup()
-        self.profileInfo = ProfileInfo()
+        self.profileInfo = ProfileModel()
         
         group.enter()
         concurrentQueue.async {
-            self.profileInfo?.userName = FileLoader.getText(fileName: FileName.USERNAME_FILENAME.rawValue)
+            if let name = FileLoader.getText(fileName: FileName.USERNAME_FILENAME.rawValue) {
+                self.profileInfo?.name = name
+            }
             group.leave()
         }
         
         group.enter()
         concurrentQueue.async {
-            self.profileInfo?.discription = FileLoader.getText(fileName: FileName.USER_DISCRIPTION_FILENAME.rawValue)
+            if let discription = FileLoader.getText(fileName: FileName.USER_DISCRIPTION_FILENAME.rawValue) {
+                self.profileInfo?.discripton = discription
+            }
+            
             group.leave()
         }
         
         group.enter()
         concurrentQueue.async {
-            self.profileInfo?.profilePicture = FileLoader.getImage(fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue)
+            if let image = FileLoader.getImage(fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue) {
+                // TODO: Update image here
+            }
+            
             group.leave()
         }
         
         group.notify(queue: .main) {
             if let distinationViewController = sender as? ProfileViewController {
                 if let profileInfo = self.profileInfo {
-                    distinationViewController.configureProfile(profileInfo: profileInfo)
+                    self.delegate?.finishLoading(profileInfo)
+//                    distinationViewController.configureProfile(profileInfo: profileInfo)
                 } else {
                     print("User data hasn't changed yet.")
                 }
             } else if let distinationViewController = sender as? ConversationListViewController {
                 if let profileInfo = self.profileInfo {
+                    // TODO: Update user picture @ profileViewController here
                     distinationViewController.configureProfile(profileInfo: profileInfo)
                 } else {
                     print("User data hasn't changed yet.")
@@ -58,15 +69,15 @@ class GCDDataManager {
         let group = DispatchGroup()
         
         if let distinationViewController = sender as? ProfileViewController {
-            profileInfo = distinationViewController.profileInfo
+            profileInfo = distinationViewController.getProfileModel()
         } else {
             print("Data couldn't be saved within requested view controller.")
             return
         }
         
-        let username = profileInfo?.userName
-        let information = profileInfo?.discription
-        let image = profileInfo?.profilePicture
+        let username = profileInfo?.name
+        let information = profileInfo?.discripton
+        //let image = profileInfo?.profilePicture
         
         group.enter()
         concurrentQueue.async {
@@ -86,9 +97,10 @@ class GCDDataManager {
         
         group.enter()
         concurrentQueue.async {
-            if let image = image {
-                self.hasValueChanged = FileSaver.saveImage(image: image, fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue)
-            }
+            // TODO: Save image hre
+//            if let image = image {
+//                self.hasValueChanged = FileSaver.saveImage(image: image, fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue)
+//            }
             group.leave()
         }
         

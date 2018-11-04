@@ -19,6 +19,6 @@ class ProfileModel {
             delegate?.updateDiscription(newValue)
         }
     }
-    
+        
     weak var delegate: ProfileViewControllerDelegate?
 }

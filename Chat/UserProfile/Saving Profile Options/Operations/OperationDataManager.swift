@@ -22,10 +22,11 @@ class OperationDataManager {
     }()
     
     
-    internal func saveProfile(sender: UIViewController, profile: ProfileInfo) {
-        userNameSavingOperation.userName = profile.userName
-        discriptionSavingOperation.discription = profile.discription
-        imageSavingOperation.image = profile.profilePicture
+    internal func saveProfile(sender: UIViewController, profile: ProfileModel) {
+        userNameSavingOperation.userName = profile.name
+        discriptionSavingOperation.discription = profile.discripton
+        // TODO: Add image here
+      //  imageSavingOperation.image = profile.profilePicture
         
         let updatingDataOperationComplete = BlockOperation {
             let distinationViewController = sender as! ProfileViewController

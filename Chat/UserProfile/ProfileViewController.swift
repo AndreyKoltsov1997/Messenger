@@ -27,57 +27,61 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - Properies
     
-    var userName: String? {
-        didSet {
-            if let userName = userName {
-                userNameField.text = userName
-            } else {
-                userNameField.text = Constants.DEFAULT_USERNAME
-            }
-        }
+    private lazy var profile = ProfileModel()
+    public func getProfileModel() -> ProfileModel {
+        return profile
     }
-    
-    var discription: String? {
-        didSet(newValue) {
-            if let discription = discription {
-                userDiscriptionField.text = discription
-            } else {
-                userDiscriptionField.text = Constants.DEFAULT_USER_DISCRIPTION
-            }
-        }
-    }
-    
-    var image: UIImage? {
-        didSet(newValue) {
-            if let image = image {
-                profilePictureImage.image = image
-            } else {
-                profilePictureImage.image =  UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
-            }
-        }
-    }
+//    var userName: String? {
+//        didSet {
+//            if let userName = userName {
+//                userNameField.text = userName
+//            } else {
+//                userNameField.text = Constants.DEFAULT_USERNAME
+//            }
+//        }
+//    }
+//    
+//    var discription: String? {
+//        didSet(newValue) {
+//            if let discription = discription {
+//                userDiscriptionField.text = discription
+//            } else {
+//                userDiscriptionField.text = Constants.DEFAULT_USER_DISCRIPTION
+//            }
+//        }
+//    }
+//    
+//    var image: UIImage? {
+//        didSet(newValue) {
+//            if let image = image {
+//                profilePictureImage.image = image
+//            } else {
+//                profilePictureImage.image =  UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
+//            }
+//        }
+//    }
     
     var hasDataChanged: Bool? {
         didSet (newValue) {
             activityIndicator.stopAnimating()
             self.showActionDoneAlert(message: "Profile info has been updated")
-            self.userName = userNameField.text
-            self.discription = userDiscriptionField.text
-            self.image = profilePictureImage.image
+//            self.userName = userNameField.text
+//            self.discription = userDiscriptionField.text
+//            self.image = profilePictureImage.image
             setButtonInteraction(avaliable: true)
         }
     }
     
-    var profileInfo: ProfileInfo {
-        get {
-            // NOTE: Getting updated user data. If no data has been updated, returns nil
-            var updatedInfo = ProfileInfo()
-            updatedInfo.userName = (userNameField.text != self.userName) ? userNameField.text : nil
-            updatedInfo.discription = (userDiscriptionField.text != self.discription) ? userDiscriptionField.text : nil
-            updatedInfo.profilePicture = (self.profilePictureImage.image != image) ? profilePictureImage.image : nil
-            return updatedInfo
-        }
-    }
+//    var profileInfo: ProfileInfo {
+//        get {
+//            // NOTE: Getting updated user data. If no data has been updated, returns nil
+//            var updatedInfo = ProfileInfo()
+//            updatedInfo.userName = (userNameField.text != self.userName) ? userNameField.text : nil
+//            updatedInfo.discription = (userDiscriptionField.text != self.discription) ? userDiscriptionField.text : nil
+//            updatedInfo.profilePicture = (self.profilePictureImage.image != image) ? profilePictureImage.image : nil
+//            return updatedInfo
+//        }
+//    }
     
     
     // MARK: - Outlet methods
@@ -218,13 +222,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func isUserDataUpdated() -> Bool {
-        return ((self.userNameField.text != userName) || (self.userDiscriptionField.text != discription) || (self.profilePictureImage.image != image))
+        // TODO: check if image has been updated
+        return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton))
     }
     
     private func saveViaOperations() {
         activityIndicator.startAnimating()
         let operationManager = OperationDataManager()
-        operationManager.saveProfile(sender: self, profile: self.profileInfo)
+        
+        // TODO: Update profile saving
+//        operationManager.saveProfile(sender: self, profile: self.profileInfo)
     }
     
     private func setButtonInteraction(avaliable isEnabled: Bool) {
@@ -289,7 +296,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 self.userNameField.text = fetchedName
                 self.userDiscriptionField.text = fetchedDiscription
                 if let fetchedImage = fetchedImage as Data? {
-                    self.image = UIImage(data: fetchedImage, scale: 1.0)
+                    self.profilePictureImage.image = UIImage(data: fetchedImage, scale: 1.0)
                 } else {
                     print("Couldn't convert binary to image.")
                 }
@@ -315,12 +322,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-    public func configureProfile(profileInfo: ProfileInfo?) {
-        self.userName = profileInfo?.userName
-        self.discription = profileInfo?.discription
-        self.image = profileInfo?.profilePicture
-        activityIndicator.stopAnimating()
-    }
+//    public func configureProfile(profileInfo: ProfileInfo?) {
+////        self.userName = profileInfo?.userName
+////        self.discription = profileInfo?.discription
+////        self.image = profileInfo?.profilePicture
+//        activityIndicator.stopAnimating()
+//    }
     
     // when we recive a touch event, we can do something
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -332,22 +339,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     private func setUpLayoutSources() {
         // NOTE: Here I'm setting up initial values for sources that could be changed in a runtime
         
-        // profilePictureImage sources
-        profilePictureImage.image = self.image
-        
         // userNameLabel sources
-        userName = Constants.DEFAULT_USERNAME
-        userNameField.text = userName
+        userNameField.text = self.profile.name
         
         // userDiscriptionLabel sources
-        discription = Constants.DEFAULT_USER_DISCRIPTION
-        userDiscriptionField.text = discription
+        userDiscriptionField.text = self.profile.discripton
         userDiscriptionField.textColor = Constants.USER_DISCRIPTION_TEXT_DEFAULT_COLOR
         userDiscriptionField.textAlignment = .justified
         
         // userProfilePicture sources
-        image = UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
-        profilePictureImage.image = image
+        profilePictureImage.image = UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
         
         
         // sendViaGCDbutton sources

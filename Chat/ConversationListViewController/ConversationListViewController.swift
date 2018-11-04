@@ -146,8 +146,8 @@ class ConversationListViewController: UIViewController {
         return nil
     }
     
-    public func configureProfile(profileInfo: ProfileInfo?) {
-        self.image = profileInfo?.profilePicture
+    public func configureProfile(profileInfo: ProfileModel?) {
+        // TODO: Update user profile picture here
     }
     
 }
