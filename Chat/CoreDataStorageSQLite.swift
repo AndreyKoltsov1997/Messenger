@@ -15,6 +15,7 @@ import UIKit
 
 class CoreDataStorageSQLite: ProfileStorageManager {    
     
+    // NOTE: Constructor is private in order to confirm to Singleton pattern
     private init() {}
     
     static var privateManagedObjectContext: NSManagedObjectContext = {
@@ -61,7 +62,6 @@ class CoreDataStorageSQLite: ProfileStorageManager {
     
     
     static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
-        
         if (CoreDataStorageSQLite.isEntityExist(withName: UserProfile.TAG)) {
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
             do {

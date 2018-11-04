@@ -20,9 +20,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var profilePictureImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var dismissButton: UIButton!
-    @IBOutlet weak var sendViaGCDbutton: UIButton!
-    @IBOutlet weak var sendViaOperationsButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - Properies
     
@@ -179,15 +178,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func setButtonInteraction(avaliable isEnabled: Bool) {
-        sendViaOperationsButton.isEnabled = isEnabled
-        sendViaGCDbutton.isEnabled = isEnabled
+        saveButton.isEnabled = isEnabled
         
         if (isEnabled) {
-            sendViaGCDbutton.backgroundColor = .white
-            sendViaOperationsButton.backgroundColor = .white
+            saveButton.backgroundColor = .white
         } else {
-            sendViaGCDbutton.backgroundColor = .lightGray
-            sendViaOperationsButton.backgroundColor = .lightGray
+            saveButton.backgroundColor = .lightGray
         }
     }
     
@@ -255,15 +251,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         profilePictureImage.image = UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
         
         
-        // sendViaGCDbutton sources
-        sendViaGCDbutton.backgroundColor = .white
-        sendViaGCDbutton.layer.borderColor = UIColor.black.cgColor
-        sendViaGCDbutton.setTitleColor(UIColor.black, for: .normal)
+        // saveButton sources
+        saveButton.backgroundColor = .white
+        saveButton.layer.borderColor = UIColor.black.cgColor
+        saveButton.setTitleColor(UIColor.black, for: .normal)
         
-        // sendViaOperationsButton sources
-        sendViaOperationsButton.backgroundColor = .white
-        sendViaOperationsButton.layer.borderColor = UIColor.black.cgColor
-        sendViaOperationsButton.setTitleColor(UIColor.black, for: .normal)
         
     }
     
@@ -305,15 +297,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         userDiscriptionField.font = UIFont.systemFont(ofSize: userDiscriptionFontSize, weight: .regular)
         
         
-        // NOTE: configuring sendViaOperationsButton
-        sendViaOperationsButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
-        sendViaOperationsButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
-        sendViaOperationsButton.titleLabel?.font = sendViaOperationsButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
-        
-        // NOTE: configuring sendViaGCDbutton
-        sendViaGCDbutton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
-        sendViaGCDbutton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
-        sendViaGCDbutton.titleLabel?.font = sendViaGCDbutton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
+        // NOTE: configuring saveButton
+        saveButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
+        saveButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
+        saveButton.titleLabel?.font = saveButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
+        saveButton.titleLabel?.text = Constants.SAVE_BUTTON_TITLE
         
         // NOTE: DO NOT set default's avaliability to false, because when the page reloads, it re-configures the buttons.
         
@@ -368,12 +356,10 @@ extension ProfileViewController: ProfileViewControllerDelegate {
         if let image = model.image {
             self.profilePictureImage.image = UIImage(data: image, scale: 1.0)
         }
-        self.showActionDoneAlert(message: "Profile info has been updated")
         self.activityIndicator.stopAnimating()
     }
     
     func onFinishSaving() {
-        
         self.showActionDoneAlert(message: "Profile info has been saved")
         self.activityIndicator.stopAnimating()
     }

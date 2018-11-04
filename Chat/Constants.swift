@@ -13,7 +13,8 @@ struct Constants {
     
     // MARK: - Data related constants
     static let PROFILE_MODEL_TAG = "ProfileModel"
-    // MARK: UI constants
+    
+    // MARK: - UI constants
     
     static let PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME = "profile-vc-userpic-placeholder"
     static let PROFILE_VC_BLUE_COLOR = UIColor(red:0.25, green:0.47, blue:0.94, alpha:1.0)
@@ -30,6 +31,7 @@ struct Constants {
     static let OFFLINE_USERS_SECTION_HEADER = "History"
     
     static let EMPTY_MESSAGE_HISTORY_TAG = "No messages yet..."
+    static let SAVE_BUTTON_TITLE = "Save"
     
     // NOTE: There's 2 formats of displaying date possible:
     // ... 1. Message has been recived within the current day => hours and minutes would be displayed; (@param MESSAGE_RECIVED_TODAY_DATE_FORMAT)

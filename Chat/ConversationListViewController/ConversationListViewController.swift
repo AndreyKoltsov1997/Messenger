@@ -57,8 +57,10 @@ class ConversationListViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadUserPic()
     }
+    
     
     private func configureCommunicationService() {
         communicationService.delegate = self
@@ -153,12 +155,9 @@ class ConversationListViewController: UIViewController {
                 if let image = image as Data? {
                     self.profilePicturePreview.image = UIImage(data: image, scale: 1.0)
                 }
-                
             }
-            
         }
     }
-    
 }
 
 // MARK: - UITableViewDelegate

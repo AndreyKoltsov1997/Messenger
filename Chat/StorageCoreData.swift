@@ -17,6 +17,7 @@ class StorageCoreData: ProfileStorageManager {
     
     public static let TAG = String(describing: StorageCoreData.self)
 
+    // NOTE: Constructor is private in order to confirm to Singleton pattern
     private init() {}
     
     static var context: NSManagedObjectContext {

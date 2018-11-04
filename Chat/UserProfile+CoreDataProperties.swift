@@ -21,5 +21,4 @@ extension UserProfile {
     @NSManaged public var name: String?
     @NSManaged public var discription: String?
     @NSManaged public var image: NSData?
-
 }

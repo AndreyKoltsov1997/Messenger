@@ -44,7 +44,7 @@
                                 </connections>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="252" text="N/A" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Hf1-gV-Paa" userLabel="UserDiscription">
-                                <rect key="frame" x="10" y="373" width="300" height="100"/>
+                                <rect key="frame" x="10" y="373" width="300" height="90"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -58,29 +58,16 @@
                                     <action selector="dismissBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TXU-bA-8H5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yek-vT-xCj">
-                                <rect key="frame" x="20" y="483" width="33" height="30"/>
-                                <state key="normal" title="GCD"/>
-                                <connections>
-                                    <action selector="onSaveViaGCDclicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E4O-NF-EUe"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z0Y-xG-jlW">
-                                <rect key="frame" x="224" y="483" width="76" height="30"/>
-                                <state key="normal" title="Operations"/>
-                                <connections>
-                                    <action selector="onSaveViaOperationsClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mk2-Vc-9nb"/>
-                                </connections>
-                            </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iFZ-cS-e8b">
                                 <rect key="frame" x="150" y="274" width="20" height="20"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sUM-yc-c4t">
+                                <rect key="frame" x="20" y="468" width="280" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="z0Y-xG-jlW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Yek-vT-xCj" secondAttribute="trailing" constant="20" id="2x8-4u-gLU"/>
-                            <constraint firstItem="Yek-vT-xCj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="3cZ-Lj-hVu"/>
-                            <constraint firstItem="bj8-cK-0iG" firstAttribute="top" secondItem="z0Y-xG-jlW" secondAttribute="bottom" constant="5" id="420-iQ-VnX"/>
                             <constraint firstItem="Hf1-gV-Paa" firstAttribute="top" secondItem="pK3-rj-UkK" secondAttribute="bottom" constant="8" symbolic="YES" id="4dd-JN-a2x"/>
                             <constraint firstItem="nOh-ET-JOx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="54S-2v-Uvv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Hf1-gV-Paa" secondAttribute="trailing" constant="10" id="7ce-30-4R3"/>
@@ -91,14 +78,15 @@
                             <constraint firstItem="pK3-rj-UkK" firstAttribute="top" secondItem="nOh-ET-JOx" secondAttribute="bottom" constant="15" id="JrG-Il-opH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bj8-cK-0iG" secondAttribute="bottom" constant="20" id="Maa-qt-fAc"/>
                             <constraint firstItem="iFZ-cS-e8b" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="PDJ-SR-A26"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="z0Y-xG-jlW" secondAttribute="trailing" constant="20" id="VxG-FC-0dl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sUM-yc-c4t" secondAttribute="trailing" constant="20" id="T3M-wB-FWn"/>
+                            <constraint firstItem="bj8-cK-0iG" firstAttribute="top" secondItem="sUM-yc-c4t" secondAttribute="bottom" constant="20" id="TWz-Uc-2m3"/>
                             <constraint firstItem="iFZ-cS-e8b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a4B-ee-RWG"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="height" secondItem="nOh-ET-JOx" secondAttribute="height" multiplier="0.2" id="cXH-lD-wUk"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="width" secondItem="nOh-ET-JOx" secondAttribute="width" multiplier="0.2" id="j9x-1Y-ZcN"/>
                             <constraint firstItem="Hf1-gV-Paa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="ku5-r3-56U"/>
-                            <constraint firstItem="Yek-vT-xCj" firstAttribute="top" secondItem="Hf1-gV-Paa" secondAttribute="bottom" constant="10" id="mme-bO-BzG"/>
+                            <constraint firstItem="sUM-yc-c4t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ltD-jw-uo8"/>
                             <constraint firstItem="UIo-W8-LaN" firstAttribute="bottom" secondItem="nOh-ET-JOx" secondAttribute="bottom" id="n6R-ip-ORf"/>
-                            <constraint firstItem="bj8-cK-0iG" firstAttribute="top" secondItem="Yek-vT-xCj" secondAttribute="bottom" constant="5" id="qzB-v8-fLJ"/>
+                            <constraint firstItem="sUM-yc-c4t" firstAttribute="top" secondItem="Hf1-gV-Paa" secondAttribute="bottom" constant="5" id="pBe-FF-XlN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nOh-ET-JOx" secondAttribute="trailing" constant="20" id="r9y-ug-o7S"/>
                             <constraint firstItem="pK3-rj-UkK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="tGO-pQ-LN0"/>
                             <constraint firstItem="bj8-cK-0iG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="xss-gP-RkY"/>
@@ -110,8 +98,7 @@
                         <outlet property="chooseImageButton" destination="UIo-W8-LaN" id="b0R-GB-axt"/>
                         <outlet property="dismissButton" destination="bj8-cK-0iG" id="Lhy-wt-rUV"/>
                         <outlet property="profilePictureImage" destination="nOh-ET-JOx" id="09t-Nq-qg3"/>
-                        <outlet property="sendViaGCDbutton" destination="Yek-vT-xCj" id="nJL-PL-eba"/>
-                        <outlet property="sendViaOperationsButton" destination="z0Y-xG-jlW" id="ofJ-Ck-MRA"/>
+                        <outlet property="saveButton" destination="sUM-yc-c4t" id="vTP-O8-Xap"/>
                         <outlet property="userDiscriptionField" destination="Hf1-gV-Paa" id="rvO-LU-zKV"/>
                         <outlet property="userNameField" destination="pK3-rj-UkK" id="Ug3-Su-wBV"/>
                     </connections>
