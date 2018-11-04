@@ -12,8 +12,15 @@ import UIKit
 
 class CoreDataStorageSQLite {
     
+    //private init() {}
     
-    private lazy var managedObjectModel: NSManagedObjectModel? = {
+    static var privateManagedObjectContext: NSManagedObjectContext = {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = CoreDataStorageSQLite.persistentStoreCoordinator
+        return managedObjectContext
+    }()
+    
+    static var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = Bundle.main.url(forResource: "ProfileModel", withExtension: "momd") else {
             return nil
         }
@@ -22,7 +29,7 @@ class CoreDataStorageSQLite {
         return managedObjectModel
     }()
     
-    private var persistentStoreURL: NSURL {
+    static var persistentStoreURL: NSURL {
         let storeName = "ProfileModel.sqlite"
         let fileManager = FileManager.default
         let documentDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -30,12 +37,12 @@ class CoreDataStorageSQLite {
         return documentDirectoryURL.appendingPathComponent(storeName) as NSURL
     }
     
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
-        guard let managedObjectModel = self.managedObjectModel else {
+     static var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
+        guard let managedObjectModel = CoreDataStorageSQLite.managedObjectModel else {
             return nil
         }
         
-        let persistentStoreURL = self.persistentStoreURL
+        let persistentStoreURL = CoreDataStorageSQLite.persistentStoreURL
         
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
 
@@ -49,20 +56,15 @@ class CoreDataStorageSQLite {
         return persistentStoreCoordinator
     }()
     
-    private lazy var privateManagedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
-        return managedObjectContext
-    }()
     
     
     
-    func save(profile: ProfileModel) {
+    static func save(profile: ProfileModel) {
         
-        if (self.isEntityExist(withName: UserProfile.TAG)) {
+        if (CoreDataStorageSQLite.isEntityExist(withName: UserProfile.TAG)) {
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
             do {
-                let userProfileInfo = try self.privateManagedObjectContext.fetch(fetchRequest)
+                let userProfileInfo = try CoreDataStorageSQLite.privateManagedObjectContext.fetch(fetchRequest)
                 if !userProfileInfo.isEmpty {
                     userProfileInfo.last?.name = profile.name
                     userProfileInfo.last?.discription = profile.discripton
@@ -75,7 +77,7 @@ class CoreDataStorageSQLite {
                 print("An error has occured while re-writing profile info:", error.localizedDescription)
             }
         } else {
-            let userProfile = NSEntityDescription.insertNewObject(forEntityName: UserProfile.TAG, into: self.privateManagedObjectContext) as? UserProfile
+            let userProfile = NSEntityDescription.insertNewObject(forEntityName: UserProfile.TAG, into: CoreDataStorageSQLite.privateManagedObjectContext) as? UserProfile
             userProfile?.name = profile.name
             userProfile?.discription = profile.discripton
             guard let image = profile.image as NSData? else {
@@ -93,12 +95,12 @@ class CoreDataStorageSQLite {
         }
     }
     
-    func loadProfile(completion: @escaping (_ name: String?, _ discription: String?, _ image: NSData?) -> Void) {
+    static func loadProfile(completion: @escaping (_ name: String?, _ discription: String?, _ image: NSData?) -> Void) {
         
         DispatchQueue.main.async {
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
             do {
-                let userProfileInfo = try self.privateManagedObjectContext.fetch(fetchRequest)
+                let userProfileInfo = try CoreDataStorageSQLite.privateManagedObjectContext.fetch(fetchRequest)
                 if !userProfileInfo.isEmpty {
                     let userName = userProfileInfo.last?.name
                     let userDiscription = userProfileInfo.last?.discription
@@ -117,12 +119,12 @@ class CoreDataStorageSQLite {
 }
 
 extension CoreDataStorageSQLite {
-    func isEntityExist(withName name: String) -> Bool {
+    static func isEntityExist(withName name: String) -> Bool {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
         fetchRequest.includesSubentities = false
         var entitiesCount = 0
         do {
-            entitiesCount = try self.privateManagedObjectContext.count(for: fetchRequest)
+            entitiesCount = try CoreDataStorageSQLite.privateManagedObjectContext.count(for: fetchRequest)
         }
         catch {
             print("error executing fetch request: \(error)")

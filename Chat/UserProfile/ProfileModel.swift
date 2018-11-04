@@ -12,7 +12,7 @@ class ProfileModel {
     public static let TAG = String(describing: ProfileModel.self)
 
     // MARK: - Properties
-    private var coreDataSQLiteStorge = CoreDataStorageSQLite()
+   // private var coreDataSQLiteStorge = CoreDataStorageSQLite()
 
     public var name = Constants.DEFAULT_USERNAME {
         didSet {
@@ -70,7 +70,7 @@ class ProfileModel {
     
     public func loadFromSQLite() {
         DispatchQueue.main.async {
-             self.coreDataSQLiteStorge.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+             CoreDataStorageSQLite.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
                 DispatchQueue.main.async {
                     if let fetchedName = fetchedName {
                         self.name = fetchedName
@@ -106,7 +106,7 @@ class ProfileModel {
     
     public func saveIntoSQLite() {
         DispatchQueue.main.async {
-            self.coreDataSQLiteStorge.save(profile: self)
+            CoreDataStorageSQLite.save(profile: self)
         }
     }
     
