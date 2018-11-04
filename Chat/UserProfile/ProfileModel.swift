@@ -10,9 +10,9 @@ import Foundation
 
 class ProfileModel {
     public static let TAG = String(describing: ProfileModel.self)
-
+    
     // MARK: - Properties
-
+    
     public var name = Constants.DEFAULT_USERNAME {
         didSet {
             delegate?.updateName(self.name)
@@ -31,17 +31,16 @@ class ProfileModel {
             }
         }
     }
-        
+    
     weak var delegate: ProfileViewControllerDelegate?
     
     
     // MARK: - Constructor
     
     init() {
-        print("init")
         self.loadFromSQLite()
         // NOTE: To load using Core Data, use:
-       // self.loadFromCoreData()
+        // self.loadFromCoreData()
     }
     
     // MARK: - Methods
@@ -69,7 +68,7 @@ class ProfileModel {
     
     public func loadFromSQLite() {
         DispatchQueue.main.async {
-             CoreDataStorageSQLite.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+            CoreDataStorageSQLite.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
                 DispatchQueue.main.async {
                     if let fetchedName = fetchedName {
                         self.name = fetchedName
@@ -88,14 +87,14 @@ class ProfileModel {
             }
         }
     }
-
+    
     public func saveIntoCoreData() {
         DispatchQueue.main.async {
             if let image = self.image as NSData? {
                 StorageCoreData.saveProfile(self.name, self.discripton, image)
             } else {
                 StorageCoreData.saveProfile(self.name, self.discripton, nil)
-
+                
             }
             self.delegate?.onFinishSaving()
         }

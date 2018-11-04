@@ -13,7 +13,7 @@ struct Constants {
     
     // MARK: - Data related constants
     static let PROFILE_MODEL_TAG = "ProfileModel"
-    
+
     // MARK: - UI constants
     
     static let PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME = "profile-vc-userpic-placeholder"
@@ -32,7 +32,8 @@ struct Constants {
     
     static let EMPTY_MESSAGE_HISTORY_TAG = "No messages yet..."
     static let SAVE_BUTTON_TITLE = "Save"
-    
+    static let DISMISS_BUTTON_TITLE = "Dismiss"
+
     // NOTE: There's 2 formats of displaying date possible:
     // ... 1. Message has been recived within the current day => hours and minutes would be displayed; (@param MESSAGE_RECIVED_TODAY_DATE_FORMAT)
     // ... 2. Message was has been recived in other day => date and month would be dispalyed; (@Param MESSAGE_RECIVED_IN_THE_PAST_DATE_FORMAT)
@@ -40,31 +41,31 @@ struct Constants {
     static let MESSAGE_RECIVED_IN_THE_PAST_DATE_FORMAT = "dd MMM"
     static let DATE_FORMAT_DEFAULT_LOCALE = Locale(identifier: "RU_ru")
     
-    // Options for profile picture choosing
+    // MARK: -  Options for profile picture choosing
     static let OPTION_TAKE_PHOTO_DEFAULT_TITLE = "Take photo"
     static let OPTION_OPEN_LIBRARY_DEFAULT_TITLE = "Choose from library"
     
-    // Default user info
+    // MARK: - Default user info
     static let DEFAULT_USERNAME = "Andrey Koltsov"
     static let DEFAULT_USER_DISCRIPTION = "Love iOS Development, burritos, math, himself and autumn."
     
-    // UIAlertAction actions and titles
+    // MARK: - UIAlertAction actions and titles
     static let OPTION_DISMISS_FEAULT_TITLE = "Dismiss"
     static let OPTION_OPEN_SETTINGS_DEFAULT_TITLE = "Open settings"
     static let ALERT_RESOURCE_NOT_AVALIABLE_DEFAULT_TITLE = "Resource not avaliable"
     
-    // MARK: Application states
+    // MARK: -  Application states
     static let APP_NON_RUNNING_STATE_TAG = "'Non running'"
     static let APP_INACTIVE_STATE_TAG = "'Inactive'"
     static let APP_ACTIVE_STATE_TAG = "'Active'"
     static let BACKGROUND_STATE_TAG = "'Background'"
-    // NOTE: @SUSPENDED_STATE_TAG is some sort of Background execution. Out app is going to be suspended ...
+    // MARK: -  @SUSPENDED_STATE_TAG is some sort of Background execution. Out app is going to be suspended ...
     //     ... because no code is being executed.
     static let SUSPENDED_STATE_TAG = "'Suspended'"
-    // NOTE: if app keeps being in some state, the STATE_REMAINS_ADDITIONAL_TAG is going to be added into the tag
+    // MARK: - if app keeps being in some state, the STATE_REMAINS_ADDITIONAL_TAG is going to be added into the tag
     static let STATE_REMAINS_ADDITIONAL_TAG = "(transition not completed yet)"
     
-    // MARK: Other constants
+    // MARK: - Other constants
     static let CHOOSE_IMAGE_BTN_PRESSED_LOG = "Выбери изображение профиля"
     static let DOCUMENT_DIRECTORY_PATH = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
 

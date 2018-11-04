@@ -250,6 +250,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         saveButton.setTitleColor(UIColor.black, for: .normal)
         
         
+        
     }
     
     private func configureLayout() {
@@ -299,11 +300,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // NOTE: DO NOT set default's avaliability to false, because when the page reloads, it re-configures the buttons.
         
         checkIfSaveIsAvaliable()
-        // NOTE: configuring dismissButton
         
+        // NOTE: configuring dismissButton
         dismissButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
         dismissButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
         dismissButton.titleLabel?.font = dismissButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
+        dismissButton.titleLabel?.text = Constants.DISMISS_BUTTON_TITLE
     }
     
     
