@@ -30,7 +30,7 @@ class OperationDataManager {
         
         let updatingDataOperationComplete = BlockOperation {
             let distinationViewController = sender as! ProfileViewController
-            distinationViewController.hasDataChanged = true
+            //distinationViewController.hasDataChanged = true
         }
         
         updatingDataOperationComplete.addDependency(userNameSavingOperation)

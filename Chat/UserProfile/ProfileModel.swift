@@ -9,6 +9,8 @@
 import Foundation
 
 class ProfileModel {
+    public static let TAG = String(describing: ProfileModel.self)
+
     public var name = Constants.DEFAULT_USERNAME {
         didSet(newValue) {
             delegate?.updateName(newValue)
@@ -31,12 +33,11 @@ class ProfileModel {
     weak var delegate: ProfileViewControllerDelegate?
     
     init() {
-        
         StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
             DispatchQueue.main.async {
                 if let fetchedName = fetchedName {
                     self.name = fetchedName
-                    print("Fetched name", fetchedName)
+                    print(ProfileModel.TAG, "Fetched name", fetchedName)
                 }
                 
                 if let fetchedDiscription = fetchedDiscription {
@@ -45,11 +46,21 @@ class ProfileModel {
                 if let fetchedImage = fetchedImage as Data? {
                     self.image = fetchedImage
                 } else {
-                    print("Couldn't convert binary to image.")
+                    print(ProfileModel.TAG, "Couldn't convert binary to image.")
                 }
                 self.delegate?.finishLoading(self)
             }
             
+        }
+    }
+    
+    public func saveInfo() {
+        DispatchQueue.main.async {
+            if let image = self.image as NSData? {
+                StorageCoreData.saveProfile(self.name, self.discripton, image)
+            } else {
+                print(ProfileModel.TAG, "Unable to save profile picture.")
+            }
         }
     }
 }

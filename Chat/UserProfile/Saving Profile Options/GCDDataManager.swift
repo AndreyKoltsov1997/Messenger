@@ -106,7 +106,7 @@ class GCDDataManager {
         
         group.notify(queue: .main) {
             let distinationViewController = sender as! ProfileViewController
-            distinationViewController.hasDataChanged = self.hasValueChanged
+            //distinationViewController.hasDataChanged = self.hasValueChanged
             
         }
     }

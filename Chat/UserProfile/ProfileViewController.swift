@@ -31,57 +31,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     public func getProfileModel() -> ProfileModel {
         return profile
     }
-//    var userName: String? {
-//        didSet {
-//            if let userName = userName {
-//                userNameField.text = userName
-//            } else {
-//                userNameField.text = Constants.DEFAULT_USERNAME
-//            }
-//        }
-//    }
-//    
-//    var discription: String? {
-//        didSet(newValue) {
-//            if let discription = discription {
-//                userDiscriptionField.text = discription
-//            } else {
-//                userDiscriptionField.text = Constants.DEFAULT_USER_DISCRIPTION
-//            }
-//        }
-//    }
-//    
-//    var image: UIImage? {
-//        didSet(newValue) {
-//            if let image = image {
-//                profilePictureImage.image = image
-//            } else {
-//                profilePictureImage.image =  UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
-//            }
-//        }
-//    }
     
-    var hasDataChanged: Bool? {
-        didSet (newValue) {
-            activityIndicator.stopAnimating()
-            self.showActionDoneAlert(message: "Profile info has been updated")
-//            self.userName = userNameField.text
-//            self.discription = userDiscriptionField.text
-//            self.image = profilePictureImage.image
-            setButtonInteraction(avaliable: true)
-        }
-    }
-    
-//    var profileInfo: ProfileInfo {
-//        get {
-//            // NOTE: Getting updated user data. If no data has been updated, returns nil
-//            var updatedInfo = ProfileInfo()
-//            updatedInfo.userName = (userNameField.text != self.userName) ? userNameField.text : nil
-//            updatedInfo.discription = (userDiscriptionField.text != self.discription) ? userDiscriptionField.text : nil
-//            updatedInfo.profilePicture = (self.profilePictureImage.image != image) ? profilePictureImage.image : nil
-//            return updatedInfo
-//        }
-//    }
+
     
     
     // MARK: - Outlet methods
@@ -89,14 +40,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func onSaveViaOperationsClicked(_ sender: UIButton) {
         if (self.isUserDataUpdated()) {
             //self.saveViaOperations()
-            DispatchQueue.main.async {
-                do {
-                    try StorageCoreData.saveProfile(self.userNameField.text, self.userDiscriptionField.text, UIImagePNGRepresentation(self.profilePictureImage.image!) as! NSData)
-                    print("data has been saved")
-                } catch {
-                    print("Unable to save data, reason:", error.localizedDescription)
-                }
-            }
+            self.profile.saveInfo()
         } else {
             print("Data couldn't be saved with operations.")
         }
@@ -252,7 +196,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         gcdDataManager.saveProfile(sender: self)
     }
     
-    // MARK: ProfileViewController lifecycle
+    // MARK: - ProfileViewController lifecycle
     
     @IBAction func userNameDidChange(_ sender: Any) {
         checkIfSaveIsAvaliable()
@@ -292,18 +236,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.profile.delegate = self
-//        StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
-//            DispatchQueue.main.async {
-//                self.userNameField.text = fetchedName
-//                self.userDiscriptionField.text = fetchedDiscription
-//                if let fetchedImage = fetchedImage as Data? {
-//                    self.profilePictureImage.image = UIImage(data: fetchedImage, scale: 1.0)
-//                } else {
-//                    print("Couldn't convert binary to image.")
-//                }
-//            }
-//            
-//        }
         print("viewDidLoad")
         setUpLayoutSources()
         userDiscriptionField.delegate = self
@@ -323,12 +255,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-//    public func configureProfile(profileInfo: ProfileInfo?) {
-////        self.userName = profileInfo?.userName
-////        self.discription = profileInfo?.discription
-////        self.image = profileInfo?.profilePicture
-//        activityIndicator.stopAnimating()
-//    }
     
     // when we recive a touch event, we can do something
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -465,7 +391,7 @@ extension ProfileViewController: ProfileViewControllerDelegate {
         if let image = model.image {
             self.profilePictureImage.image = UIImage(data: image, scale: 1.0)
         }
-        
+        self.showActionDoneAlert(message: "Profile info has been updated")
         self.activityIndicator.stopAnimating()
     }
     
