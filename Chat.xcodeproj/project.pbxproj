@@ -38,6 +38,8 @@
 		55D2AED2218EF1F200625FFB /* UserProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2AED0218EF1F200625FFB /* UserProfile+CoreDataClass.swift */; };
 		55D2AED3218EF1F200625FFB /* UserProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2AED1218EF1F200625FFB /* UserProfile+CoreDataProperties.swift */; };
 		55D2AED5218EF25B00625FFB /* StorageCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2AED4218EF25B00625FFB /* StorageCoreData.swift */; };
+		55D2AED7218F04ED00625FFB /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2AED6218F04ED00625FFB /* ProfileModel.swift */; };
+		55D2AED9218F14CF00625FFB /* ProvileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2AED8218F14CF00625FFB /* ProvileViewControllerDelegate.swift */; };
 		55E23626216A30230040E4DB /* ConversationCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E23625216A30230040E4DB /* ConversationCellConfiguration.swift */; };
 		55E2362A216A387B0040E4DB /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E23629216A387B0040E4DB /* Message.swift */; };
 		55E2362C216A38CE0040E4DB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E2362B216A38CE0040E4DB /* Contact.swift */; };
@@ -83,6 +85,8 @@
 		55D2AED0218EF1F200625FFB /* UserProfile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		55D2AED1218EF1F200625FFB /* UserProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		55D2AED4218EF25B00625FFB /* StorageCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCoreData.swift; sourceTree = "<group>"; };
+		55D2AED6218F04ED00625FFB /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		55D2AED8218F14CF00625FFB /* ProvileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvileViewControllerDelegate.swift; sourceTree = "<group>"; };
 		55E23625216A30230040E4DB /* ConversationCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellConfiguration.swift; sourceTree = "<group>"; };
 		55E23629216A387B0040E4DB /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		55E2362B216A38CE0040E4DB /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
@@ -203,6 +207,8 @@
 				55A6D221217CDDAE00B9A135 /* Saving Profile Options */,
 				5509958A2157955600D377E5 /* Main.storyboard */,
 				558252532160224800AA3FD0 /* ProfileViewController.swift */,
+				55D2AED8218F14CF00625FFB /* ProvileViewControllerDelegate.swift */,
+				55D2AED6218F04ED00625FFB /* ProfileModel.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -349,12 +355,14 @@
 				55E23626216A30230040E4DB /* ConversationCellConfiguration.swift in Sources */,
 				553A880C217D1868004B8EC6 /* ProfileInfo.swift in Sources */,
 				55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */,
+				55D2AED9218F14CF00625FFB /* ProvileViewControllerDelegate.swift in Sources */,
 				5539672721862E6600AA4D05 /* ConversationListViewControllerDelegate.swift in Sources */,
 				55A6D237217CF21D00B9A135 /* UserNameSavingOperation.swift in Sources */,
 				553967222184BB3E00AA4D05 /* Peer.swift in Sources */,
 				5539671F2184BADA00AA4D05 /* CommunicationServiceDelegate.swift in Sources */,
 				5539672921863A7300AA4D05 /* CodableMessage.swift in Sources */,
 				553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */,
+				55D2AED7218F04ED00625FFB /* ProfileModel.swift in Sources */,
 				550995872157955600D377E5 /* AppDelegate.swift in Sources */,
 				552810A2216529ED001A304A /* ConversationListViewController.swift in Sources */,
 				553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */,

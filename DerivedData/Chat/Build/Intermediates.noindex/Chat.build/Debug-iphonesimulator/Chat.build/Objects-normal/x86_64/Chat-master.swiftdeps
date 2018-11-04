@@ -1,6 +1,6 @@
 version: "Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)"
 options: "832d7ec3349e1d284e5cd5c1397adf13"
-build_time: [1541327631, 713378000]
+build_time: [1541332449, 514350000]
 inputs:
   "/Users/Andrey/Developer/ChatGitHub/Chat/StorageCoreData.swift": [1541327631, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationsListCell.swift": [1539531207, 0]
@@ -11,12 +11,14 @@ inputs:
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationCellConfiguration.swift": [1539531207, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/Saving Profile Options/ProfileInfo.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationViewController/ConversationViewController.swift": [1540805253, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/ProvileViewControllerDelegate.swift": [1541332438, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationListViewController/ConversationListViewControllerDelegate.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/Saving Profile Options/Operations/UserNameSavingOperation.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/Peer.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/CommunicationServiceDelegate.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/CodableMessage.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/Saving Profile Options/FileManager/FileLoader.swift": [1540805253, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/ProfileModel.swift": [1541332449, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/AppDelegate.swift": [1538425763, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ConversationListViewController/ConversationListViewController.swift": [1541277709, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/Saving Profile Options/FileManager/FileSaver.swift": [1540805253, 0]
@@ -25,7 +27,7 @@ inputs:
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile+CoreDataClass.swift": [1541323377, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/Saving Profile Options/Operations/DiscriptionSavingOperation.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/ICommunicationService.swift": [1540805253, 0]
-  "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/ProfileViewController.swift": [1541327591, 0]
+  "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/ProfileViewController.swift": [1541332304, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile+CoreDataProperties.swift": [1541324722, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/Message.swift": [1540805253, 0]
   "/Users/Andrey/Developer/ChatGitHub/Chat/UserProfile/Saving Profile Options/Operations/OperationDataManager.swift": [1540805253, 0]
