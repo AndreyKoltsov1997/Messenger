@@ -11,6 +11,8 @@ import UIKit
 
 struct Constants {
     
+    // MARK: - Data related constants
+    static let PROFILE_MODEL_TAG = "ProfileModel"
     // MARK: UI constants
     
     static let PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME = "profile-vc-userpic-placeholder"

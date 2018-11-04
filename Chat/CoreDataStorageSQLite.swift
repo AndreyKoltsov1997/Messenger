@@ -24,7 +24,7 @@ class CoreDataStorageSQLite: ProfileStorageManager {
     }()
     
     static var managedObjectModel: NSManagedObjectModel? = {
-        guard let modelURL = Bundle.main.url(forResource: "ProfileModel", withExtension: "momd") else {
+        guard let modelURL = Bundle.main.url(forResource: Constants.PROFILE_MODEL_TAG, withExtension: "momd") else {
             return nil
         }
         let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
@@ -33,7 +33,7 @@ class CoreDataStorageSQLite: ProfileStorageManager {
     }()
     
     static var persistentStoreURL: NSURL {
-        let storeName = "ProfileModel.sqlite"
+        let storeName = "\(Constants.PROFILE_MODEL_TAG).sqlite"
         let fileManager = FileManager.default
         let documentDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         

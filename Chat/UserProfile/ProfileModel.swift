@@ -51,7 +51,6 @@ class ProfileModel {
             DispatchQueue.main.async {
                 if let fetchedName = fetchedName {
                     self.name = fetchedName
-                    print(ProfileModel.TAG, "Fetched name from core data", fetchedName)
                 }
                 
                 if let fetchedDiscription = fetchedDiscription {
@@ -74,7 +73,6 @@ class ProfileModel {
                 DispatchQueue.main.async {
                     if let fetchedName = fetchedName {
                         self.name = fetchedName
-                        print(ProfileModel.TAG, "Fetched name", fetchedName)
                     }
                     
                     if let fetchedDiscription = fetchedDiscription {
