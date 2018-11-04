@@ -57,8 +57,10 @@ class ConversationListViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadUserPic()
     }
+    
     
     private func configureCommunicationService() {
         communicationService.delegate = self
@@ -146,10 +148,16 @@ class ConversationListViewController: UIViewController {
         return nil
     }
     
-    public func configureProfile(profileInfo: ProfileInfo?) {
-        self.image = profileInfo?.profilePicture
+    public func configureProfile(profileInfo: ProfileModel?) {
+        // TODO: Update user profile picture here
+        CoreDataStorageSQLite.loadProfile { name, discription, image in
+            DispatchQueue.main.async {
+                if let image = image as Data? {
+                    self.profilePicturePreview.image = UIImage(data: image, scale: 1.0)
+                }
+            }
+        }
     }
-    
 }
 
 // MARK: - UITableViewDelegate
