@@ -97,8 +97,6 @@ class ProfileModel {
                 StorageCoreData.saveProfile(self.name, self.discripton, nil)
 
             }
-
-            
             self.delegate?.onFinishSaving()
         }
     }
@@ -111,6 +109,7 @@ class ProfileModel {
                 CoreDataStorageSQLite.saveProfile(self.name, self.discripton, nil)
             }
         }
+        self.delegate?.onFinishSaving()
     }
     
     // MARK: - GCD Operations
