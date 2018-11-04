@@ -10,7 +10,7 @@ import Foundation
 
 protocol ProfileStorageManager: class {
     static func loadProfile(completion: @escaping (_ name: String?, _ discription: String?, _ image: NSData?) -> Void)
-    static func saveProfile(profile: ProfileModel)
+    static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?)
     static func isEntityExist(withName name: String) -> Bool
     
 }

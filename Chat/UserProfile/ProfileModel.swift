@@ -91,18 +91,27 @@ class ProfileModel {
         }
     }
 
-    
     public func saveIntoCoreData() {
-        
         DispatchQueue.main.async {
-             StorageCoreData.saveProfile(profile: self)
+            if let image = self.image as NSData? {
+                StorageCoreData.saveProfile(self.name, self.discripton, image)
+            } else {
+                StorageCoreData.saveProfile(self.name, self.discripton, nil)
+
+            }
+
+            
             self.delegate?.onFinishSaving()
         }
     }
     
     public func saveIntoSQLite() {
         DispatchQueue.main.async {
-            CoreDataStorageSQLite.saveProfile(profile: self)
+            if let image = self.image as NSData? {
+                CoreDataStorageSQLite.saveProfile(self.name, self.discripton, image)
+            } else {
+                CoreDataStorageSQLite.saveProfile(self.name, self.discripton, nil)
+            }
         }
     }
     

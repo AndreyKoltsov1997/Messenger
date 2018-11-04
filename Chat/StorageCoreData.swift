@@ -84,15 +84,15 @@ class StorageCoreData: ProfileStorageManager {
         }
     }
     
-    static func saveProfile(profile: ProfileModel) {
+    static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             if (StorageCoreData.isEntityExist(withName: UserProfile.TAG)) {
                  let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
                 do {
                     let userProfileInfo = try StorageCoreData.context.fetch(fetchRequest)
-                    userProfileInfo.first?.name = profile.name
-                    userProfileInfo.first?.discription = profile.discripton
-                    if let image = profile.image as NSData? {
+                    userProfileInfo.first?.name = name
+                    userProfileInfo.first?.discription = discription
+                    if let image = image as NSData? {
                         userProfileInfo.first?.image = image
                     } else {
                         print(TAG, "Unable to save image.")
@@ -105,9 +105,9 @@ class StorageCoreData: ProfileStorageManager {
                 return
             }
             let userProfile = UserProfile(context: StorageCoreData.context)
-            userProfile.name = profile.name
-            userProfile.discription = profile.discripton
-            if let image = profile.image as NSData? {
+            userProfile.name = name
+            userProfile.discription = discription
+            if let image = image as NSData? {
                 userProfile.image = image
             } else {
                 print(TAG, "Unable to save image.")

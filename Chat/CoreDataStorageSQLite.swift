@@ -13,7 +13,7 @@ import UIKit
 // NOTE: @CoreDataStorageSQLite is used to manage data operations with NSPersistentContainer. It's a single-ton because ...
 // ... I think it's better to have a single instance of a class which is working with core memory.
 
-class CoreDataStorageSQLite: ProfileStorageManager {
+class CoreDataStorageSQLite: ProfileStorageManager {    
     
     private init() {}
     
@@ -60,16 +60,16 @@ class CoreDataStorageSQLite: ProfileStorageManager {
     }()
     
     
-    static func saveProfile(profile: ProfileModel) {
+    static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
         
         if (CoreDataStorageSQLite.isEntityExist(withName: UserProfile.TAG)) {
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
             do {
                 let userProfileInfo = try CoreDataStorageSQLite.privateManagedObjectContext.fetch(fetchRequest)
                 if !userProfileInfo.isEmpty {
-                    userProfileInfo.last?.name = profile.name
-                    userProfileInfo.last?.discription = profile.discripton
-                    guard let image = profile.image as NSData? else {
+                    userProfileInfo.last?.name = name
+                    userProfileInfo.last?.discription = discription
+                    guard let image = image as NSData? else {
                         return
                     }
                     userProfileInfo.last?.image = image
@@ -79,9 +79,9 @@ class CoreDataStorageSQLite: ProfileStorageManager {
             }
         } else {
             let userProfile = NSEntityDescription.insertNewObject(forEntityName: UserProfile.TAG, into: CoreDataStorageSQLite.privateManagedObjectContext) as? UserProfile
-            userProfile?.name = profile.name
-            userProfile?.discription = profile.discripton
-            guard let image = profile.image as NSData? else {
+            userProfile?.name = name
+            userProfile?.discription = discription
+            guard let image = image as NSData? else {
                 userProfile?.image = nil
                 return
             }
