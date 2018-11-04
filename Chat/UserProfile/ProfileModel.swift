@@ -74,4 +74,15 @@ class ProfileModel {
             }
         }
     }
+    
+    // MARK: - GCD Operations
+    
+    public func saveViaGCD() {
+        let gcdDataManager = GCDDataManager()
+        gcdDataManager.saveProfile(sender: self)
+    }
+    
+    public func onFinishSaving() {
+        delegate?.onFinishSaving()
+    }
 }

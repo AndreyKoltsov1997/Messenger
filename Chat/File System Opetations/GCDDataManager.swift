@@ -65,19 +65,13 @@ class GCDDataManager {
         }
     }
     
-    public func saveProfile(sender: UIViewController) {
+    public func saveProfile(sender: ProfileModel) {
         let group = DispatchGroup()
         
-        if let distinationViewController = sender as? ProfileViewController {
-            profileInfo = distinationViewController.getProfileModel()
-        } else {
-            print("Data couldn't be saved within requested view controller.")
-            return
-        }
         
         let username = profileInfo?.name
         let information = profileInfo?.discripton
-        //let image = profileInfo?.profilePicture
+        let image = UIImage(data: sender.image as! Data, scale: 1.0)
         
         group.enter()
         concurrentQueue.async {
@@ -97,16 +91,14 @@ class GCDDataManager {
         
         group.enter()
         concurrentQueue.async {
-            // TODO: Save image hre
-//            if let image = image {
-//                self.hasValueChanged = FileSaver.saveImage(image: image, fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue)
-//            }
+            if let image = image {
+                self.hasValueChanged = FileSaver.saveImage(image: image, fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue)
+            }
             group.leave()
         }
         
         group.notify(queue: .main) {
-            let distinationViewController = sender as! ProfileViewController
-            //distinationViewController.hasDataChanged = self.hasValueChanged
+            sender.onFinishSaving()
             
         }
     }

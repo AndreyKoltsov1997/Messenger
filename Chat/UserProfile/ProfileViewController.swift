@@ -48,7 +48,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     @IBAction func onSaveViaGCDclicked(_ sender: UIButton) {
         if (isUserDataUpdated()) {
-            self.saveViaGCD()
+            profile.saveViaGCD()
+            activityIndicator.startAnimating()
             setButtonInteraction(avaliable: false)
         }
     }
@@ -191,10 +192,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-    private func saveViaGCD() {
-        let gcdDataManager = GCDDataManager()
-        gcdDataManager.saveProfile(sender: self)
-    }
     
     // MARK: - ProfileViewController lifecycle
     
@@ -212,13 +209,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         loadProfileData()
     }
     
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureLayout()
     }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.profile.delegate = self
@@ -377,5 +372,8 @@ extension ProfileViewController: ProfileViewControllerDelegate {
         self.activityIndicator.stopAnimating()
     }
     
-    
+    func onFinishSaving() {
+        self.showActionDoneAlert(message: "Profile info has been saved")
+        self.activityIndicator.stopAnimating()
+    }
 }
