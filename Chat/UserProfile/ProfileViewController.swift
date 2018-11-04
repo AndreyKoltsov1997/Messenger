@@ -33,23 +33,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - Outlet methods
     
-    @IBAction func onSaveViaOperationsClicked(_ sender: UIButton) {
+    @IBAction func onSaveButtonClicked(_ sender: UIButton) {
         if (self.isUserDataUpdated()) {
             activityIndicator.startAnimating()
             self.profile.discripton = userDiscriptionField.text
             self.profile.name = userNameField.text!
             self.profile.saveIntoSQLite()
-            //self.profile.saveIntoCoreData()
+            // NOTE: In order to save using Core Data, USE:
+            // self.profile.saveIntoCoreData()
         } else {
             print("Data couldn't be saved with operations.")
-        }
-    }
-    
-    @IBAction func onSaveViaGCDclicked(_ sender: UIButton) {
-        if (isUserDataUpdated()) {
-            profile.saveViaGCD()
-            activityIndicator.startAnimating()
-            setButtonInteraction(avaliable: false)
         }
     }
     
