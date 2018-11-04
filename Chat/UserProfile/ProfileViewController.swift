@@ -34,12 +34,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // MARK: - Outlet methods
     
     @IBAction func onSaveButtonClicked(_ sender: UIButton) {
-        activityIndicator.startAnimating()
-        self.profile.discripton = userDiscriptionField.text
-        self.profile.name = userNameField.text!
-        self.profile.saveIntoSQLite()
-        // NOTE: In order to save using Core Data, USE:
-        // self.profile.saveIntoCoreData()
+        if (self.isUserDataUpdated()) {
+            activityIndicator.startAnimating()
+            self.profile.discripton = userDiscriptionField.text
+            self.profile.name = userNameField.text!
+            self.profile.saveIntoSQLite()
+            // NOTE: In order to save using Core Data, USE:
+            // self.profile.saveIntoCoreData()
+        }
+        
         
 //        if (self.isUserDataUpdated()) {
 //
@@ -159,12 +162,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePicker.allowsEditing = true
         self.present(imagePicker, animated: true, completion: nil)
     }
-//
-//    private func isUserDataUpdated() -> Bool {
-//        // TODO: check if image has been updated
-//        return true
-//     //   return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton))
-//    }
+
+    
+    private func isUserDataUpdated() -> Bool {
+    
+        return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton))
+    }
     
     
     private func setButtonInteraction(avaliable isEnabled: Bool) {
@@ -290,7 +293,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     
     private func checkIfSaveIsAvaliable() {
-      //  isUserDataUpdated() ? setButtonInteraction(avaliable: true) : setButtonInteraction(avaliable: false)
+        isUserDataUpdated() ? setButtonInteraction(avaliable: true) : setButtonInteraction(avaliable: false)
     }
     
     // MARK: UIImagePickerDelegate methods
