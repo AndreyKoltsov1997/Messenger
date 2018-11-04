@@ -34,16 +34,18 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // MARK: - Outlet methods
     
     @IBAction func onSaveButtonClicked(_ sender: UIButton) {
-        if (self.isUserDataUpdated()) {
-            activityIndicator.startAnimating()
-            self.profile.discripton = userDiscriptionField.text
-            self.profile.name = userNameField.text!
-            self.profile.saveIntoSQLite()
-            // NOTE: In order to save using Core Data, USE:
-            // self.profile.saveIntoCoreData()
-        } else {
-            print("Data couldn't be saved with operations.")
-        }
+        activityIndicator.startAnimating()
+        self.profile.discripton = userDiscriptionField.text
+        self.profile.name = userNameField.text!
+        self.profile.saveIntoSQLite()
+        // NOTE: In order to save using Core Data, USE:
+        // self.profile.saveIntoCoreData()
+        
+//        if (self.isUserDataUpdated()) {
+//
+//        } else {
+//            print("Data couldn't be saved with operations.")
+//        }
     }
     
     @IBAction func dismissBtnClicked(_ sender: Any) {
@@ -157,18 +159,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePicker.allowsEditing = true
         self.present(imagePicker, animated: true, completion: nil)
     }
+//
+//    private func isUserDataUpdated() -> Bool {
+//        // TODO: check if image has been updated
+//        return true
+//     //   return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton))
+//    }
     
-    private func isUserDataUpdated() -> Bool {
-        // TODO: check if image has been updated
-        return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton))
-    }
-    
-    private func saveViaOperations() {
-        activityIndicator.startAnimating()
-        let operationManager = OperationDataManager()
-        operationManager.saveProfile(profile: profile)
-        // TODO: Update profile saving
-    }
     
     private func setButtonInteraction(avaliable isEnabled: Bool) {
         saveButton.isEnabled = isEnabled
@@ -194,31 +191,18 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadProfileData()
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+
+    override func viewWillLayoutSubviews() {
         configureLayout()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.profile.delegate = self
-        print("viewDidLoad")
         setUpLayoutSources()
         userDiscriptionField.delegate = self
-    }
-    
-    
-    private func loadProfileData() {
-        activityIndicator.startAnimating()
-        let gcdDataManager = GCDDataManager()
-        if (!isUserDataUpdated()) {
-            gcdDataManager.loadProfile(sender: self)
-        } else {
-            setButtonInteraction(avaliable: true)
-        }
+       
     }
     
     
@@ -231,7 +215,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     private func setUpLayoutSources() {
         // NOTE: Here I'm setting up initial values for sources that could be changed in a runtime
-        
+
         // userNameLabel sources
         userNameField.text = self.profile.name
         
@@ -248,8 +232,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         saveButton.backgroundColor = .white
         saveButton.layer.borderColor = UIColor.black.cgColor
         saveButton.setTitleColor(UIColor.black, for: .normal)
-        
-        
         
     }
     
@@ -295,7 +277,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         saveButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
         saveButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
         saveButton.titleLabel?.font = saveButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
-        saveButton.titleLabel?.text = Constants.SAVE_BUTTON_TITLE
         
         // NOTE: DO NOT set default's avaliability to false, because when the page reloads, it re-configures the buttons.
         
@@ -305,12 +286,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         dismissButton.layer.cornerRadius = Constants.ROUNDED_BUTTONS_DEFAULT_RADIUS
         dismissButton.layer.borderWidth = Constants.BUTTON_BORDER_DEFAULT_WIDTH
         dismissButton.titleLabel?.font = dismissButton.titleLabel?.font.withSize(self.view.frame.height * multiplierForRelativeFontDiscriptionFontSize)
-        dismissButton.titleLabel?.text = Constants.DISMISS_BUTTON_TITLE
     }
     
     
     private func checkIfSaveIsAvaliable() {
-        isUserDataUpdated() ? setButtonInteraction(avaliable: true) : setButtonInteraction(avaliable: false)
+      //  isUserDataUpdated() ? setButtonInteraction(avaliable: true) : setButtonInteraction(avaliable: false)
     }
     
     // MARK: UIImagePickerDelegate methods

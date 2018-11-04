@@ -51,7 +51,7 @@
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bj8-cK-0iG">
                                 <rect key="frame" x="20" y="518" width="280" height="30"/>
-                                <state key="normal" title="Закрыть">
+                                <state key="normal" title="Dismiss">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -63,7 +63,7 @@
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sUM-yc-c4t">
                                 <rect key="frame" x="20" y="468" width="280" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="onSaveButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KVa-DC-a9j"/>
                                 </connections>
