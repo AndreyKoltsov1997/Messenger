@@ -168,7 +168,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         if let image = self.profilePictureImage.image {
             return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton) || (UIImagePNGRepresentation(image) != self.profile.image))
         }
-        
         return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton))
     }
     

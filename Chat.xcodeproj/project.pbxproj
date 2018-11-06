@@ -49,6 +49,8 @@
 		55E2363F216A7FA80040E4DB /* SentMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E2363D216A7FA70040E4DB /* SentMessageCell.swift */; };
 		55E23640216A7FA80040E4DB /* SentMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55E2363E216A7FA80040E4DB /* SentMessageCell.xib */; };
 		55E23642216A85770040E4DB /* MessageCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E23641216A85770040E4DB /* MessageCellConfiguration.swift */; };
+		55F7BBAF2191E89800752AB6 /* ConversationListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7BBAE2191E89800752AB6 /* ConversationListModel.swift */; };
+		55F7BBB12191E90000752AB6 /* ConversationListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7BBB02191E90000752AB6 /* ConversationListDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +99,8 @@
 		55E2363D216A7FA70040E4DB /* SentMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentMessageCell.swift; sourceTree = "<group>"; };
 		55E2363E216A7FA80040E4DB /* SentMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SentMessageCell.xib; sourceTree = "<group>"; };
 		55E23641216A85770040E4DB /* MessageCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellConfiguration.swift; sourceTree = "<group>"; };
+		55F7BBAE2191E89800752AB6 /* ConversationListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListModel.swift; sourceTree = "<group>"; };
+		55F7BBB02191E90000752AB6 /* ConversationListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +182,8 @@
 			children = (
 				552810A421652A4E001A304A /* ConversationListViewController.storyboard */,
 				552810A0216529ED001A304A /* ConversationListViewController.swift */,
+				55F7BBAE2191E89800752AB6 /* ConversationListModel.swift */,
+				55F7BBB02191E90000752AB6 /* ConversationListDelegate.swift */,
 				5539672621862E6600AA4D05 /* ConversationListViewControllerDelegate.swift */,
 			);
 			path = ConversationListViewController;
@@ -360,12 +366,14 @@
 				55E23626216A30230040E4DB /* ConversationCellConfiguration.swift in Sources */,
 				55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */,
 				55D2AED9218F14CF00625FFB /* ProvileViewControllerDelegate.swift in Sources */,
+				55F7BBB12191E90000752AB6 /* ConversationListDelegate.swift in Sources */,
 				5539672721862E6600AA4D05 /* ConversationListViewControllerDelegate.swift in Sources */,
 				55A6D237217CF21D00B9A135 /* UserNameSavingOperation.swift in Sources */,
 				553967222184BB3E00AA4D05 /* Peer.swift in Sources */,
 				5539671F2184BADA00AA4D05 /* CommunicationServiceDelegate.swift in Sources */,
 				5539672921863A7300AA4D05 /* CodableMessage.swift in Sources */,
 				553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */,
+				55F7BBAF2191E89800752AB6 /* ConversationListModel.swift in Sources */,
 				55D2AED7218F04ED00625FFB /* ProfileModel.swift in Sources */,
 				550995872157955600D377E5 /* AppDelegate.swift in Sources */,
 				552810A2216529ED001A304A /* ConversationListViewController.swift in Sources */,
