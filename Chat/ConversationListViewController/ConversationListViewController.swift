@@ -28,12 +28,12 @@ class ConversationListViewController: UIViewController {
         return conversationList
     }
     
+     weak var conversationViewControllerDelegate: ConversationViewControllerDelegate?
+    
     var conversationViewController = ConversationViewController()
     private let identifier = String(describing: ConversationsListCell.self)
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
-//    private var contactsInfo = [[Contact]]()
-//
-//    private var onlineContacts = [Contact]()
+
     
     private var communicationService: CommunicationService  = CommunicationService(displayingName: "Andrey Koltsov")
     
@@ -55,6 +55,7 @@ class ConversationListViewController: UIViewController {
         self.conversationViewController.delegate = self
         configureCommunicationService()
         configureTableView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -132,14 +133,7 @@ class ConversationListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
-//    private func generateTestUsers() {
-//        // TODO: Delete this in a feature API. It's here because I don't have time to fix this until deadline.
-//        let offlineUsers = [Contact]()
-//        contactsInfo.append(offlineUsers)
-//        contactsInfo.append(offlineUsers)
-//    }
-//
+
     
     func findContactByPeer(_ peer: Peer) -> Contact? {
         conversationList.processFoundPeer(peer)
@@ -164,8 +158,12 @@ extension ConversationListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         // TODO: Replace it with ConversationDelegate
-//        conversationViewController.contact = onlineContacts[indexPath.row]
-        conversationViewController.contact.hasUnreadMessages = false
+        let isOnline = (indexPath.section == 0)
+        guard let loadingContact = self.conversationList.getContact(withIndex: indexPath.row, status: isOnline) else {
+            return
+        }
+        conversationViewController.contact = loadingContact
+       conversationViewControllerDelegate?.loadDialoque(withContact: loadingContact)
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
 }
@@ -210,7 +208,7 @@ extension ConversationListViewController: UITableViewDataSource {
         cell.message = contact.getLastMessageFromDialog()
         cell.date = contact.getLastMessageDate()
         cell.isOnline = contact.isOnline
-        // TODO: Add custom color for oggline contacts
+        // TODO: Add custom color for online contacts cell background
         cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
         if (contact.hasUnreadMessages) {
             cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
@@ -237,16 +235,6 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
-        // TODO: handle peer loss
-//        for contact in self.onlineContacts {
-//            if contact.peer == peer {
-//                contact.isOnline = false
-//            }
-//        }
-//        self.onlineContacts = self.onlineContacts.filter {
-//            $0.peer.identifier != peer.identifier
-//        }
-
         conversationList.processPeerLoss(peer)
         if self.conversationViewController.viewIfLoaded?.window != nil {
             self.conversationViewController.blockUserInput()
@@ -272,9 +260,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         })
         alert.addAction(UIAlertAction(title: "Decline", style: .default) { action in
             // Removing user from the list. The task said we have to initially add everyone we discovered.
-//            self.onlineContacts = self.onlineContacts.filter {
-//                $0.peer.identifier != peer.identifier
-//            }
+
             self.self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
             self.tableView.reloadData()
             invintationClosure(false)

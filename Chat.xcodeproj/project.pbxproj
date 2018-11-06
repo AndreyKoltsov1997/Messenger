@@ -35,6 +35,7 @@
 		55A6D233217CF19600B9A135 /* ImageSavingOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6D232217CF19600B9A135 /* ImageSavingOperation.swift */; };
 		55A6D235217CF1B600B9A135 /* DiscriptionSavingOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6D234217CF1B600B9A135 /* DiscriptionSavingOperation.swift */; };
 		55A6D237217CF21D00B9A135 /* UserNameSavingOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6D236217CF21D00B9A135 /* UserNameSavingOperation.swift */; };
+		55BBDF062191F555009AEAE1 /* ConversationViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBDF052191F555009AEAE1 /* ConversationViewControllerDelegate.swift */; };
 		55D2AECF218EF06C00625FFB /* ProfileModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55D2AECD218EF06C00625FFB /* ProfileModel.xcdatamodeld */; };
 		55D2AED2218EF1F200625FFB /* UserProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2AED0218EF1F200625FFB /* UserProfile+CoreDataClass.swift */; };
 		55D2AED3218EF1F200625FFB /* UserProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2AED1218EF1F200625FFB /* UserProfile+CoreDataProperties.swift */; };
@@ -85,6 +86,7 @@
 		55A6D232217CF19600B9A135 /* ImageSavingOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSavingOperation.swift; sourceTree = "<group>"; };
 		55A6D234217CF1B600B9A135 /* DiscriptionSavingOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscriptionSavingOperation.swift; sourceTree = "<group>"; };
 		55A6D236217CF21D00B9A135 /* UserNameSavingOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameSavingOperation.swift; sourceTree = "<group>"; };
+		55BBDF052191F555009AEAE1 /* ConversationViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerDelegate.swift; sourceTree = "<group>"; };
 		55D2AECE218EF06C00625FFB /* ProfileModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProfileModel.xcdatamodel; sourceTree = "<group>"; };
 		55D2AED0218EF1F200625FFB /* UserProfile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		55D2AED1218EF1F200625FFB /* UserProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		550995852157955600D377E5 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				55E23630216A7B0D0040E4DB /* ConversationViewController */,
 				55A6D221217CDDAE00B9A135 /* File System Opetations */,
 				55A6D21C217B520A00B9A135 /* UserProfile */,
 				551858CF2173AC000075AC1F /* ChatPlayground.playground */,
@@ -149,9 +152,8 @@
 		552810A621652AB4001A304A /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
-				55E2362D216A40260040E4DB /* ConversationListCell */,
 				553967252185DD3500AA4D05 /* ConversationListViewController */,
-				55E23630216A7B0D0040E4DB /* ConversationViewController */,
+				55E2362D216A40260040E4DB /* ConversationListCell */,
 				55E23629216A387B0040E4DB /* Message.swift */,
 				55E2362B216A38CE0040E4DB /* Contact.swift */,
 			);
@@ -269,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				55E23635216A7D4B0040E4DB /* ConversationViewController.swift */,
+				55BBDF052191F555009AEAE1 /* ConversationViewControllerDelegate.swift */,
 				5506460E216A97BD00EB961B /* RecivedMessagesCell.swift */,
 				5506460F216A97BD00EB961B /* RecivedMessagesCell.xib */,
 				55E23636216A7D4B0040E4DB /* ConversationViewController.xib */,
@@ -362,6 +365,7 @@
 				55064610216A97BD00EB961B /* RecivedMessagesCell.swift in Sources */,
 				5573D000218F6A0D00F82D05 /* ProfileStorageManager.swift in Sources */,
 				55E2363F216A7FA80040E4DB /* SentMessageCell.swift in Sources */,
+				55BBDF062191F555009AEAE1 /* ConversationViewControllerDelegate.swift in Sources */,
 				55A6D225217CDE0E00B9A135 /* FileName.swift in Sources */,
 				55E23626216A30230040E4DB /* ConversationCellConfiguration.swift in Sources */,
 				55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */,

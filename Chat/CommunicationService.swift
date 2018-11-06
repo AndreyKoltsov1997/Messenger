@@ -84,8 +84,8 @@ class CommunicationService: NSObject, ICommunicationService {
             }
             let peerID = activePeers[peer]!
             try session.send(jsonData, toPeers: [peerID], with: .reliable)
-        } catch{
-            print("Unable to send JSON")
+        } catch {
+            print("Unable to send JSON, reason:", error.localizedDescription)
         }
     }
     

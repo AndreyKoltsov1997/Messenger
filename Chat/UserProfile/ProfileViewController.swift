@@ -42,13 +42,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             // NOTE: In order to save using Core Data, USE:
             // self.profile.saveIntoCoreData()
         }
-        
-        
-//        if (self.isUserDataUpdated()) {
-//
-//        } else {
-//            print("Data couldn't be saved with operations.")
-//        }
     }
     
     @IBAction func dismissBtnClicked(_ sender: Any) {
