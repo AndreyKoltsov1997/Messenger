@@ -62,6 +62,9 @@ class StorageCoreData: ProfileStorageManager {
                         return
                     }
                     completion(userName, userDiscription, image)
+                } else {
+                    // NOTE: Returning nothing.
+                    completion(nil, nil, nil)
                 }
             } catch {
                 // TODO: Handle error correctly
@@ -72,8 +75,8 @@ class StorageCoreData: ProfileStorageManager {
     
     static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
-            if (StorageCoreData.isEntityExist(withName: UserProfile.TAG)) {
-                 let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
+            let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
+            if (StorageCoreData.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
                 do {
                     let userProfileInfo = try StorageCoreData.context.fetch(fetchRequest)
                     userProfileInfo.first?.name = name
@@ -99,12 +102,10 @@ class StorageCoreData: ProfileStorageManager {
                 print(TAG, "Unable to save image.")
             }
             StorageCoreData.saveContext()
-            print(StorageCoreData.TAG, "Context has been saved")
         }
     }
     
-    static func isEntityExist(withName name: String) -> Bool {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+    static func isEntityExist(withName name: String, withIn fetchRequest: NSFetchRequest<UserProfile>) -> Bool {
         fetchRequest.includesSubentities = false
         var entitiesCount = 0
         do {

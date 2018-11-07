@@ -47,6 +47,10 @@ class ProfileModel {
     
     public func loadFromCoreData() {
         StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+            if ((fetchedName == nil) && (fetchedDiscription == nil) && (fetchedImage == nil)) {
+                print(ProfileModel.TAG, "Unable to find any saved info for user profile")
+                return
+            }
             DispatchQueue.main.async {
                 if let fetchedName = fetchedName {
                     self.name = fetchedName
@@ -62,7 +66,6 @@ class ProfileModel {
                 }
                 self.delegate?.finishLoading(self)
             }
-            
         }
     }
     
