@@ -77,6 +77,7 @@ class StorageCoreData: ProfileStorageManager {
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
             if (StorageCoreData.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
+                // NOTE: Changing existing profile info
                 do {
                     let userProfileInfo = try StorageCoreData.context.fetch(fetchRequest)
                     userProfileInfo.first?.name = name
@@ -91,17 +92,18 @@ class StorageCoreData: ProfileStorageManager {
                     // TODO: Handle error correctly
                     print(StorageCoreData.TAG, "An error has occured while re-writing profile info:", error.localizedDescription)
                 }
-                return
-            }
-            let userProfile = UserProfile(context: StorageCoreData.context)
-            userProfile.name = name
-            userProfile.discription = discription
-            if let image = image as NSData? {
-                userProfile.image = image
             } else {
-                print(TAG, "Unable to save image.")
+                let userProfile = UserProfile(context: StorageCoreData.context)
+                userProfile.name = name
+                userProfile.discription = discription
+                if let image = image as NSData? {
+                    userProfile.image = image
+                } else {
+                    print(TAG, "Unable to save image.")
+                }
+                StorageCoreData.saveContext()
             }
-            StorageCoreData.saveContext()
+            
         }
     }
     
