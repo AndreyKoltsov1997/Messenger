@@ -101,7 +101,6 @@ class ConversationListViewController: UIViewController {
         let message = "Do you want to accept him?"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Accept", style: .default) { action in
-            // todo: accept user here
             print("user accepted")
             self.addUserToList(userPeer: peer)
         })
@@ -215,6 +214,8 @@ extension ConversationListViewController: UITableViewDataSource {
         } else if contact.isOnline {
             let green = UIColor(red: 173.0/255.0, green: 255.0/255.0, blue: 47.0/255.0, alpha: 1.0)
             cell.profileImage.layer.borderColor = green.cgColor
+        } else {
+            cell.profileImage.layer.borderColor = UIColor.lightGray.cgColor
         }
         cell.name = contact.name
         cell.message = contact.getLastMessageFromDialog()
@@ -242,9 +243,6 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
         if (isAccepted) {
             DispatchQueue.main.async {
-                guard let contact = self.conversationList.findContact(withPeer: peer) else {
-                    return
-                }
                 self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
                 self.tableView.reloadData()
             }

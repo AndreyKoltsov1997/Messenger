@@ -127,17 +127,11 @@ extension CommunicationService: MCNearbyServiceAdvertiserDelegate {
 extension CommunicationService: MCSessionDelegate {
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        // TODO: impliment peer change state
+        // NOTE: impliment peer change state
         let peer = Peer(name: peerID.displayName, id: peerID)
-//        if (self.activePeers.contains(peer)) {
-//            print("found existing peer")
-//            delegate?.communicationService(self, didFoundPeer: peer)
-//            // NOTE: pear already exist. Return.
-//            return
-//        }
+
         let isConfirmed = (state.rawValue != 0)
         if (isConfirmed) {
-            
             delegate?.communicationService(self, didAcceptInvite: isConfirmed, from: peer)
             print("active peers, session:", self.activePeers)
         }
