@@ -35,16 +35,7 @@ class ConversationListModel {
     }
  
     private var connectedPeers = [Peer]()
-//
-//    lazy var contactsFetchResultController: NSFetchedResultsController<ContactCD> = {
-////        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-//        let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest()
-//        fetchRequest.sortDescriptors = []
-//        fetchRequest.resultType = .managedObjectResultType
-//        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: StorageCoreData.context, sectionNameKeyPath: nil, cacheName: nil)
-//       // controller.delegate = self
-//        return controller
-//    }()
+
     
     // MARK: - Constructor
     init() {
@@ -144,13 +135,27 @@ class ConversationListModel {
     
     public func changeContactStatus(withPeer peer: Peer, toOnlineStatus isOnline: Bool) {
         // TODO: Impliment method
-        
-//        for contact in self.contacts {
-//            if contact.peer == peer {
-//                contact.isOnline = isOnline
-//                contact.isInviteConfirmed = true
+        guard let contactID = self.findContactID(withPeer: peer) else {
+            // NOTE: Means contact doesnt exist
+            return
+        }
+        StorageCoreData.context.performAndWait {
+//            guard let contact = StorageCoreData.getContact(withID: "0") else {
+//                print("Contact with id \(contactID) hasn't been found in database.")
+//                return
 //            }
-//        }
+//            contact.isOnline = isOnline
+//            self.delegate?.updateTable()
+//            try? StorageCoreData.context.save()
+             let predicate = NSPredicate(format: "id == %@", "1")
+            let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest()
+            fetchRequest.predicate = predicate
+                let foundContact = try? StorageCoreData.context.fetch(fetchRequest)
+                print("found amount", foundContact?.count)
+            foundContact?.first?.isOnline = true
+            foundContact?.first?.isInviteConfirmed = true
+                try? StorageCoreData.context.save()
+        }
     }
     
 }

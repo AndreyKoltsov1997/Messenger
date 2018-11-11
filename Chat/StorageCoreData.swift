@@ -137,18 +137,60 @@ class StorageCoreData: ProfileStorageManager {
     // NOTE: получение беседы (Conversation) с определенным conversationId
     
     static func getConversation(withID id: String) -> Conversation? {
-        guard let fetchRequest = FetchRequestTemplates.getConversationByID(withID: id) else {
-            print("Requested template for fetch request hasn't been found")
-            return nil
+        // TODO: Impliment method
+        return nil
+    }
+    
+    // NOTE получение непустых бесед, в которых пользователь (User) онлайн
+    static func getNonEmptyConversationsForOnlineUsers() -> [Conversation]? {
+        var conversations: [Conversation]?
+        
+        let predicate = NSPredicate(format: "isOnline == %@", true)
+        let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest()
+        fetchRequest.predicate = predicate
+        
+        let context = StorageCoreData.context
+        context.performAndWait {
+            guard let onlineUsers = try? context.fetch(fetchRequest) else {
+                return
+            }
+            for user in onlineUsers {
+                guard let conversation = user.conversation else {
+                    continue
+                }
+                guard let messages = conversation.messages else {
+                    continue
+                }
+                
+                if !messages.isEmpty {
+                    conversations?.append(conversation)
+                }
+            }
+            
         }
-        fetchRequest.includesSubentities = false
-        var conversation: Conversation? = nil
-        do {
-            conversation = try StorageCoreData.context.fetch(fetchRequest).first
-        } catch {
-            print("An error has occured while fetching conversation.")
+        return conversations
+    }
+    
+    // NOTE: получение сообщений (Message) из определенной беседы по id беседы
+    
+    static func getMessageFromConversation(withID id: String) -> [MessageCD]? {
+        var messages: [MessageCD]?
+        
+        let predicate = NSPredicate(format: "id == %@", id)
+        let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
+        fetchRequest.predicate = predicate
+        let context = StorageCoreData.context
+        context.performAndWait {
+            guard let conversation = try? context.fetch(fetchRequest).first else {
+                return
+            }
+            guard let foundMessages = conversation?.messages else {
+                return
+            }
+            messages = foundMessages
+            
         }
-        return conversation
+        return messages
     }
     
     static func saveContact(_ contact: Contact) {

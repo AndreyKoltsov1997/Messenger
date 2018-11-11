@@ -29,12 +29,20 @@ class ConversationListViewController: UIViewController {
     }
     
     lazy var contactsFetchResultController: NSFetchedResultsController<ContactCD> = {
-        //        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest()
         fetchRequest.sortDescriptors = []
         fetchRequest.resultType = .managedObjectResultType
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: StorageCoreData.context, sectionNameKeyPath: nil, cacheName: nil)
          controller.delegate = self
+        return controller
+    }()
+    
+    lazy var conversationFetchResultController: NSFetchedResultsController<Conversation> = {
+        let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
+        fetchRequest.sortDescriptors = []
+        fetchRequest.resultType = .managedObjectResultType
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: StorageCoreData.context, sectionNameKeyPath: nil, cacheName: nil)
+        controller.delegate = self
         return controller
     }()
     
@@ -205,11 +213,17 @@ extension ConversationListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let isOnline = (indexPath.section == 0)
         
+        try? conversationFetchResultController.performFetch()
+        
+        // TODO: replace with function, isOnline passing as a parameter
+        guard let contacts = StorageCoreData.getContacts() else {
+            return UITableViewCell()
+        }
         guard let contact = conversationList.getContact(withIndex: indexPath.row, status: isOnline) else {
             return UITableViewCell()
         }
         
-        guard let cell = generateCell(forContact: contact) else {
+        guard let cell = generateCell(forContact: contacts[0]) else {
             return UITableViewCell()
         }
         
@@ -224,8 +238,8 @@ extension ConversationListViewController: UITableViewDataSource {
         cell.profileImage.layer.borderWidth = 2
         
         if (!contact.isInviteConfirmed) {
-            let red = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 0.0/255.0, alpha: 1.0)
-            cell.profileImage.layer.borderColor = red.cgColor
+            let yellow = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+            cell.profileImage.layer.borderColor = yellow.cgColor
         } else if contact.isOnline {
             let green = UIColor(red: 173.0/255.0, green: 255.0/255.0, blue: 47.0/255.0, alpha: 1.0)
             cell.profileImage.layer.borderColor = green.cgColor
@@ -233,7 +247,7 @@ extension ConversationListViewController: UITableViewDataSource {
             cell.profileImage.layer.borderColor = UIColor.lightGray.cgColor
         }
         cell.name = contact.name
-        cell.message = "bla bla bla"
+        cell.message = "Test message (HARD CODED)"
         // TODO: replace hard-coded messages
         cell.date = Date()
         cell.isOnline = contact.isOnline
@@ -259,11 +273,9 @@ extension ConversationListViewController: UITableViewDataSource {
 extension ConversationListViewController: CommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didAcceptInvite isAccepted: Bool, from peer: Peer) {
         // NOTE: handle invite acceptance here
-        self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
         if (isAccepted) {
             DispatchQueue.main.async {
                 self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
-                self.tableView.reloadData()
             }
         }
         
@@ -379,6 +391,7 @@ extension ConversationListViewController: NSFetchedResultsControllerDelegate {
             switch type {
             case .update:
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                self.tableView.reloadData()
             case .move:
                 guard let newIndexPath = newIndexPath else { break }
                 self.tableView.moveRow(at: indexPath, to: newIndexPath)

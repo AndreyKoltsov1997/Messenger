@@ -133,7 +133,6 @@ extension CommunicationService: MCSessionDelegate {
         let isConfirmed = (state.rawValue != 0)
         if (isConfirmed) {
             delegate?.communicationService(self, didAcceptInvite: isConfirmed, from: peer)
-            print("active peers, session:", self.activePeers)
         }
       
     }
