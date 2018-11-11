@@ -82,7 +82,8 @@ class CommunicationService: NSObject, ICommunicationService {
             let jsonEncodedMessage = ["eventType": "TextMessage", "messageId": message.identifier, "text": message.text]
             let jsonData = try JSONSerialization.data(withJSONObject: jsonEncodedMessage, options: .prettyPrinted)
          
-            if !self.activePeers.contains(peer) {
+           
+            if !self.session.connectedPeers.contains(peer.identifier) { 
                 print("User hasn't been found")
                 return
             }
@@ -111,18 +112,10 @@ extension CommunicationService: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         let inviter = Peer(name: peerID.displayName, id: peerID)
 
-        if session.connectedPeers.contains(peerID) {
-            // TODO: Restore contact state to "online" here
-            print("MCNearbyServiceAdvertiser: found existing peer")
-            return
-        }
-        
-
         self.delegate?.communicationService(self, didReceiveInviteFromPeer: inviter) { [weak self] isAccepted in
             if (isAccepted) {
                 // NOTE: Accepting invite from the user
-                let newPeer = Peer(name: peerID.displayName, id: peerID)
-                self?.activePeers.append(newPeer)
+                self?.activePeers.append(inviter)
             }
             invitationHandler(isAccepted, self?.session)
         }
@@ -144,6 +137,7 @@ extension CommunicationService: MCSessionDelegate {
         }
         let isConfirmed = (state.rawValue != 0)
         if (isConfirmed) {
+            
             delegate?.communicationService(self, didAcceptInvite: isConfirmed, from: peer)
             print("active peers, session:", self.activePeers)
         }

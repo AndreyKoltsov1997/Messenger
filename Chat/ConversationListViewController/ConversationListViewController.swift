@@ -282,13 +282,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: @escaping (Bool) -> Void) {
-        // todo: handle invite receiving
-        if self.conversationList.isContactExist(withPeer: peer) {
-            print("communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer pee")
-            conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
-            return
-        }
-        self.addUserToList(userPeer: peer)
+        // NOTE: handle invite receiving
 
         let title = peer.name + " wants to chat with you."
         let message = "Do you want to accept him?"
@@ -300,6 +294,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
             // Removing user from the list. The task said we have to initially add everyone we discovered.
 
             self.self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
+            
             self.tableView.reloadData()
             invintationClosure(false)
 

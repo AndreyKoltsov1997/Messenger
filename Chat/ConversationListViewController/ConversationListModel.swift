@@ -89,6 +89,7 @@ class ConversationListModel {
         for contact in self.contacts {
             if contact.peer == peer {
                 contact.isOnline = isOnline
+                contact.isInviteConfirmed = true
             }
         }
     }
