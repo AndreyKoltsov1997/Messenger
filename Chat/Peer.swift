@@ -7,22 +7,23 @@
 //
 
 import Foundation
+import MultipeerConnectivity
 
 struct Peer: Hashable  {
-    let identifier: String
+    let identifier: MCPeerID
     let name: String
     
-    private static var peerIdentifierFactory = 0
-    private static func getUniqueIdentifier() -> Int {
-        peerIdentifierFactory += 1
-        return Peer.peerIdentifierFactory
-    }
+//    private static var peerIdentifierFactory = 0
+//    private static func getUniqueIdentifier() -> Int {
+//        peerIdentifierFactory += 1
+//        return Peer.peerIdentifierFactory
+//    }
     
-    init(name: String) {
+    init(name: String, id: MCPeerID) {
         self.name = name
         // NOTE: I'm generating STRING identifier because the homework text defined the Peer structure. I'm not sure ...
         // ... if I can edit types so enjoy the encoded unique identifier. :)
-        self.identifier = name.data(using: .utf8)!.base64EncodedString()
+        self.identifier = id
     }
     
     static func ==(lhs: Peer, rhs: Peer) -> Bool {

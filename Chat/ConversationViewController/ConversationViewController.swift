@@ -136,7 +136,7 @@ extension ConversationViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if (!self.contact.isOnline) {
             let userName =  self.contact?.name ?? "User"
-            showAlert(message: userName + "is offline and not avaliable for conversation.")
+            showAlert(message: userName + " is offline and not avaliable for conversation.")
             textField.resignFirstResponder()
         }
         return true

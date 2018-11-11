@@ -14,7 +14,14 @@ enum NetworkType {
 }
 
 class ConversationListModel {
-    public var contacts = [Contact]()
+    
+    weak var delegate: ConversationListModelDelegate?
+
+    public var contacts = [Contact]() {
+        didSet {
+            delegate?.updateTable()
+        }
+    }
  
     private var connectedPeers = [Peer]()
     
@@ -25,13 +32,13 @@ class ConversationListModel {
         if !isContactExist {
             self.contacts.append(foundContact)
         } else {
-            for contact in self.contacts {
-                if contact.peer.identifier == foundContact.peer.identifier {
-                    contact.isOnline = true
-                }
-            }
+            changeContactStatus(withPeer: peer, toOnlineStatus: true)
         }
 
+    }
+    
+    public func isContactExist(withPeer peer: Peer) -> Bool {
+        return self.contacts.contains(where: { $0.peer?.identifier == peer.identifier })
     }
     
     public func findContact(withPeer peer: Peer) -> Contact? {

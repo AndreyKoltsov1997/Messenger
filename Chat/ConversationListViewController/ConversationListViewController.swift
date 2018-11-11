@@ -112,10 +112,9 @@ class ConversationListViewController: UIViewController {
     }
     
     private func addUserToList(userPeer user: Peer) {
-//        let foundContact = Contact(peer: user, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
-        conversationList.processFoundPeer(user)
-       // self.onlineContacts.append(foundContact)
         DispatchQueue.main.async {
+            self.conversationList.processFoundPeer(user)
+
             self.tableView.reloadData()
         }
     }
@@ -156,6 +155,9 @@ extension ConversationListViewController: UITableViewDelegate {
         let isOnline = (indexPath.section == 0)
         guard let loadingContact = self.conversationList.getContact(withIndex: indexPath.row, status: isOnline) else {
             return
+        }
+        if !loadingContact.isInviteConfirmed {
+            self.communicationService.sendInvite(toPeer: loadingContact.peer)
         }
         conversationViewController.contact = loadingContact
        conversationViewControllerDelegate?.loadDialoque(withContact: loadingContact)
@@ -221,8 +223,13 @@ extension ConversationListViewController: UITableViewDataSource {
 extension ConversationListViewController: CommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didAcceptInvite isAccepted: Bool, from peer: Peer) {
         // NOTE: handle invite acceptance here
-        self.conversationList.connectUser(withPeer: peer)
-        // TODO: make chat avaliable here
+        self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
+        if (isAccepted) {
+            guard let contact = self.conversationList.findContact(withPeer: peer) else {
+                return
+            }
+            contact.isInviteConfirmed = true
+        }
     }
     
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
@@ -239,7 +246,9 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
+        conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
         conversationList.processPeerLoss(peer)
+        // NOTE: If user is in the chat, block message inpit
         if self.conversationViewController.viewIfLoaded?.window != nil {
             self.conversationViewController.blockUserInput()
         }
@@ -254,6 +263,11 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: @escaping (Bool) -> Void) {
         // todo: handle invite receiving
+        if self.conversationList.isContactExist(withPeer: peer) {
+            print("communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer pee")
+            conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
+            return
+        }
         self.addUserToList(userPeer: peer)
 
         let title = peer.name + " wants to chat with you."
@@ -309,4 +323,11 @@ extension ConversationListViewController: ConversationListViewControllerDelegate
         self.tableView.reloadData()
     }
     
+}
+
+// MARK: - ConversationListModelDelegate
+extension ConversationListViewController: ConversationListModelDelegate {
+    func updateTable() {
+        self.tableView.reloadData()
+    }
 }
