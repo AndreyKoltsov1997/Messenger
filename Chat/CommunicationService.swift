@@ -128,11 +128,14 @@ extension CommunicationService: MCSessionDelegate {
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         // TODO: impliment peer change state
+        let peer = Peer(name: peerID.displayName)
+
         if (self.activePeers.values.contains(peerID)) {
+            delegate?.communicationService(self, didFoundPeer: peer)
+            print("found existing peer")
             // NOTE: pear already exist. Return.
             return
         }
-        let peer = Peer(name: peerID.displayName)
         let isConfirmed = (state.rawValue != 0)
         if (isConfirmed) {
             self.activePeers[peer] = peerID

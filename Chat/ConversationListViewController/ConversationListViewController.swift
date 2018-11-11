@@ -135,11 +135,6 @@ class ConversationListViewController: UIViewController {
     }
 
     
-    func findContactByPeer(_ peer: Peer) -> Contact? {
-        conversationList.processFoundPeer(peer)
-        return nil
-    }
-    
     public func configureProfile(profileInfo: ProfileModel?) {
         // TODO: Update user profile picture here
         CoreDataStorageSQLite.loadProfile { name, discription, image in
@@ -226,12 +221,21 @@ extension ConversationListViewController: UITableViewDataSource {
 extension ConversationListViewController: CommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didAcceptInvite isAccepted: Bool, from peer: Peer) {
         // NOTE: handle invite acceptance here
-        self.conversationList.processFoundPeer(peer)
+        self.conversationList.connectUser(withPeer: peer)
+        // TODO: make chat avaliable here
     }
     
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
-        // TODO: handle peer discovering
-        self.tableView.reloadData()
+        // NOTE: handle peer discovering
+        // NOTE: When peer is discovered, the contact will be added ...
+        // ... to list. Once the dialogue has been tapped, the invite will be sent.
+        DispatchQueue.main.async {
+            self.conversationList.processFoundPeer(peer)
+            
+            self.tableView.reloadData()
+        }
+
+    
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
@@ -275,7 +279,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
-        if let contact = self.findContactByPeer(peer) {
+        if let contact = conversationList.findContact(withPeer: peer) {
             contact.dialoque.append(message)
             if self.conversationViewController.viewIfLoaded?.window != nil {
                 self.conversationViewController.contact.dialoque = contact.dialoque

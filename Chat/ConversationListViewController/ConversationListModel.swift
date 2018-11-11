@@ -16,9 +16,22 @@ enum NetworkType {
 class ConversationListModel {
     public var contacts = [Contact]()
  
+    private var connectedPeers = [Peer]()
+    
     public func processFoundPeer(_ peer: Peer) {
         let foundContact = Contact(peer: peer, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
-        self.contacts.append(foundContact)
+        let isContactExist = self.contacts.contains(where: { $0.peer?.identifier == peer.identifier })
+    
+        if !isContactExist {
+            self.contacts.append(foundContact)
+        } else {
+            for contact in self.contacts {
+                if contact.peer.identifier == foundContact.peer.identifier {
+                    contact.isOnline = true
+                }
+            }
+        }
+
     }
     
     public func findContact(withPeer peer: Peer) -> Contact? {
@@ -28,6 +41,10 @@ class ConversationListModel {
             }
         }
         return nil
+    }
+    
+    public func connectUser(withPeer peer: Peer) {
+        connectedPeers.append(peer)
     }
     
     public func getContacts(onlineStatus isOnline: Bool) -> [Contact]?{
