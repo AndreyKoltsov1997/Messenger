@@ -17,7 +17,7 @@ extension ContactCD {
         return NSFetchRequest<ContactCD>(entityName: "ContactCD")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: String!
     @NSManaged public var name: String?
     @NSManaged public var isOnline: Bool
     @NSManaged public var isInviteConfirmed: Bool

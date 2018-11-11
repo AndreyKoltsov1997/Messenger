@@ -16,10 +16,17 @@ enum NetworkType {
 
 class ConversationListModel {
     
+    // NOTE: Identifier factory for Contact
+    private static var identifierFactory = 0
+    public static func getUniqueIdentifier() -> String {
+        identifierFactory += 1
+        return String(ConversationListModel.identifierFactory)
+    }
+    
     // MARK: - Properties
     weak var delegate: ConversationListModelDelegate?
 
-    public var contactsInfo = [ContactCD: Peer]()
+    public var contactsInfo = [String: Peer]()
     
     public var contacts = [ContactCD]() {
         didSet {
@@ -52,21 +59,24 @@ class ConversationListModel {
     // MARK: - Public methods
     
     public func processFoundPeer(_ peer: Peer) {
-        let foundContact = Contact(peer: peer, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
-        
-        let isContactExist = self.isContactExist(withID: foundContact.getIdentifier())
-        if !isContactExist {
+        if !self.isPeerExist(peer) {
+            let foundContact = Contact(peer: peer, message: nil, date: Date(), hasUnreadMessages: false, isOnline: true)
+            foundContact.isOnline = true
+            foundContact.name = peer.name
+            self.contactsInfo.updateValue(peer, forKey: foundContact.getIdentifier())
+            
             StorageCoreData.saveContact(foundContact)
             // TODO: Re-write everything to match only ContactCD
-            if let newContact = StorageCoreData.getContact(withID: foundContact.getIdentifier()) {
-                self.contactsInfo.updateValue(peer, forKey: newContact)
-                }
-            // TODO: Update table here
         } else {
-            // TODO: Update user status here
-           // changeContactStatus(withPeer: peer, toOnlineStatus: true)
+            // TODO: Update user online status here
         }
 
+
+       
+    }
+    
+    public func isPeerExist(_ peer: Peer) -> Bool {
+        return self.contactsInfo.values.contains(peer)
     }
     
     public func isContactExist(withID id: String) -> Bool {
@@ -76,7 +86,7 @@ class ConversationListModel {
         return contacts.contains(where: {$0.id == id})
     }
     
-    public func findContact(withPeer peer: Peer) -> ContactCD? {
+    public func findContactID(withPeer peer: Peer) -> String? {
         let storingContacts = self.contactsInfo.keys
         for contact in storingContacts {
             if self.contactsInfo[contact] == peer {
@@ -87,7 +97,7 @@ class ConversationListModel {
     }
     
     public func getPeer(for contact: ContactCD) -> Peer? {
-        guard let peer = self.contactsInfo[contact] else {
+        guard let peer = self.contactsInfo[contact.id] else {
             return nil
         }
         return peer
@@ -144,21 +154,3 @@ class ConversationListModel {
     }
     
 }
-
-//extension ConversationListModel: NSFetchedResultsControllerDelegate {
-//
-//
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        delegate?.prepareTableForUpdates()
-//      //  tableView.beginUpdates()
-//    }
-//
-//
-//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        delegate?.endTableUpdates()
-//
-//        //tableView.endUpdates()
-//    }
-//
-//
-//}

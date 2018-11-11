@@ -13,6 +13,8 @@ import CoreData
 // ... I think it's better to have a single instance of a class which is working with core memory.
 class StorageCoreData: ProfileStorageManager {
     
+
+    
     // MARK: - Core Data stack
     
     public static let TAG = String(describing: StorageCoreData.self)
@@ -74,7 +76,7 @@ class StorageCoreData: ProfileStorageManager {
     }
     
     static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
-        StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
+        StorageCoreData.context.performAndWait {
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
             if (StorageCoreData.isEntityExist(withName: String(describing: UserProfile.self), withIn: fetchRequest)) {
                 // NOTE: Changing existing profile info
@@ -149,16 +151,17 @@ class StorageCoreData: ProfileStorageManager {
         return conversation
     }
     
-    static func saveContact(_ contact: Contact) {        
+    static func saveContact(_ contact: Contact) {
         // TODO: Check if entity exist
         
-        StorageCoreData.context.performAndWait { //(backgroundContext) in
+        StorageCoreData.context.performAndWait {
             let storedConract = NSEntityDescription.insertNewObject(forEntityName: String(describing: ContactCD.self), into: StorageCoreData.context) as? ContactCD
             // TODO: Add ID storing
             storedConract?.isOnline = contact.isOnline
             storedConract?.name = contact.name
-            storedConract?.id = contact.getIdentifier()
-            if  let conversation = StorageCoreData.getConversation(withID: String(contact.conversation.identifier)) {
+            storedConract?.isInviteConfirmed = false
+            storedConract?.id = String(contact.getIdentifier())
+            if  let conversation = StorageCoreData.getConversation(withID: String(contact.getIdentifier())) {
                 storedConract?.conversation = conversation
             }
             // TODO: Handle invite confirmation

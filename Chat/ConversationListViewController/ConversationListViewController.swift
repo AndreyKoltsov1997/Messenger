@@ -324,7 +324,11 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
-        if let contact = conversationList.findContact(withPeer: peer) {
+        if let contactID = conversationList.findContactID(withPeer: peer) {
+            guard let contact = StorageCoreData.getContact(withID: contactID) else {
+                print("No contact has been found with displaying name \(peer.name)")
+                return
+            }
             StorageCoreData.saveMessage(message, withIn: contact.conversation)
             if self.conversationViewController.viewIfLoaded?.window != nil {
                 // TODO: Handle situation when screen is displaying - set message as "read"
