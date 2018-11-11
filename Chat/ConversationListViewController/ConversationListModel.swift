@@ -50,10 +50,6 @@ class ConversationListModel {
         return nil
     }
     
-    public func connectUser(withPeer peer: Peer) {
-        connectedPeers.append(peer)
-    }
-    
     public func getContacts(onlineStatus isOnline: Bool) -> [Contact]?{
         var requiredContacts = [Contact]()
         for contact in self.contacts {

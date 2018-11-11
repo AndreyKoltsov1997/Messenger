@@ -106,7 +106,6 @@ class StorageCoreData: ProfileStorageManager {
             
         }
     }
-    
    
     
     static func isEntityExist(withName name: String, withIn fetchRequest: NSFetchRequest<UserProfile>) -> Bool {
@@ -133,6 +132,8 @@ class StorageCoreData: ProfileStorageManager {
         }
     }
     
+    // NOTE: получение беседы (Conversation) с определенным conversationId
+    
     static func getConversation(withID id: String) -> Conversation? {
         guard let fetchRequest = FetchRequestTemplates.getConversationByID(withID: id) else {
             print("Requested template for fetch request hasn't been found")
@@ -152,7 +153,6 @@ class StorageCoreData: ProfileStorageManager {
         
         // TODO: Check if entity exist
         
-        
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let storedConract = NSEntityDescription.insertNewObject(forEntityName: String(describing: ContactCD.self), into: backgroundContext) as? ContactCD
             // TODO: Add ID storing
@@ -165,6 +165,8 @@ class StorageCoreData: ProfileStorageManager {
             StorageCoreData.saveContext()
         }
     }
+    
+        // NOTE: получение пользователя с определенным userId
     
     static func getContact(withID id: String) -> ContactCD? {
         guard let fetchRequest = FetchRequestTemplates.getContactByID(withID: id) else {
@@ -187,8 +189,6 @@ class StorageCoreData: ProfileStorageManager {
         
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let storedConversation = NSEntityDescription.insertNewObject(forEntityName: String(describing: Conversation.self), into: backgroundContext) as? Conversation
-            // TODO: Add ID storing
-            
             if let contact = StorageCoreData.getContact(withID: conversation.contact.getIdentifier()) {
                 storedConversation?.contact = contact
             }
@@ -199,4 +199,20 @@ class StorageCoreData: ProfileStorageManager {
         }
     }
     
+    // NOTE: получение пользователей онлайн
+
+    static func getOnlineContacts() -> [ContactCD]? {
+        guard let fetchRequest = FetchRequestTemplates.getOnlineUsers() else {
+            print("template for fetching online users hasn't been found.")
+            return nil
+        }
+        do {
+            let onlineContacts = try StorageCoreData.context.fetch(fetchRequest)
+            return onlineContacts
+        } catch {
+            // TODO: Handle error correctly
+            print(StorageCoreData.TAG, "An error has occured while loading the contacts:", error.localizedDescription)
+            return nil
+        }
+    }
 }

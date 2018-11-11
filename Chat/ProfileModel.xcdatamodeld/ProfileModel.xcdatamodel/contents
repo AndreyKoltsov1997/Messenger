@@ -26,6 +26,7 @@
     </entity>
     <fetchRequest name="ContactById" entity="ContactCD" predicateString="id == &quot;$ID&quot;"/>
     <fetchRequest name="ConversationById" entity="Conversation" predicateString="id == &quot;$ID&quot;"/>
+    <fetchRequest name="GetOnlineUContacts" entity="ContactCD" predicateString="isOnline == 0"/>
     <elements>
         <element name="UserProfile" positionX="-414.98046875" positionY="64.76953125" width="128" height="90"/>
         <element name="MessageCD" positionX="-106.19921875" positionY="233.66015625" width="128" height="120"/>
