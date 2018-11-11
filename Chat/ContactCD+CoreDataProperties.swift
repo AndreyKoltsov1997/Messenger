@@ -19,8 +19,8 @@ extension ContactCD {
 
     @NSManaged public var id: String?
     @NSManaged public var name: String?
-    @NSManaged public var peer: NSData?
     @NSManaged public var isOnline: Bool
-    @NSManaged public var conversation: Conversation?
+    @NSManaged public var isInviteConfirmed: Bool
+    @NSManaged public var conversation: Conversation!
 
 }

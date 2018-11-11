@@ -15,11 +15,11 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var messageInputTextField: UITextField!
     
     // MARK: - Properties
-    var contact: Contact!
+    var contact: ContactCD!
     weak var delegate: ConversationListViewControllerDelegate?
     private let sentMessageIdentifier = String(describing: SentMessageCell.self)
     private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
-
+    var destinationPeer: Peer!
 
     public var userName: String = ""
     
@@ -88,20 +88,31 @@ extension ConversationViewController: UITableViewDelegate {
 
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.contact.conversation.dialoque.count
+        guard let conversationID = contact.conversation.id else {
+            return 0
+        }
+        guard let conversation = StorageCoreData.getConversation(withID: conversationID) else {
+            return 0
+        }
+        guard let messages = conversation.messages else {
+            return 0
+        }
+        
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var displayingCell = UITableViewCell()
-       let dialoque = contact.conversation.dialoque
-        
-        let isIndexValid = dialoque.indices.contains(indexPath.row)
-        if (!isIndexValid) {
+        guard let dialoque = StorageCoreData.getConversation(withID: contact.conversation.id)?.messages else {
+            return displayingCell
+        }
+        let isIndexValid = (indexPath.row <= dialoque.count - 1)
+        if !isIndexValid {
             return displayingCell
         }
         let message = dialoque[indexPath.row]
         
-        if message.isRecived {
+        if message.isReceived {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: recivingMessageIdentifier, for: indexPath) as? RecivedMessagesCell else {
                 return UITableViewCell()
             }
@@ -149,9 +160,15 @@ extension ConversationViewController: UITextFieldDelegate {
         guard let text = textField.text else {
             return true
         }
-        let newMessage = Message(identifier: generateMessageID(), text: text, isRecived: false, date: Date())
-        self.contact.conversation.dialoque.append(newMessage)
-        delegate?.sendMessage(newMessage, to: contact.peer)
+        //let newMessage = Message(identifier: generateMessageID(), text: text, isRecived: false, date: Date())
+        let newMessage = MessageCD(context: StorageCoreData.context)
+        newMessage.conversation = StorageCoreData.getConversation(withID: self.contact.conversation.id)
+        newMessage.date = Date() as NSDate
+        newMessage.isReceived = false
+        newMessage.text = text
+        self.contact.conversation?.addToMessages(newMessage)
+        
+        delegate?.sendMessage(newMessage, to: self.destinationPeer)
         let clearedText = ""
         textField.text = clearedText
         chatTableView.reloadData()
@@ -162,7 +179,7 @@ extension ConversationViewController: UITextFieldDelegate {
 
 // MARK: - ConversationViewControllerDelegate
 extension ConversationViewController: ConversationViewControllerDelegate {
-    func loadDialoque(withContact contact: Contact) {
+    func loadDialoque(withContact contact: ContactCD) {
         // TODO: ENcapsulate logic into a separate model
         self.contact = contact
     }

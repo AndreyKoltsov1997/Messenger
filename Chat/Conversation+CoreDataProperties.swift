@@ -17,9 +17,9 @@ extension Conversation {
         return NSFetchRequest<Conversation>(entityName: "Conversation")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: String!
     @NSManaged public var hasUnreadMessages: Bool
-    @NSManaged public var messages: NSSet?
+    @NSManaged public var messages: [MessageCD]?
     @NSManaged public var contact: ContactCD?
 
 }

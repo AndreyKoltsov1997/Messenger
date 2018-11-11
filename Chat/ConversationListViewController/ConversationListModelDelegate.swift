@@ -10,4 +10,6 @@ import Foundation
 
 protocol ConversationListModelDelegate: class {
     func updateTable()
+//    func prepareTableForUpdates()
+//    func endTableUpdates()
 }

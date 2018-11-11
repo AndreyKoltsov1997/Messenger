@@ -13,5 +13,5 @@ protocol ICommunicationService  {
     /// Онлайн/Не онлайн
     var online: Bool { get set }
     /// Отправляет сообщение участнику
-    func send(_ message: Message, to peer: Peer)
+    func send(_ message: MessageCD, to peer: Peer)
 }

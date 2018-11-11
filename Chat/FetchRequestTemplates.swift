@@ -16,7 +16,6 @@ class FetchRequestTemplates {
 
     
     // TODO: Merge "get...byID" functions into one generic function
-    
 
     static func getConversationByID(withID id: String) -> NSFetchRequest<Conversation>? {
         guard let fetchRequest = StorageCoreData.persistentContainer.managedObjectModel.fetchRequestFromTemplate(withName: "ConversationById", substitutionVariables: ["ID":id]) as? NSFetchRequest<Conversation> else {
@@ -42,6 +41,7 @@ class FetchRequestTemplates {
         }
         return fetchRequest
     }
+    
     
     
 }

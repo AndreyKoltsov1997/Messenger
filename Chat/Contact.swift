@@ -39,7 +39,7 @@ class Contact {
     init(peer: Peer!, message: String?, date: Date?, hasUnreadMessages: Bool, isOnline: Bool) {
         self.identifier = Contact.getUniqueIdentifier()
         self.name = peer.name
-        self.conversation = ConversationModel(withContact: peer)
+        self.conversation = ConversationModel(withContactID:  self.identifier)
         self.hasUnreadMessages = hasUnreadMessages
         if (message != nil) && (conversation.dialoque.isEmpty) {
             self.message = Constants.EMPTY_MESSAGE_HISTORY_TAG

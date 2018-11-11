@@ -162,6 +162,8 @@ class StorageCoreData: ProfileStorageManager {
             if  let conversation = StorageCoreData.getConversation(withID: String(contact.conversation.identifier)) {
                 storedConract?.conversation = conversation
             }
+            // TODO: Handle invite confirmation
+            storedConract?.isInviteConfirmed = false
             StorageCoreData.saveContext()
         }
     }
@@ -189,10 +191,11 @@ class StorageCoreData: ProfileStorageManager {
         
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let storedConversation = NSEntityDescription.insertNewObject(forEntityName: String(describing: Conversation.self), into: backgroundContext) as? Conversation
-            if let contact = StorageCoreData.getContact(withID: conversation.contact.getIdentifier()) {
+            if let contact = StorageCoreData.getContact(withID: String(conversation.contactID)) {
                 storedConversation?.contact = contact
             }
-            storedConversation?.hasUnreadMessages = conversation.contact.hasUnreadMessages
+            // TODO: Add dynamic "hasUnreadMessages"
+            storedConversation?.hasUnreadMessages = false
             storedConversation?.id = String(conversation.identifier)
             storedConversation?.messages = nil
             StorageCoreData.saveContext()
@@ -204,6 +207,22 @@ class StorageCoreData: ProfileStorageManager {
     static func getOnlineContacts() -> [ContactCD]? {
         guard let fetchRequest = FetchRequestTemplates.getOnlineUsers() else {
             print("template for fetching online users hasn't been found.")
+            return nil
+        }
+        do {
+            let onlineContacts = try StorageCoreData.context.fetch(fetchRequest)
+            return onlineContacts
+        } catch {
+            // TODO: Handle error correctly
+            print(StorageCoreData.TAG, "An error has occured while loading the contacts:", error.localizedDescription)
+            return nil
+        }
+    }
+    
+    static func getContacts() -> [ContactCD]? {
+     //   let fetchRequest: NSFetchRequest<ContactCD> =
+        guard let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest() else {
+            print("template for fetching contacts hasn't been found.")
             return nil
         }
         do {

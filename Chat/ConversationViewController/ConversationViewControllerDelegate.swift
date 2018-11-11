@@ -8,5 +8,5 @@
 
 
 protocol ConversationViewControllerDelegate: class {
-    func loadDialoque(withContact contact: Contact)
+    func loadDialoque(withContact contact: ContactCD)
 }

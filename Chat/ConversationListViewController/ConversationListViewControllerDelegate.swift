@@ -7,6 +7,6 @@
 //
 
 protocol ConversationListViewControllerDelegate: class {
-    func updateDialogues(for contact: Contact)
-    func sendMessage(_ message: Message, to peer: Peer)
+    func updateDialogues(for contact: ContactCD)
+    func sendMessage(_ message: MessageCD, to peer: Peer)
 }

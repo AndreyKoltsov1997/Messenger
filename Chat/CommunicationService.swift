@@ -77,9 +77,9 @@ class CommunicationService: NSObject, ICommunicationService {
         self.serviceBrowser.invitePeer(peer.identifier, to: session, withContext: nil, timeout: 300)
     }
     
-    func send(_ message: Message, to peer: Peer) {
+    func send(_ message: MessageCD, to peer: Peer) {
         do {
-            let jsonEncodedMessage = ["eventType": "TextMessage", "messageId": message.identifier, "text": message.text]
+            let jsonEncodedMessage = ["eventType": "TextMessage", "messageId": message.id, "text": message.text]
             let jsonData = try JSONSerialization.data(withJSONObject: jsonEncodedMessage, options: .prettyPrinted)
          
            

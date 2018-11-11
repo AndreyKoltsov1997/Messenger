@@ -17,10 +17,10 @@ class ConversationModel {
      public var identifier: Int
     
     var dialoque: [Message] = []
-    var contact: Contact!
+    var contactID: Int!
     
-    init(withContact contact: Peer) {
-        self.contact = Contact(peer: contact, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
+    init(withContactID contactID: Int) {
+        self.contactID = contactID
         self.identifier = ConversationModel.getUniqueIdentifier()
     }
     

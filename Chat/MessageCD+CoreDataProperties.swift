@@ -17,10 +17,10 @@ extension MessageCD {
         return NSFetchRequest<MessageCD>(entityName: "MessageCD")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: String!
     @NSManaged public var text: String?
     @NSManaged public var date: NSDate?
     @NSManaged public var isReceived: Bool
-    @NSManaged public var conversation: Conversation?
+    @NSManaged public var conversation: Conversation!
 
 }
