@@ -53,10 +53,8 @@ class ConversationListModel {
     
     public func processFoundPeer(_ peer: Peer) {
         let foundContact = Contact(peer: peer, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
-
         
         let isContactExist = self.isContactExist(withID: foundContact.getIdentifier())
-    
         if !isContactExist {
             StorageCoreData.saveContact(foundContact)
             // TODO: Re-write everything to match only ContactCD

@@ -371,24 +371,37 @@ extension ConversationListViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
-        guard let indexPath = indexPath else { return }
-        
-        switch type {
-        case .update:
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        case .move:
-            guard let newIndexPath = newIndexPath else { break }
-            self.tableView.moveRow(at: indexPath, to: newIndexPath)
-            break
-        case .insert:
-            self.tableView.insertRows(at: [indexPath], with: .automatic)
-            break
-        case .delete:
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            break
-        default:
-            break
+        if let indexPath = indexPath {
+            switch type {
+            case .update:
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            case .move:
+                guard let newIndexPath = newIndexPath else { break }
+                self.tableView.moveRow(at: indexPath, to: newIndexPath)
+                break
+            case .insert:
+                self.tableView.insertRows(at: [indexPath], with: .automatic)
+                break
+            case .delete:
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                break
+            default:
+                break
+            }
+            self.tableView.reloadData()
+        } else {
+            if let newIndexPath = newIndexPath {
+                switch type {
+                case .insert:
+                    tableView.insertRows(at: [newIndexPath], with: .automatic)
+                    break
+                default:
+                    break
+                }
+            }
         }
+        
+        
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

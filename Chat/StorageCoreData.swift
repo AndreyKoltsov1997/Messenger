@@ -149,12 +149,11 @@ class StorageCoreData: ProfileStorageManager {
         return conversation
     }
     
-    static func saveContact(_ contact: Contact) {
-        
+    static func saveContact(_ contact: Contact) {        
         // TODO: Check if entity exist
         
-        StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
-            let storedConract = NSEntityDescription.insertNewObject(forEntityName: String(describing: ContactCD.self), into: backgroundContext) as? ContactCD
+        StorageCoreData.context.performAndWait { //(backgroundContext) in
+            let storedConract = NSEntityDescription.insertNewObject(forEntityName: String(describing: ContactCD.self), into: StorageCoreData.context) as? ContactCD
             // TODO: Add ID storing
             storedConract?.isOnline = contact.isOnline
             storedConract?.name = contact.name
