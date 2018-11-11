@@ -88,12 +88,12 @@ extension ConversationViewController: UITableViewDelegate {
 
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.contact.dialoque.count
+        return self.contact.conversation.dialoque.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var displayingCell = UITableViewCell()
-       let dialoque = contact.dialoque
+       let dialoque = contact.conversation.dialoque
         
         let isIndexValid = dialoque.indices.contains(indexPath.row)
         if (!isIndexValid) {
@@ -150,7 +150,7 @@ extension ConversationViewController: UITextFieldDelegate {
             return true
         }
         let newMessage = Message(identifier: generateMessageID(), text: text, isRecived: false, date: Date())
-        self.contact.dialoque.append(newMessage)
+        self.contact.conversation.dialoque.append(newMessage)
         delegate?.sendMessage(newMessage, to: contact.peer)
         let clearedText = ""
         textField.text = clearedText

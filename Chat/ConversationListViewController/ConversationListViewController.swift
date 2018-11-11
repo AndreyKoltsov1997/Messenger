@@ -307,9 +307,9 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
         if let contact = conversationList.findContact(withPeer: peer) {
-            contact.dialoque.append(message)
+            contact.conversation.dialoque.append(message)
             if self.conversationViewController.viewIfLoaded?.window != nil {
-                self.conversationViewController.contact.dialoque = contact.dialoque
+                self.conversationViewController.contact.conversation.dialoque = contact.conversation.dialoque
                 self.conversationViewController.updateView()
             } else {
                 contact.hasUnreadMessages = true
@@ -330,7 +330,7 @@ extension ConversationListViewController: ConversationListViewControllerDelegate
     func updateDialogues(for contact: Contact) {
         for currentContact in self.conversationList.contacts {
             if contact == currentContact {
-                contact.dialoque = currentContact.dialoque
+                contact.conversation.dialoque = currentContact.conversation.dialoque
             }
         }
         self.tableView.reloadData()

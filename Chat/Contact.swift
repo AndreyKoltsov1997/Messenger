@@ -14,9 +14,11 @@ class Contact {
     var name: String?
     var peer: Peer!
     
+    
     // NOTE: last message in dialogue
     var message: String?
-    var dialoque: [Message] = []
+   // var dialoque: [Message] = []
+    var conversation: ConversationModel!
     var date: Date?
     
     var hasUnreadMessages: Bool
@@ -27,9 +29,9 @@ class Contact {
     
     init(peer: Peer!, message: String?, date: Date?, hasUnreadMessages: Bool, isOnline: Bool) {
         self.name = peer.name
-        
+        self.conversation = ConversationModel(withContact: peer)
         self.hasUnreadMessages = hasUnreadMessages
-        if (message != nil) && (dialoque.isEmpty) {
+        if (message != nil) && (conversation.dialoque.isEmpty) {
             self.message = Constants.EMPTY_MESSAGE_HISTORY_TAG
             self.hasUnreadMessages = false
         } else if (message != nil) {
@@ -46,14 +48,14 @@ class Contact {
     }
     
     public func getLastMessageFromDialog() -> String {
-        if let lastMessage = self.dialoque.last?.text {
+        if let lastMessage = self.conversation.dialoque.last?.text {
             return lastMessage
         }
         return Constants.EMPTY_MESSAGE_HISTORY_TAG
     }
     
     public func getLastMessageDate() -> Date {
-        if let lastMessageDate = self.dialoque.last?.date {
+        if let lastMessageDate = self.conversation.dialoque.last?.date {
             return lastMessageDate
         }
         return Date()

@@ -107,6 +107,8 @@ class StorageCoreData: ProfileStorageManager {
         }
     }
     
+   
+    
     static func isEntityExist(withName name: String, withIn fetchRequest: NSFetchRequest<UserProfile>) -> Bool {
         fetchRequest.includesSubentities = false
         var entitiesCount = 0
@@ -117,6 +119,21 @@ class StorageCoreData: ProfileStorageManager {
             print(TAG, "An error has occured while counting required entities:", error.localizedDescription)
         }
         return entitiesCount > 0
+    }
+    
+    static func saveMessage(_ message: Message, withIn conversation: Conversation) {
+        StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
+            let storedMessage = NSEntityDescription.insertNewObject(forEntityName: String(describing: MessageCD.self), into: backgroundContext) as? MessageCD
+            storedMessage?.date = message.date as NSDate
+            storedMessage?.text = message.text
+            storedMessage?.isReceived = message.isRecived
+            storedMessage?.id = message.identifier
+            storedMessage?.conversation = conversation
+        }
+    }
+    
+    static func saveConversation() {
+        
     }
     
 }

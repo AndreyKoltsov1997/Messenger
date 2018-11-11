@@ -33,6 +33,8 @@
 		5565F6AC21986E9500F14504 /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6A621986E9500F14504 /* Conversation+CoreDataProperties.swift */; };
 		5565F6AD21986E9500F14504 /* ContactCD+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6A721986E9500F14504 /* ContactCD+CoreDataClass.swift */; };
 		5565F6AE21986E9500F14504 /* ContactCD+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6A821986E9500F14504 /* ContactCD+CoreDataProperties.swift */; };
+		5565F6B02198735000F14504 /* FetchRequestTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6AF2198735000F14504 /* FetchRequestTemplates.swift */; };
+		5565F6B221987F6B00F14504 /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6B121987F6B00F14504 /* ConversationModel.swift */; };
 		5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */; };
 		5573D000218F6A0D00F82D05 /* ProfileStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573CFFF218F6A0D00F82D05 /* ProfileStorageManager.swift */; };
 		558252542160224800AA3FD0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558252532160224800AA3FD0 /* ProfileViewController.swift */; };
@@ -91,6 +93,8 @@
 		5565F6A621986E9500F14504 /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5565F6A721986E9500F14504 /* ContactCD+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactCD+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5565F6A821986E9500F14504 /* ContactCD+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactCD+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5565F6AF2198735000F14504 /* FetchRequestTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestTemplates.swift; sourceTree = "<group>"; };
+		5565F6B121987F6B00F14504 /* ConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModel.swift; sourceTree = "<group>"; };
 		5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorageSQLite.swift; sourceTree = "<group>"; };
 		5573CFFF218F6A0D00F82D05 /* ProfileStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManager.swift; sourceTree = "<group>"; };
 		558252532160224800AA3FD0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 				55D2AED1218EF1F200625FFB /* UserProfile+CoreDataProperties.swift */,
 				55D2AECD218EF06C00625FFB /* ProfileModel.xcdatamodeld */,
 				55D2AED4218EF25B00625FFB /* StorageCoreData.swift */,
+				5565F6AF2198735000F14504 /* FetchRequestTemplates.swift */,
 				5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */,
 				5573CFFF218F6A0D00F82D05 /* ProfileStorageManager.swift */,
 			);
@@ -297,6 +302,7 @@
 				5506460F216A97BD00EB961B /* RecivedMessagesCell.xib */,
 				55E23636216A7D4B0040E4DB /* ConversationViewController.xib */,
 				55E2363D216A7FA70040E4DB /* SentMessageCell.swift */,
+				5565F6B121987F6B00F14504 /* ConversationModel.swift */,
 				55E2363E216A7FA80040E4DB /* SentMessageCell.xib */,
 				55E23641216A85770040E4DB /* MessageCellConfiguration.swift */,
 			);
@@ -381,6 +387,7 @@
 			files = (
 				5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */,
 				55D2AED5218EF25B00625FFB /* StorageCoreData.swift in Sources */,
+				5565F6B221987F6B00F14504 /* ConversationModel.swift in Sources */,
 				552810A921652B77001A304A /* ConversationsListCell.swift in Sources */,
 				5565F6AE21986E9500F14504 /* ContactCD+CoreDataProperties.swift in Sources */,
 				55A6D233217CF19600B9A135 /* ImageSavingOperation.swift in Sources */,
@@ -403,6 +410,7 @@
 				553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */,
 				55F7BBAF2191E89800752AB6 /* ConversationListModel.swift in Sources */,
 				55D2AED7218F04ED00625FFB /* ProfileModel.swift in Sources */,
+				5565F6B02198735000F14504 /* FetchRequestTemplates.swift in Sources */,
 				5565F6AC21986E9500F14504 /* Conversation+CoreDataProperties.swift in Sources */,
 				550995872157955600D377E5 /* AppDelegate.swift in Sources */,
 				552810A2216529ED001A304A /* ConversationListViewController.swift in Sources */,
