@@ -57,8 +57,8 @@ class CoreDataStorageSQLite: ProfileStorageManager {
     
     
     static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
-        if (CoreDataStorageSQLite.isEntityExist(withName: UserProfile.TAG)) {
-            let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
+        let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
+        if (CoreDataStorageSQLite.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
             do {
                 let userProfileInfo = try CoreDataStorageSQLite.privateManagedObjectContext.fetch(fetchRequest)
                 if !userProfileInfo.isEmpty {
@@ -114,8 +114,7 @@ class CoreDataStorageSQLite: ProfileStorageManager {
 }
 
 extension CoreDataStorageSQLite {
-    static func isEntityExist(withName name: String) -> Bool {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+    static func isEntityExist(withName name: String, withIn fetchRequest: NSFetchRequest<UserProfile>) -> Bool {
         fetchRequest.includesSubentities = false
         var entitiesCount = 0
         do {

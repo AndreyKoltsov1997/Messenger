@@ -20,7 +20,7 @@ class CommunicationService: NSObject, ICommunicationService {
     let peerID = MCPeerID(displayName: UIDevice.current.name)
     var mcSession: MCSession!
     let serviceType = "tinkoff-chat"
-    var activePeers: [Peer: MCPeerID] = [:]
+    var activePeers: [Peer] = []
     
     // Bluetooth Manager
     var bluetoothManager: CBCentralManager!
@@ -73,27 +73,32 @@ class CommunicationService: NSObject, ICommunicationService {
         self.serviceBrowser.stopBrowsingForPeers();
     }
     
+    public func sendInvite(toPeer peer: Peer) {
+        self.serviceBrowser.invitePeer(peer.identifier, to: session, withContext: nil, timeout: 300)
+    }
+    
     func send(_ message: Message, to peer: Peer) {
         do {
             let jsonEncodedMessage = ["eventType": "TextMessage", "messageId": message.identifier, "text": message.text]
             let jsonData = try JSONSerialization.data(withJSONObject: jsonEncodedMessage, options: .prettyPrinted)
          
-            if !self.activePeers.keys.contains(peer) {
+           
+            if !self.session.connectedPeers.contains(peer.identifier) { 
                 print("User hasn't been found")
                 return
             }
-            let peerID = activePeers[peer]!
-            try session.send(jsonData, toPeers: [peerID], with: .reliable)
-        } catch{
-            print("Unable to send JSON")
+            
+            try session.send(jsonData, toPeers: [peer.identifier], with: .reliable)
+        } catch {
+            print("Unable to send JSON, reason:", error.localizedDescription)
         }
     }
     
     func getPeerByID (_ lostPeerID: MCPeerID) -> Peer {
-        var lostPeer = Peer(name: lostPeerID.displayName)
+        var lostPeer = Peer(name: lostPeerID.displayName, id: lostPeerID)
         for user in self.activePeers {
-            if user.value == lostPeerID {
-                lostPeer = user.key
+            if user  == lostPeer {
+                lostPeer = user
             }
         }
         return lostPeer
@@ -105,17 +110,12 @@ class CommunicationService: NSObject, ICommunicationService {
 // MARK: - MCNearbyServiceAdvertiserDelegate
 extension CommunicationService: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        if session.connectedPeers.contains(peerID) {
-            return
-        }
-        
-        let inviter = Peer(name: peerID.displayName)
+        let inviter = Peer(name: peerID.displayName, id: peerID)
 
         self.delegate?.communicationService(self, didReceiveInviteFromPeer: inviter) { [weak self] isAccepted in
             if (isAccepted) {
                 // NOTE: Accepting invite from the user
-                let addedUserPeer = Peer(name: peerID.displayName)
-                self?.activePeers[addedUserPeer] = peerID
+                self?.activePeers.append(inviter)
             }
             invitationHandler(isAccepted, self?.session)
         }
@@ -127,17 +127,13 @@ extension CommunicationService: MCNearbyServiceAdvertiserDelegate {
 extension CommunicationService: MCSessionDelegate {
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        // TODO: impliment peer change state
-        if (self.activePeers.values.contains(peerID)) {
-            // NOTE: pear already exist. Return.
-            return
-        }
-        let peer = Peer(name: peerID.displayName)
+        // NOTE: impliment peer change state
+        let peer = Peer(name: peerID.displayName, id: peerID)
+
         let isConfirmed = (state.rawValue != 0)
         if (isConfirmed) {
-            self.activePeers[peer] = peerID
             delegate?.communicationService(self, didAcceptInvite: isConfirmed, from: peer)
-            print("active peers, session:", self.activePeers.values)
+            print("active peers, session:", self.activePeers)
         }
       
     }
@@ -170,18 +166,21 @@ extension CommunicationService: MCSessionDelegate {
 // MARK: - MCNearbyServiceBrowserDelegate
 extension CommunicationService: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-        // TODO: impliment peer discovering behaviour
-        if (!session.connectedPeers.contains(peerID)) {
-            browser.invitePeer(peerID, to: self.session, withContext: self.serviceType.data(using: .utf8), timeout: 300)
-        }
+        // NOTE: impliment peer discovering behaviour
+        let peer = Peer(name: peerID.displayName, id: peerID)
+        delegate?.communicationService(self, didFoundPeer: peer)
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-        // TODO: impliment peer loss behavior
-        self.delegate?.communicationService(self, didLostPeer: Peer(name: peerID.displayName))
-        if activePeers.values.contains(peerID) {
-            
+        // NOTE: impliment peer loss behavior
+        let lostPeer = Peer(name: peerID.displayName, id: peerID)
+        if activePeers.contains(lostPeer) {
+            // NOTE: Peer is in the contact list
             self.delegate?.communicationService(self, didLostPeer: self.getPeerByID(peerID))
+        } else {
+            // NOTE: Peer is not in the contact list
+            self.delegate?.communicationService(self, didLostPeer: Peer(name: peerID.displayName, id: peerID))
+
         }
     }
     

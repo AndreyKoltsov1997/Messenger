@@ -21,6 +21,7 @@ class Contact {
     
     var hasUnreadMessages: Bool
     var isOnline: Bool = false
+    var isInviteConfirmed: Bool = false
     
     
     

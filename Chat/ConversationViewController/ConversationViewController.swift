@@ -15,7 +15,7 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var messageInputTextField: UITextField!
     
     // MARK: - Properties
-    var contact: Contact! 
+    var contact: Contact!
     weak var delegate: ConversationListViewControllerDelegate?
     private let sentMessageIdentifier = String(describing: SentMessageCell.self)
     private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
@@ -24,6 +24,7 @@ class ConversationViewController: UIViewController {
     public var userName: String = ""
     
     // MARK: - Lifecycle
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,6 @@ class ConversationViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("view will disappear")
         delegate?.updateDialogues(for: self.contact)
     }
     
@@ -52,7 +52,8 @@ class ConversationViewController: UIViewController {
         chatTableView.dataSource = self
         self.title = userName
         self.messageInputTextField.delegate = self
-        self.messageInputTextField.isEnabled = contact.isOnline
+        // TODO: Replace with delegate
+        self.messageInputTextField.isEnabled = true
     }
     
     private func showAlert(message:String) {
@@ -135,7 +136,7 @@ extension ConversationViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if (!self.contact.isOnline) {
             let userName =  self.contact?.name ?? "User"
-            showAlert(message: userName + "is offline and not avaliable for conversation.")
+            showAlert(message: userName + " is offline and not avaliable for conversation.")
             textField.resignFirstResponder()
         }
         return true
@@ -155,4 +156,15 @@ extension ConversationViewController: UITextFieldDelegate {
         chatTableView.reloadData()
         return true
     }
+}
+
+
+// MARK: - ConversationViewControllerDelegate
+extension ConversationViewController: ConversationViewControllerDelegate {
+    func loadDialoque(withContact contact: Contact) {
+        // TODO: ENcapsulate logic into a separate model
+        self.contact = contact
+    }
+    
+    
 }

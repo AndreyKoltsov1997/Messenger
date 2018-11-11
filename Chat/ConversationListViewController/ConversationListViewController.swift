@@ -23,16 +23,17 @@ class ConversationListViewController: UIViewController {
     
     // MARK: - Properties
     
-    enum NetworkType {
-        case bluetooth
-        case wifi
+    private lazy var conversationList = ConversationListModel()
+    public func getConversationListModel() -> ConversationListModel {
+        return conversationList
     }
+    
+     weak var conversationViewControllerDelegate: ConversationViewControllerDelegate?
+    
     var conversationViewController = ConversationViewController()
     private let identifier = String(describing: ConversationsListCell.self)
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
-    private var contactsInfo = [[Contact]]()
-    
-    private var onlineContacts = [Contact]()
+
     
     private var communicationService: CommunicationService  = CommunicationService(displayingName: "Andrey Koltsov")
     
@@ -42,6 +43,7 @@ class ConversationListViewController: UIViewController {
                 profilePicturePreview.image = image
             } else {
                 profilePicturePreview.image =  UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
+
             }
         }
     }
@@ -53,7 +55,7 @@ class ConversationListViewController: UIViewController {
         self.conversationViewController.delegate = self
         configureCommunicationService()
         configureTableView()
-        generateTestUsers()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,7 +101,6 @@ class ConversationListViewController: UIViewController {
         let message = "Do you want to accept him?"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Accept", style: .default) { action in
-            // todo: accept user here
             print("user accepted")
             self.addUserToList(userPeer: peer)
         })
@@ -110,9 +111,9 @@ class ConversationListViewController: UIViewController {
     }
     
     private func addUserToList(userPeer user: Peer) {
-        let foundContact = Contact(peer: user, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
-        self.onlineContacts.append(foundContact)
         DispatchQueue.main.async {
+            self.conversationList.processFoundPeer(user)
+
             self.tableView.reloadData()
         }
     }
@@ -130,23 +131,7 @@ class ConversationListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
-    private func generateTestUsers() {
-        // TODO: Delete this in a feature API. It's here because I don't have time to fix this until deadline.
-        let offlineUsers = [Contact]()
-        contactsInfo.append(offlineUsers)
-        contactsInfo.append(offlineUsers)
-    }
-    
-    
-    func findContactByPeer(_ peer: Peer) -> Contact? {
-        for contact in self.onlineContacts {
-            if contact.peer == peer {
-                return contact
-            }
-        }
-        return nil
-    }
+
     
     public func configureProfile(profileInfo: ProfileModel?) {
         // TODO: Update user profile picture here
@@ -165,8 +150,22 @@ extension ConversationListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        conversationViewController.contact = onlineContacts[indexPath.row]
-        conversationViewController.contact.hasUnreadMessages = false
+        // TODO: Replace it with ConversationDelegate
+        let isOnline = (indexPath.section == 0)
+        guard let loadingContact = self.conversationList.getContact(withIndex: indexPath.row, status: isOnline) else {
+            return
+        }
+        if !loadingContact.isInviteConfirmed {
+            self.communicationService.sendInvite(toPeer: loadingContact.peer)
+            // TODO: Change background to yellow here
+            print("Invite send")
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            return
+        }
+        conversationViewController.contact = loadingContact
+       conversationViewControllerDelegate?.loadDialoque(withContact: loadingContact)
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
 }
@@ -181,39 +180,53 @@ extension ConversationListViewController: UITableViewDataSource {
         return chatSections[section]
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return onlineContacts.count
+        let isOnline = (section == 0)
+        if let onlineContacts = conversationList.getContacts(onlineStatus: isOnline) {
+            return onlineContacts.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        self.onlineContacts.sort(by: <)
-        // guard is used for type cast of the UITableViewCell to ConversationsListCell
+        let isOnline = (indexPath.section == 0)
+        
+        guard let contact = conversationList.getContact(withIndex: indexPath.row, status: isOnline) else {
+            return UITableViewCell()
+        }
+        
+        guard let cell = generateCell(forContact: contact) else {
+            return UITableViewCell()
+        }
+        
+        return cell
+    }
+    
+    private func generateCell(forContact contact: Contact) -> ConversationsListCell? {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationsListCell else {
             // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
-            return UITableViewCell()
+            return nil
         }
-        let onlineContactsSection = 0
-        if indexPath.section != onlineContactsSection {
-            // NOTE: In this case, we're processing only online users
-            return UITableViewCell()
-        }
+        cell.profileImage.layer.borderWidth = 2
         
-        let isIndexValid = onlineContacts.indices.contains(indexPath.row)
-        if (isIndexValid) {
-            let user = onlineContacts[indexPath.row]
-            cell.name = user.name
-            cell.message = user.getLastMessageFromDialog()
-            cell.date = user.getLastMessageDate()
-            cell.isOnline = true
-            cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
-            
-            if (user.hasUnreadMessages) {
-                cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
-            }
+        if (!contact.isInviteConfirmed) {
+            let red = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+            cell.profileImage.layer.borderColor = red.cgColor
+        } else if contact.isOnline {
+            let green = UIColor(red: 173.0/255.0, green: 255.0/255.0, blue: 47.0/255.0, alpha: 1.0)
+            cell.profileImage.layer.borderColor = green.cgColor
         } else {
-            // TODO: handle situation when "no message has been found"
-            return UITableViewCell()
+            cell.profileImage.layer.borderColor = UIColor.lightGray.cgColor
         }
-        
+        cell.name = contact.name
+        cell.message = contact.getLastMessageFromDialog()
+        cell.date = contact.getLastMessageDate()
+        cell.isOnline = contact.isOnline
+        // TODO: Add custom color for online contacts cell background
+        cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
+        if (contact.hasUnreadMessages) {
+            cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
+        }
+
         return cell
     }
     
@@ -226,26 +239,34 @@ extension ConversationListViewController: UITableViewDataSource {
 // MARK: - CommunicationServiceDelegate
 extension ConversationListViewController: CommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didAcceptInvite isAccepted: Bool, from peer: Peer) {
-        // todo: handle invite acceptance here
-        self.addUserToList(userPeer: peer)
+        // NOTE: handle invite acceptance here
+        self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
+        if (isAccepted) {
+            DispatchQueue.main.async {
+                self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
+                self.tableView.reloadData()
+            }
+        }
+        
     }
     
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
-        // TODO: handle peer discovering
-        self.tableView.reloadData()
+        // NOTE: handle peer discovering
+        // NOTE: When peer is discovered, the contact will be added ...
+        // ... to list. Once the dialogue has been tapped, the invite will be sent.
+        DispatchQueue.main.async {
+            self.conversationList.processFoundPeer(peer)
+            
+            self.tableView.reloadData()
+        }
+
+    
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
-        // TODO: handle peer loss
-        for contact in self.onlineContacts {
-            if contact.peer == peer {
-                contact.isOnline = false
-            }
-        }
-        self.onlineContacts = self.onlineContacts.filter {
-            $0.peer.identifier != peer.identifier
-        }
-
+        conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
+        conversationList.processPeerLoss(peer)
+        // NOTE: If user is in the chat, block message inpit
         if self.conversationViewController.viewIfLoaded?.window != nil {
             self.conversationViewController.blockUserInput()
         }
@@ -259,8 +280,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: @escaping (Bool) -> Void) {
-        // todo: handle invite receiving
-        self.addUserToList(userPeer: peer)
+        // NOTE: handle invite receiving
 
         let title = peer.name + " wants to chat with you."
         let message = "Do you want to accept him?"
@@ -270,9 +290,9 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         })
         alert.addAction(UIAlertAction(title: "Decline", style: .default) { action in
             // Removing user from the list. The task said we have to initially add everyone we discovered.
-            self.onlineContacts = self.onlineContacts.filter {
-                $0.peer.identifier != peer.identifier
-            }
+
+            self.self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
+            
             self.tableView.reloadData()
             invintationClosure(false)
 
@@ -286,7 +306,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
-        if let contact = self.findContactByPeer(peer) {
+        if let contact = conversationList.findContact(withPeer: peer) {
             contact.dialoque.append(message)
             if self.conversationViewController.viewIfLoaded?.window != nil {
                 self.conversationViewController.contact.dialoque = contact.dialoque
@@ -308,12 +328,19 @@ extension ConversationListViewController: ConversationListViewControllerDelegate
     }
     
     func updateDialogues(for contact: Contact) {
-        for user in self.onlineContacts {
-            if user == contact {
-                user.dialoque = contact.dialoque
+        for currentContact in self.conversationList.contacts {
+            if contact == currentContact {
+                contact.dialoque = currentContact.dialoque
             }
         }
         self.tableView.reloadData()
     }
     
+}
+
+// MARK: - ConversationListModelDelegate
+extension ConversationListViewController: ConversationListModelDelegate {
+    func updateTable() {
+        self.tableView.reloadData()
+    }
 }

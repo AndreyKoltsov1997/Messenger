@@ -42,13 +42,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             // NOTE: In order to save using Core Data, USE:
             // self.profile.saveIntoCoreData()
         }
-        
-        
-//        if (self.isUserDataUpdated()) {
-//
-//        } else {
-//            print("Data couldn't be saved with operations.")
-//        }
     }
     
     @IBAction func dismissBtnClicked(_ sender: Any) {
@@ -168,7 +161,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         if let image = self.profilePictureImage.image {
             return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton) || (UIImagePNGRepresentation(image) != self.profile.image))
         }
-        
         return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton))
     }
     
