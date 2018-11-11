@@ -245,7 +245,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
                 guard let contact = self.conversationList.findContact(withPeer: peer) else {
                     return
                 }
-                contact.isInviteConfirmed = true
+                self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
                 self.tableView.reloadData()
             }
         }
