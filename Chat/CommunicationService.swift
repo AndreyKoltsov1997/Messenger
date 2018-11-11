@@ -178,15 +178,9 @@ extension CommunicationService: MCSessionDelegate {
 // MARK: - MCNearbyServiceBrowserDelegate
 extension CommunicationService: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-        // TODO: impliment peer discovering behaviour
-        if (!session.connectedPeers.contains(peerID)) {
-            browser.invitePeer(peerID, to: self.session, withContext: self.serviceType.data(using: .utf8), timeout: 300)
-        } else {
-            // NOTE: Process existing peer
-            let peer = Peer(name: peerID.displayName, id: peerID)
-            delegate?.communicationService(self, didFoundPeer: peer)
-
-        }
+        // NOTE: impliment peer discovering behaviour
+        let peer = Peer(name: peerID.displayName, id: peerID)
+        delegate?.communicationService(self, didFoundPeer: peer)
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {

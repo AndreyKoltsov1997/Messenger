@@ -158,6 +158,12 @@ extension ConversationListViewController: UITableViewDelegate {
         }
         if !loadingContact.isInviteConfirmed {
             self.communicationService.sendInvite(toPeer: loadingContact.peer)
+            // TODO: Change background to yellow here
+            print("Invite send")
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            return
         }
         conversationViewController.contact = loadingContact
        conversationViewControllerDelegate?.loadDialoque(withContact: loadingContact)
@@ -201,6 +207,15 @@ extension ConversationListViewController: UITableViewDataSource {
             // nil. We have to return a strong cell in this scope. E.g.:  any default cell.
             return nil
         }
+        cell.profileImage.layer.borderWidth = 2
+        
+        if (!contact.isInviteConfirmed) {
+            let red = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+            cell.profileImage.layer.borderColor = red.cgColor
+        } else if contact.isOnline {
+            let green = UIColor(red: 173.0/255.0, green: 255.0/255.0, blue: 47.0/255.0, alpha: 1.0)
+            cell.profileImage.layer.borderColor = green.cgColor
+        }
         cell.name = contact.name
         cell.message = contact.getLastMessageFromDialog()
         cell.date = contact.getLastMessageDate()
@@ -210,6 +225,7 @@ extension ConversationListViewController: UITableViewDataSource {
         if (contact.hasUnreadMessages) {
             cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
         }
+
         return cell
     }
     
@@ -225,11 +241,15 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         // NOTE: handle invite acceptance here
         self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
         if (isAccepted) {
-            guard let contact = self.conversationList.findContact(withPeer: peer) else {
-                return
+            DispatchQueue.main.async {
+                guard let contact = self.conversationList.findContact(withPeer: peer) else {
+                    return
+                }
+                contact.isInviteConfirmed = true
+                self.tableView.reloadData()
             }
-            contact.isInviteConfirmed = true
         }
+        
     }
     
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
