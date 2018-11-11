@@ -149,6 +149,10 @@ class StorageCoreData: ProfileStorageManager {
     }
     
     static func saveContact(_ contact: Contact) {
+        
+        // TODO: Check if entity exist
+        
+        
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let storedConract = NSEntityDescription.insertNewObject(forEntityName: String(describing: ContactCD.self), into: backgroundContext) as? ContactCD
             // TODO: Add ID storing
@@ -158,6 +162,39 @@ class StorageCoreData: ProfileStorageManager {
             if  let conversation = StorageCoreData.getConversation(withID: String(contact.conversation.identifier)) {
                 storedConract?.conversation = conversation
             }
+            StorageCoreData.saveContext()
+        }
+    }
+    
+    static func getContact(withID id: String) -> ContactCD? {
+        guard let fetchRequest = FetchRequestTemplates.getContactByID(withID: id) else {
+            print("Requested template for contact fetch request hasn't been found")
+            return nil
+        }
+        fetchRequest.includesSubentities = false
+        var contact: ContactCD? = nil
+        do {
+            contact = try StorageCoreData.context.fetch(fetchRequest).first
+        } catch {
+            print("An error has occured while fetching conversation.")
+        }
+        return contact
+    }
+    
+    static func saveConversation(_ conversation: ConversationModel) {
+        
+        // TODO: Check if entiity exist
+        
+        StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
+            let storedConversation = NSEntityDescription.insertNewObject(forEntityName: String(describing: Conversation.self), into: backgroundContext) as? Conversation
+            // TODO: Add ID storing
+            
+            if let contact = StorageCoreData.getContact(withID: conversation.contact.getIdentifier()) {
+                storedConversation?.contact = contact
+            }
+            storedConversation?.hasUnreadMessages = conversation.contact.hasUnreadMessages
+            storedConversation?.id = String(conversation.identifier)
+            storedConversation?.messages = nil
             StorageCoreData.saveContext()
         }
     }

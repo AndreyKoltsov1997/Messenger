@@ -24,6 +24,7 @@
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <fetchRequest name="ContactById" entity="ContactCD" predicateString="id == &quot;$ID&quot;"/>
     <fetchRequest name="ConversationById" entity="Conversation" predicateString="id == &quot;$ID&quot;"/>
     <elements>
         <element name="UserProfile" positionX="-414.98046875" positionY="64.76953125" width="128" height="90"/>

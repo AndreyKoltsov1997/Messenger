@@ -15,6 +15,8 @@ class FetchRequestTemplates {
     private init() {}
 
     
+    // TODO: Merge "get...byID" functions into one generic function
+    
     static func getConversationByID(withID id: String) -> NSFetchRequest<Conversation>? {
         guard let fetchRequest = StorageCoreData.persistentContainer.managedObjectModel.fetchRequestFromTemplate(withName: "ConversationById", substitutionVariables: ["ID":id]) as? NSFetchRequest<Conversation> else {
             return nil
@@ -22,12 +24,15 @@ class FetchRequestTemplates {
         return fetchRequest
     }
     
+    static func getContactByID(withID id: String) -> NSFetchRequest<ContactCD>? {
+        guard let fetchRequest = StorageCoreData.persistentContainer.managedObjectModel.fetchRequestFromTemplate(withName: "ContactById", substitutionVariables: ["ID":id]) as? NSFetchRequest<ContactCD> else {
+            return nil
+        }
+        return fetchRequest
+    }
+    
     func getMessagesFromConversation(withID id: String)  {
-        let fetchRequest = FetchRequestTemplates.getConversationByID(withID: id)
-//        guard let messages =  StorageCoreData.context.fetch(fetchRequest) as? NSFetchRequest<Conversation> else {
-//            print("no data has been found")
-//        }
-//        print(messages)
+
     }
     
     
