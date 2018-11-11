@@ -31,6 +31,7 @@ class ConversationViewController: UIViewController {
         // Do any additional setup after loading the view.
         configureChatTableView()
         navigationItem.title = contact.name
+        self.chatTableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {

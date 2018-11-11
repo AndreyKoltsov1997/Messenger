@@ -58,7 +58,7 @@ class CoreDataStorageSQLite: ProfileStorageManager {
     
     static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
         let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
-        if (CoreDataStorageSQLite.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
+        if (CoreDataStorageSQLite.isEntityExist(withName: String(describing: UserProfile.self), withIn: fetchRequest)) {
             do {
                 let userProfileInfo = try CoreDataStorageSQLite.privateManagedObjectContext.fetch(fetchRequest)
                 if !userProfileInfo.isEmpty {
@@ -73,7 +73,7 @@ class CoreDataStorageSQLite: ProfileStorageManager {
                 print(TAG, "An error has occured while re-writing profile info:", error.localizedDescription)
             }
         } else {
-            let userProfile = NSEntityDescription.insertNewObject(forEntityName: UserProfile.TAG, into: CoreDataStorageSQLite.privateManagedObjectContext) as? UserProfile
+            let userProfile = NSEntityDescription.insertNewObject(forEntityName: String(describing: UserProfile.self), into: CoreDataStorageSQLite.privateManagedObjectContext) as? UserProfile
             userProfile?.name = name
             userProfile?.discription = discription
             guard let image = image as NSData? else {

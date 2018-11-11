@@ -76,7 +76,7 @@ class StorageCoreData: ProfileStorageManager {
     static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
-            if (StorageCoreData.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
+            if (StorageCoreData.isEntityExist(withName: String(describing: UserProfile.self), withIn: fetchRequest)) {
                 // NOTE: Changing existing profile info
                 do {
                     let userProfileInfo = try StorageCoreData.context.fetch(fetchRequest)

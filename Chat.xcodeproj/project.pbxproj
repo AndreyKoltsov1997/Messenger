@@ -27,6 +27,12 @@
 		553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A880E217D19E3004B8EC6 /* FileSaver.swift */; };
 		553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A8810217D1A00004B8EC6 /* FileLoader.swift */; };
 		5565F69E219837AB00F14504 /* ConversationListModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F69D219837AB00F14504 /* ConversationListModelDelegate.swift */; };
+		5565F6A921986E9500F14504 /* MessageCD+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6A321986E9500F14504 /* MessageCD+CoreDataClass.swift */; };
+		5565F6AA21986E9500F14504 /* MessageCD+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6A421986E9500F14504 /* MessageCD+CoreDataProperties.swift */; };
+		5565F6AB21986E9500F14504 /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6A521986E9500F14504 /* Conversation+CoreDataClass.swift */; };
+		5565F6AC21986E9500F14504 /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6A621986E9500F14504 /* Conversation+CoreDataProperties.swift */; };
+		5565F6AD21986E9500F14504 /* ContactCD+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6A721986E9500F14504 /* ContactCD+CoreDataClass.swift */; };
+		5565F6AE21986E9500F14504 /* ContactCD+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F6A821986E9500F14504 /* ContactCD+CoreDataProperties.swift */; };
 		5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */; };
 		5573D000218F6A0D00F82D05 /* ProfileStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573CFFF218F6A0D00F82D05 /* ProfileStorageManager.swift */; };
 		558252542160224800AA3FD0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558252532160224800AA3FD0 /* ProfileViewController.swift */; };
@@ -79,6 +85,12 @@
 		553A880E217D19E3004B8EC6 /* FileSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSaver.swift; sourceTree = "<group>"; };
 		553A8810217D1A00004B8EC6 /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		5565F69D219837AB00F14504 /* ConversationListModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListModelDelegate.swift; sourceTree = "<group>"; };
+		5565F6A321986E9500F14504 /* MessageCD+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCD+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5565F6A421986E9500F14504 /* MessageCD+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCD+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5565F6A521986E9500F14504 /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5565F6A621986E9500F14504 /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5565F6A721986E9500F14504 /* ContactCD+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactCD+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5565F6A821986E9500F14504 /* ContactCD+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactCD+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorageSQLite.swift; sourceTree = "<group>"; };
 		5573CFFF218F6A0D00F82D05 /* ProfileStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManager.swift; sourceTree = "<group>"; };
 		558252532160224800AA3FD0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -250,6 +262,12 @@
 		55D2AECC218EF02900625FFB /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				5565F6A321986E9500F14504 /* MessageCD+CoreDataClass.swift */,
+				5565F6A421986E9500F14504 /* MessageCD+CoreDataProperties.swift */,
+				5565F6A521986E9500F14504 /* Conversation+CoreDataClass.swift */,
+				5565F6A621986E9500F14504 /* Conversation+CoreDataProperties.swift */,
+				5565F6A721986E9500F14504 /* ContactCD+CoreDataClass.swift */,
+				5565F6A821986E9500F14504 /* ContactCD+CoreDataProperties.swift */,
 				55D2AED0218EF1F200625FFB /* UserProfile+CoreDataClass.swift */,
 				55D2AED1218EF1F200625FFB /* UserProfile+CoreDataProperties.swift */,
 				55D2AECD218EF06C00625FFB /* ProfileModel.xcdatamodeld */,
@@ -364,12 +382,14 @@
 				5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */,
 				55D2AED5218EF25B00625FFB /* StorageCoreData.swift in Sources */,
 				552810A921652B77001A304A /* ConversationsListCell.swift in Sources */,
+				5565F6AE21986E9500F14504 /* ContactCD+CoreDataProperties.swift in Sources */,
 				55A6D233217CF19600B9A135 /* ImageSavingOperation.swift in Sources */,
 				55064610216A97BD00EB961B /* RecivedMessagesCell.swift in Sources */,
 				5573D000218F6A0D00F82D05 /* ProfileStorageManager.swift in Sources */,
 				55E2363F216A7FA80040E4DB /* SentMessageCell.swift in Sources */,
 				55BBDF062191F555009AEAE1 /* ConversationViewControllerDelegate.swift in Sources */,
 				55A6D225217CDE0E00B9A135 /* FileName.swift in Sources */,
+				5565F6AB21986E9500F14504 /* Conversation+CoreDataClass.swift in Sources */,
 				55E23626216A30230040E4DB /* ConversationCellConfiguration.swift in Sources */,
 				55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */,
 				55D2AED9218F14CF00625FFB /* ProvileViewControllerDelegate.swift in Sources */,
@@ -378,10 +398,12 @@
 				55A6D237217CF21D00B9A135 /* UserNameSavingOperation.swift in Sources */,
 				553967222184BB3E00AA4D05 /* Peer.swift in Sources */,
 				5539671F2184BADA00AA4D05 /* CommunicationServiceDelegate.swift in Sources */,
+				5565F6AD21986E9500F14504 /* ContactCD+CoreDataClass.swift in Sources */,
 				5539672921863A7300AA4D05 /* CodableMessage.swift in Sources */,
 				553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */,
 				55F7BBAF2191E89800752AB6 /* ConversationListModel.swift in Sources */,
 				55D2AED7218F04ED00625FFB /* ProfileModel.swift in Sources */,
+				5565F6AC21986E9500F14504 /* Conversation+CoreDataProperties.swift in Sources */,
 				550995872157955600D377E5 /* AppDelegate.swift in Sources */,
 				552810A2216529ED001A304A /* ConversationListViewController.swift in Sources */,
 				553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */,
@@ -389,6 +411,7 @@
 				55E23642216A85770040E4DB /* MessageCellConfiguration.swift in Sources */,
 				55D2AECF218EF06C00625FFB /* ProfileModel.xcdatamodeld in Sources */,
 				5565F69E219837AB00F14504 /* ConversationListModelDelegate.swift in Sources */,
+				5565F6AA21986E9500F14504 /* MessageCD+CoreDataProperties.swift in Sources */,
 				55D2AED2218EF1F200625FFB /* UserProfile+CoreDataClass.swift in Sources */,
 				55A6D235217CF1B600B9A135 /* DiscriptionSavingOperation.swift in Sources */,
 				5539671D2184BA7C00AA4D05 /* ICommunicationService.swift in Sources */,
@@ -399,6 +422,7 @@
 				550995992157A18600D377E5 /* Constants.swift in Sources */,
 				55E2362C216A38CE0040E4DB /* Contact.swift in Sources */,
 				553967242185CFA600AA4D05 /* CommunicationService.swift in Sources */,
+				5565F6A921986E9500F14504 /* MessageCD+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
