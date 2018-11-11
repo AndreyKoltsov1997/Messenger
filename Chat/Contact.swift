@@ -14,6 +14,12 @@ class Contact {
     var name: String?
     var peer: Peer!
     
+    private static var identifierFactory = 0
+    private static func getUniqueIdentifier() -> Int {
+        identifierFactory += 1
+        return Contact.identifierFactory
+    }
+    private var identifier: Int
     
     // NOTE: last message in dialogue
     var message: String?
@@ -25,9 +31,13 @@ class Contact {
     var isOnline: Bool = false
     var isInviteConfirmed: Bool = false
     
-    
+    // TODO: Change to Int64? 
+    public func getIdentifier() -> String {
+    return String(self.identifier)
+    }
     
     init(peer: Peer!, message: String?, date: Date?, hasUnreadMessages: Bool, isOnline: Bool) {
+        self.identifier = Contact.getUniqueIdentifier()
         self.name = peer.name
         self.conversation = ConversationModel(withContact: peer)
         self.hasUnreadMessages = hasUnreadMessages

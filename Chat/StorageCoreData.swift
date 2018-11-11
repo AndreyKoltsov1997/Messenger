@@ -129,11 +129,37 @@ class StorageCoreData: ProfileStorageManager {
             storedMessage?.isReceived = message.isRecived
             storedMessage?.id = message.identifier
             storedMessage?.conversation = conversation
+            StorageCoreData.saveContext()
         }
     }
     
-    static func saveConversation() {
-        
+    static func getConversation(withID id: String) -> Conversation? {
+        guard let fetchRequest = FetchRequestTemplates.getConversationByID(withID: id) else {
+            print("Requested template for fetch request hasn't been found")
+            return nil
+        }
+        fetchRequest.includesSubentities = false
+        var conversation: Conversation? = nil
+        do {
+            conversation = try StorageCoreData.context.fetch(fetchRequest).first
+        } catch {
+            print("An error has occured while fetching conversation.")
+        }
+        return conversation
+    }
+    
+    static func saveContact(_ contact: Contact) {
+        StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
+            let storedConract = NSEntityDescription.insertNewObject(forEntityName: String(describing: ContactCD.self), into: backgroundContext) as? ContactCD
+            // TODO: Add ID storing
+            storedConract?.isOnline = contact.isOnline
+            storedConract?.name = contact.name
+            storedConract?.id = contact.getIdentifier()
+            if  let conversation = StorageCoreData.getConversation(withID: String(contact.conversation.identifier)) {
+                storedConract?.conversation = conversation
+            }
+            StorageCoreData.saveContext()
+        }
     }
     
 }

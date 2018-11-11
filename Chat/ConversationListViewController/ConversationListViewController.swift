@@ -259,7 +259,6 @@ extension ConversationListViewController: CommunicationServiceDelegate {
             
             self.tableView.reloadData()
         }
-
     
     }
     

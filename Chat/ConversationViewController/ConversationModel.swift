@@ -14,7 +14,7 @@ class ConversationModel {
         identifierFactory += 1
         return ConversationModel.identifierFactory
     }
-     private var identifier: Int
+     public var identifier: Int
     
     var dialoque: [Message] = []
     var contact: Peer!
