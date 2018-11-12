@@ -122,7 +122,12 @@ class ConversationListModel {
     }
     
     public func processPeerLoss(_ peer: Peer) {
-        changeContactStatus(withPeer: peer, toOnlineStatus: false)
+        guard let contactID = self.findContactID(withPeer: peer) else {
+            print("Unable to find contact with peer", peer)
+            return
+        }
+        // TODO: Impliment saving into history
+        StorageCoreData.deleteContact(withID: contactID)
     }
     
     public func changeContactStatus(withPeer peer: Peer, toOnlineStatus isOnline: Bool) {

@@ -228,6 +228,23 @@ extension StorageCoreData {
             }
         }
     }
+    
+    static func deleteContact(withID id: String) {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = ContactCD.fetchRequest()
+        let predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = predicate
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        let context = StorageCoreData.context
+        context.performAndWait {
+            do {
+                try context.execute(deleteRequest)
+                try context.save()
+            } catch {
+                print("An error has occured while deleting contact with id: \(id)", error.localizedDescription)
+                return
+            }
+        }
+    }
 }
 
 
