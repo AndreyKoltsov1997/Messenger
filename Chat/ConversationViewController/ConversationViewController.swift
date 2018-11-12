@@ -88,7 +88,7 @@ extension ConversationViewController: UITableViewDelegate {
 
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let conversationID = contact.conversation.id else {
+        guard let conversationID = contact.conversation?.id else {
             return 0
         }
         guard let conversation = StorageCoreData.getConversation(withID: conversationID) else {
@@ -103,28 +103,31 @@ extension ConversationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var displayingCell = UITableViewCell()
-        guard let dialoque = StorageCoreData.getConversation(withID: contact.conversation.id)?.messages else {
+        guard let conversationID = contact.conversation?.id else {
+            return displayingCell
+        }
+        guard let dialoque = StorageCoreData.getConversation(withID: conversationID)?.messages else {
             return displayingCell
         }
         let isIndexValid = (indexPath.row <= dialoque.count - 1)
         if !isIndexValid {
             return displayingCell
         }
-        let message = dialoque[indexPath.row]
+        //let message = dialoque[indexPath.row]
         
-        if message.isReceived {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: recivingMessageIdentifier, for: indexPath) as? RecivedMessagesCell else {
-                return UITableViewCell()
-            }
-            cell.messageText = message.text
-            displayingCell = cell
-        } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: sentMessageIdentifier, for: indexPath) as? SentMessageCell else {
-                return UITableViewCell()
-            }
-            cell.messageText = message.text
-            displayingCell = cell
-        }
+//        if message.isReceived {
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: recivingMessageIdentifier, for: indexPath) as? RecivedMessagesCell else {
+//                return UITableViewCell()
+//            }
+//            cell.messageText = message.text
+//            displayingCell = cell
+//        } else {
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: sentMessageIdentifier, for: indexPath) as? SentMessageCell else {
+//                return UITableViewCell()
+//            }
+//            cell.messageText = message.text
+//            displayingCell = cell
+//        }
         return displayingCell
     }
     
@@ -162,7 +165,9 @@ extension ConversationViewController: UITextFieldDelegate {
         }
         //let newMessage = Message(identifier: generateMessageID(), text: text, isRecived: false, date: Date())
         let newMessage = MessageCD(context: StorageCoreData.context)
-        newMessage.conversation = StorageCoreData.getConversation(withID: self.contact.conversation.id)
+        if let conversationID = self.contact.conversation?.id {
+            newMessage.conversation = StorageCoreData.getConversation(withID: conversationID)
+        }
         newMessage.date = Date() as NSDate
         newMessage.isReceived = false
         newMessage.text = text

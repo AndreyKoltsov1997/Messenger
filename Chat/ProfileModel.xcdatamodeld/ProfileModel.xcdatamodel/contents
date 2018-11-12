@@ -10,6 +10,8 @@
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <attribute name="hasUnreadMessages" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="lastMessageDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lastMessageText" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contact" maxCount="1" deletionRule="Nullify" destinationEntity="ContactCD" inverseName="conversation" inverseEntity="ContactCD" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageCD" inverseName="conversation" inverseEntity="MessageCD" syncable="YES"/>
     </entity>
@@ -18,7 +20,7 @@
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="isReceived" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="conversation" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <entity name="UserProfile" representedClassName="UserProfile" syncable="YES">
         <attribute name="discription" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,9 +31,9 @@
     <fetchRequest name="ConversationById" entity="Conversation" predicateString="id == &quot;$ID&quot;"/>
     <fetchRequest name="GetOnlineUContacts" entity="ContactCD" predicateString="isOnline == 0"/>
     <elements>
+        <element name="ContactCD" positionX="-596.87890625" positionY="189.7734375" width="128" height="120"/>
+        <element name="Conversation" positionX="-388.84765625" positionY="189.6796875" width="128" height="135"/>
+        <element name="MessageCD" positionX="-97.98046875" positionY="205.69140625" width="128" height="120"/>
         <element name="UserProfile" positionX="-414.98046875" positionY="64.76953125" width="128" height="90"/>
-        <element name="MessageCD" positionX="-106.19921875" positionY="233.66015625" width="128" height="120"/>
-        <element name="ContactCD" positionX="-547.53515625" positionY="246.12109375" width="128" height="120"/>
-        <element name="Conversation" positionX="-315.3046875" positionY="272.91796875" width="128" height="105"/>
     </elements>
 </model>

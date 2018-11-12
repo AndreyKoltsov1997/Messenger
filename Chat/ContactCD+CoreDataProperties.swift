@@ -2,7 +2,7 @@
 //  ContactCD+CoreDataProperties.swift
 //  Chat
 //
-//  Created by Andrey Koltsov on 11/11/2018.
+//  Created by Andrey Koltsov on 12/11/2018.
 //  Copyright © 2018 Peter the Great St.Petersburg Polytechnic University. All rights reserved.
 //
 //
@@ -17,10 +17,10 @@ extension ContactCD {
         return NSFetchRequest<ContactCD>(entityName: "ContactCD")
     }
 
-    @NSManaged public var id: String!
-    @NSManaged public var name: String?
-    @NSManaged public var isOnline: Bool
+    @NSManaged public var id: String?
     @NSManaged public var isInviteConfirmed: Bool
-    @NSManaged public var conversation: Conversation!
+    @NSManaged public var isOnline: Bool
+    @NSManaged public var name: String?
+    @NSManaged public var conversation: Conversation?
 
 }

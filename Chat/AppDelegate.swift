@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // NOTE: If app was in background and user quits, @nextState is going to be Constants.APP_NON_RUNNING_STATE_TAG
+
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

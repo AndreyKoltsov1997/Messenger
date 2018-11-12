@@ -30,10 +30,10 @@ class ConversationListViewController: UIViewController {
     
     lazy var contactsFetchResultController: NSFetchedResultsController<ContactCD> = {
         let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest()
-        fetchRequest.sortDescriptors = []
+        fetchRequest.sortDescriptors = StorageCoreData.contactsSortDescriptors
         fetchRequest.resultType = .managedObjectResultType
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: StorageCoreData.context, sectionNameKeyPath: nil, cacheName: nil)
-        controller.delegate = self
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: StorageCoreData.context, sectionNameKeyPath: "isOnline", cacheName: nil)
+        //controller.delegate = self
         return controller
     }()
     
@@ -80,6 +80,12 @@ class ConversationListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadUserPic()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        StorageCoreData.deleteSession() // cleaning up previous session
+
     }
     
     private func configureFRCs() {
@@ -215,7 +221,8 @@ extension ConversationListViewController: UITableViewDataSource {
             print("Unable to find any sections within conversation DB table.")
             return 0
         }
-        if section >= amountOfSectionsInDataBase.count {
+        
+        if section >= amountOfSectionsInDataBase.endIndex {
             return 0
         }
         return amountOfSectionsInDataBase[section].numberOfObjects
@@ -228,11 +235,11 @@ extension ConversationListViewController: UITableViewDataSource {
             print("Unable to find assigned contact for conversaton with indexPath:", indexPath)
             return UITableViewCell()
         }
-        
+
         guard let cell = generateCell(forContact: targetContact) else {
             return UITableViewCell()
         }
-        
+
         return cell
     }
     
@@ -253,20 +260,23 @@ extension ConversationListViewController: UITableViewDataSource {
             cell.profileImage.layer.borderColor = UIColor.lightGray.cgColor
         }
         cell.name = contact.name
-        if let lastMessageInConversation = contact.conversation.messages?.last {
-            cell.message = lastMessageInConversation.text
-            cell.date = lastMessageInConversation.date as Date?
-        } else {
-            cell.message = "No messages yet."
-            cell.date = Date()
-            print("Unable to find last message within conversation.")
-        }
+        // TODO: Get last message here
+//        if let lastMessageInConversation = contact.conversation?.messages? {
+//            cell.message = lastMessageInConversation.text
+//            cell.date = lastMessageInConversation.date as Date?
+//        } else {
+//            cell.message = "No messages yet."
+//            cell.date = Date()
+//            print("Unable to find last message within conversation.")
+//        }
+        cell.message = "No messages yet."
+        cell.date = Date()
         cell.isOnline = contact.isOnline
         // TODO: Add custom color for online contacts cell background
         cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
         cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
-        cell.assignedConversationId = contact.conversation.id
-        cell.hasUnreadMessages = contact.conversation.hasUnreadMessages
+        cell.assignedConversationId = contact.conversation?.id
+        cell.hasUnreadMessages = contact.conversation?.hasUnreadMessages ?? false
         
         if (cell.hasUnreadMessages) {
             cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
@@ -299,11 +309,8 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         // NOTE: handle peer discovering
         // NOTE: When peer is discovered, the contact will be added ...
         // ... to list. Once the dialogue has been tapped, the invite will be sent.
-        DispatchQueue.main.async {
-            self.conversationList.processFoundPeer(peer)
-            
-            self.tableView.reloadData()
-        }
+        self.conversationList.processFoundPeer(peer)
+
         
     }
     
@@ -354,13 +361,16 @@ extension ConversationListViewController: CommunicationServiceDelegate {
                 print("No contact has been found with displaying name \(peer.name)")
                 return
             }
-            StorageCoreData.saveMessage(message, withIn: contact.conversation)
+            if let targerConversation = contact.conversation {
+                StorageCoreData.saveMessage(message, withIn: targerConversation)
+
+            }
             if self.conversationViewController.viewIfLoaded?.window != nil {
                 // TODO: Handle situation when screen is displaying - set message as "read"
                 self.conversationViewController.updateView()
             } else {
                 // NOTE: set message as "unread"
-                contact.conversation.hasUnreadMessages = true
+                contact.conversation?.hasUnreadMessages = true
             }
             
             tableView.reloadData()
@@ -378,7 +388,7 @@ extension ConversationListViewController: ConversationListViewControllerDelegate
     func updateDialogues(for contact: ContactCD) {
         for currentContact in self.conversationList.contacts {
             if contact == currentContact {
-                contact.conversation.messages = currentContact.conversation.messages
+                contact.conversation?.messages = currentContact.conversation?.messages
             }
         }
         self.tableView.reloadData()
@@ -404,7 +414,7 @@ extension ConversationListViewController: NSFetchedResultsControllerDelegate {
             switch type {
             case .update:
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
-            //  self.tableView.reloadData()
+                break
             case .move:
                 guard let newIndexPath = newIndexPath else { break }
                 self.tableView.moveRow(at: indexPath, to: newIndexPath)
@@ -418,7 +428,6 @@ extension ConversationListViewController: NSFetchedResultsControllerDelegate {
             default:
                 break
             }
-            self.tableView.reloadData()
         } else {
             if let newIndexPath = newIndexPath {
                 switch type {
@@ -431,10 +440,12 @@ extension ConversationListViewController: NSFetchedResultsControllerDelegate {
             }
         }
         
-        
+
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
+        self.tableView.reloadData()
+
     }
 }

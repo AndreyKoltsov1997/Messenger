@@ -54,12 +54,24 @@ class ConversationListModel {
             let foundContact = Contact(peer: peer, message: nil, date: Date(), hasUnreadMessages: false, isOnline: true)
             foundContact.isOnline = true
             foundContact.name = peer.name
-            self.contactsInfo.updateValue(peer, forKey: foundContact.getIdentifier())
+            StorageCoreData.saveContact(foundContact) { [weak self] isSaveSuccess in
+                guard let isSaveSuccess = isSaveSuccess else {
+                    return
+                }
+                if (isSaveSuccess) {
+                    self?.contactsInfo.updateValue(peer, forKey: foundContact.getIdentifier())
+
+                }
+                
+            }
             
-            StorageCoreData.saveContact(foundContact)
-            // TODO: Re-write everything to match only ContactCD
         } else {
-            // TODO: Update user online status here
+            // NOTE: Updating user online status
+            if let contactID = self.findContactID(withPeer: peer) {
+                let isOnline = true
+                StorageCoreData.changeContactStatus(withID: contactID, toStatus: isOnline)
+
+            }
         }
         
         
@@ -88,7 +100,10 @@ class ConversationListModel {
     }
     
     public func getPeer(for contact: ContactCD) -> Peer? {
-        guard let peer = self.contactsInfo[contact.id] else {
+        guard let contactID = contact.id else {
+            return nil
+        }
+        guard let peer = self.contactsInfo[contactID] else {
             return nil
         }
         return peer

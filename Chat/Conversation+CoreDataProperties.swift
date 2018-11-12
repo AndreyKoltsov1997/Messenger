@@ -2,7 +2,7 @@
 //  Conversation+CoreDataProperties.swift
 //  Chat
 //
-//  Created by Andrey Koltsov on 11/11/2018.
+//  Created by Andrey Koltsov on 12/11/2018.
 //  Copyright © 2018 Peter the Great St.Petersburg Polytechnic University. All rights reserved.
 //
 //
@@ -17,10 +17,12 @@ extension Conversation {
         return NSFetchRequest<Conversation>(entityName: "Conversation")
     }
 
-    @NSManaged public var id: String!
     @NSManaged public var hasUnreadMessages: Bool
-    @NSManaged public var messages: [MessageCD]?
+    @NSManaged public var id: String?
+    @NSManaged public var lastMessageDate: NSDate?
+    @NSManaged public var lastMessageText: String?
     @NSManaged public var contact: ContactCD?
+    @NSManaged public var messages: NSSet?
 
 }
 

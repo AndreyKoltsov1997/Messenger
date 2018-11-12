@@ -51,6 +51,14 @@ class StorageCoreData: ProfileStorageManager {
         }
     }
     
+    
+    
+}
+
+
+// MARK: - Operations with profile
+extension StorageCoreData {
+    
     static func loadProfile(completion: @escaping (_ name: String?, _ discription: String?, _ image: NSData?) -> Void) {
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
@@ -121,130 +129,13 @@ class StorageCoreData: ProfileStorageManager {
         }
         return entitiesCount > 0
     }
-    
-    
 }
-
 
 // MARK: - Operations With Contacts
 extension StorageCoreData {
-    // NOTE: получение пользователей онлайн
-    
-    static func getOnlineContacts() -> [ContactCD]? {
-        guard let fetchRequest = FetchRequestTemplates.getOnlineUsers() else {
-            print("template for fetching online users hasn't been found.")
-            return nil
-        }
-        do {
-            let onlineContacts = try StorageCoreData.context.fetch(fetchRequest)
-            return onlineContacts
-        } catch {
-            // TODO: Handle error correctly
-            print(StorageCoreData.TAG, "An error has occured while loading the contacts:", error.localizedDescription)
-            return nil
-        }
-    }
-    
-    static func getContacts() -> [ContactCD]? {
-        //   let fetchRequest: NSFetchRequest<ContactCD> =
-        guard let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest() else {
-            print("template for fetching contacts hasn't been found.")
-            return nil
-        }
-        do {
-            let onlineContacts = try StorageCoreData.context.fetch(fetchRequest)
-            return onlineContacts
-        } catch {
-            // TODO: Handle error correctly
-            print(StorageCoreData.TAG, "An error has occured while loading the contacts:", error.localizedDescription)
-            return nil
-        }
-    }
+
     
     
-    static func saveContact(_ contact: Contact) {
-        // TODO: Check if entity exist
-        
-        StorageCoreData.context.performAndWait {
-            // NOTE: First, generating a contact. Secondly, generating a converssation for it.
-            let storedConract = NSEntityDescription.insertNewObject(forEntityName: String(describing: ContactCD.self), into: StorageCoreData.context) as? ContactCD
-            // TODO: Add ID storing
-            storedConract?.isOnline = contact.isOnline
-            storedConract?.name = contact.name
-            storedConract?.isInviteConfirmed = false
-            storedConract?.id = String(contact.getIdentifier())
-            
-            // TODO: Handle invite confirmation
-            storedConract?.isInviteConfirmed = false
-            
-            // NOTE: Generating conversation for contact
-            let conversation = Conversation(context: context)
-            conversation.id = StorageCoreData.getUniqueIdentifierForConversation()
-            
-            // NOTE: Binding user and conversation
-            conversation.contact = storedConract
-            
-            StorageCoreData.saveContext()
-        }
-    }
-    
-    // NOTE: получение пользователя с определенным userId
-    
-    static func getContact(withID id: String) -> ContactCD? {
-        guard let fetchRequest = FetchRequestTemplates.getContactByID(withID: id) else {
-            print("Requested template for contact fetch request hasn't been found")
-            return nil
-        }
-        fetchRequest.includesSubentities = false
-        var contact: ContactCD? = nil
-        do {
-            contact = try StorageCoreData.context.fetch(fetchRequest).first
-        } catch {
-            print("An error has occured while fetching conversation.")
-        }
-        return contact
-    }
-    
-    static func changeContactStatus(withID id: String, toStatus isOnline: Bool) {
-        let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest()
-        let predicate = NSPredicate(format: "id == %@", id)
-        fetchRequest.predicate = predicate
-        let context = StorageCoreData.context
-        context.performAndWait {
-            do {
-                guard let matchingContact = try? context.fetch(fetchRequest) else {
-                    print("No contact has been found with requested id", id)
-                    return
-                }
-                if matchingContact.isEmpty {
-                    print("No contact has been found with requested id", id)
-                    return
-                }
-                matchingContact.first?.isOnline = isOnline
-                try context.save()
-            } catch {
-                print("An error has occured while fetching contact with ID:", error.localizedDescription)
-                return
-            }
-        }
-    }
-    
-    static func deleteContact(withID id: String) {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = ContactCD.fetchRequest()
-        let predicate = NSPredicate(format: "id == %@", id)
-        fetchRequest.predicate = predicate
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        let context = StorageCoreData.context
-        context.performAndWait {
-            do {
-                try context.execute(deleteRequest)
-                try context.save()
-            } catch {
-                print("An error has occured while deleting contact with id: \(id)", error.localizedDescription)
-                return
-            }
-        }
-    }
 }
 
 
@@ -253,121 +144,16 @@ extension StorageCoreData {
     
     
     
-    static var conversationSortDiscriptors: [NSSortDescriptor] {
-        let isContactOnline = NSSortDescriptor(key: "contact.isOnline", ascending: false)
-        return [isContactOnline]
-    }
     
-    private static var conversationFactory = 0
-    private static func getUniqueIdentifierForConversation() -> String {
-        conversationFactory += 1
-        return String(StorageCoreData.conversationFactory)
-    }
-    
-    
-    // NOTE: получение беседы (Conversation) с определенным conversationId
-    
-    static func getConversation(withID id: String) -> Conversation? {
-        var fetcedConversation: Conversation?
-        guard let fetchRequest = FetchRequestTemplates.getConversationByID(withID: id) else {
-            print("template for fetching conversations hasn't been found.")
-            return nil
-        }
-        let context = StorageCoreData.context
-        context.performAndWait {
-            guard let conversation = try? context.fetch(fetchRequest) else {
-                print("Unable to fetch conversations with requested ID")
-                return
-            }
-            if !conversation.isEmpty {
-                fetcedConversation = conversation.first
-            }
-        }
-        return fetcedConversation
-    }
-    
-    
-    // NOTE получение непустых бесед, в которых пользователь (User) онлайн
-    static func getNonEmptyConversationsForOnlineUsers() -> [Conversation]? {
-        var conversations: [Conversation]?
-        
-        let predicate = NSPredicate(format: "isOnline == %@", true)
-        let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest()
-        fetchRequest.predicate = predicate
-        
-        let context = StorageCoreData.context
-        context.performAndWait {
-            guard let onlineUsers = try? context.fetch(fetchRequest) else {
-                return
-            }
-            for user in onlineUsers {
-                guard let conversation = user.conversation else {
-                    continue
-                }
-                guard let messages = conversation.messages else {
-                    continue
-                }
-                
-                if !messages.isEmpty {
-                    conversations?.append(conversation)
-                }
-            }
-            
-        }
-        return conversations
-    }
-    
-    // NOTE: получение сообщений (Message) из определенной беседы по id беседы
-    
-    static func getMessageFromConversation(withID id: String) -> [MessageCD]? {
-        var messages: [MessageCD]?
-        
-        let predicate = NSPredicate(format: "id == %@", id)
-        let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-        fetchRequest.predicate = predicate
-        let context = StorageCoreData.context
-        context.performAndWait {
-            guard let conversation = try? context.fetch(fetchRequest).first else {
-                return
-            }
-            guard let foundMessages = conversation?.messages else {
-                return
-            }
-            messages = foundMessages
-            
-        }
-        return messages
-    }
-    
-    static func saveConversation(_ conversation: ConversationModel) {
-        
-        // TODO: Check if entiity exist
-        
-        StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
-            let storedConversation = NSEntityDescription.insertNewObject(forEntityName: String(describing: Conversation.self), into: backgroundContext) as? Conversation
-            if let contact = StorageCoreData.getContact(withID: String(conversation.contactID)) {
-                storedConversation?.contact = contact
-            }
-            // TODO: Add dynamic "hasUnreadMessages"
-            storedConversation?.hasUnreadMessages = false
-            storedConversation?.id = String(conversation.identifier)
-            storedConversation?.messages = nil
-            StorageCoreData.saveContext()
-        }
-    }
 }
 
 // MARK: - Operations With Messages
 extension StorageCoreData {
-    static func saveMessage(_ message: Message, withIn conversation: Conversation) {
-        StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
-            let storedMessage = NSEntityDescription.insertNewObject(forEntityName: String(describing: MessageCD.self), into: backgroundContext) as? MessageCD
-            storedMessage?.date = message.date as NSDate
-            storedMessage?.text = message.text
-            storedMessage?.isReceived = message.isRecived
-            storedMessage?.id = message.identifier
-            storedMessage?.conversation = conversation
-            StorageCoreData.saveContext()
-        }
-    }
+    
+}
+
+
+// MARK: - Common CoreData Operations
+extension StorageCoreData {
+ 
 }
