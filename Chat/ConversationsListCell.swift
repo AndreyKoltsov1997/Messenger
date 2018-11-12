@@ -47,6 +47,7 @@ class ConversationsListCell: UITableViewCell, ConversationCellConfiguration {
     
     var isOnline: Bool = false
     var hasUnreadMessages: Bool = false
+    var assignedConversationId: String? 
 
     public func configureCell(_ name: String, _ message: String?, _ date: Date?, _ isOnline: Bool, _ hasUnreadMessages: Bool) {
         usernameLabel.text = name

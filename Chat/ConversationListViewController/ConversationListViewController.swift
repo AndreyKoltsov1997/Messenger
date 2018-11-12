@@ -33,7 +33,7 @@ class ConversationListViewController: UIViewController {
         fetchRequest.sortDescriptors = []
         fetchRequest.resultType = .managedObjectResultType
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: StorageCoreData.context, sectionNameKeyPath: nil, cacheName: nil)
-         controller.delegate = self
+        controller.delegate = self
         return controller
     }()
     
@@ -46,12 +46,12 @@ class ConversationListViewController: UIViewController {
         return controller
     }()
     
-     weak var conversationViewControllerDelegate: ConversationViewControllerDelegate?
+    weak var conversationViewControllerDelegate: ConversationViewControllerDelegate?
     
     var conversationViewController = ConversationViewController()
     private let identifier = String(describing: ConversationsListCell.self)
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
-
+    
     
     private var communicationService: CommunicationService  = CommunicationService(displayingName: "Andrey Koltsov")
     
@@ -61,7 +61,7 @@ class ConversationListViewController: UIViewController {
                 profilePicturePreview.image = image
             } else {
                 profilePicturePreview.image =  UIImage(named: Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME)
-
+                
             }
         }
     }
@@ -140,7 +140,7 @@ class ConversationListViewController: UIViewController {
     private func addUserToList(userPeer user: Peer) {
         DispatchQueue.main.async {
             self.conversationList.processFoundPeer(user)
-
+            
             self.tableView.reloadData()
         }
     }
@@ -158,7 +158,7 @@ class ConversationListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
     }
-
+    
     
     public func configureProfile(profileInfo: ProfileModel?) {
         // TODO: Update user profile picture here
@@ -196,7 +196,7 @@ extension ConversationListViewController: UITableViewDelegate {
             return
         }
         conversationViewController.contact = loadingContact
-       conversationViewControllerDelegate?.loadDialoque(withContact: loadingContact)
+        conversationViewControllerDelegate?.loadDialoque(withContact: loadingContact)
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
 }
@@ -211,31 +211,25 @@ extension ConversationListViewController: UITableViewDataSource {
         return chatSections[section]
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let isOnline = (section == 0)
         guard let amountOfSectionsInDataBase = conversationFetchResultController.sections else  {
             print("Unable to find any sections within conversation DB table.")
             return 0
         }
-        if let onlineContacts = conversationList.getContacts(onlineStatus: isOnline) {
-            return onlineContacts.count
+        if section >= amountOfSectionsInDataBase.count {
+            return 0
         }
-        return 0
+        return amountOfSectionsInDataBase[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let isOnline = (indexPath.section == 0)
         
-        try? conversationFetchResultController.performFetch()
-        
-        // TODO: replace with function, isOnline passing as a parameter
-        guard let contacts = StorageCoreData.getContacts() else {
-            return UITableViewCell()
-        }
-        guard let contact = conversationList.getContact(withIndex: indexPath.row, status: isOnline) else {
+        let conversation = conversationFetchResultController.object(at: indexPath)
+        guard let targetContact = conversation.contact else {
+            print("Unable to find assigned contact for conversaton with indexPath:", indexPath)
             return UITableViewCell()
         }
         
-        guard let cell = generateCell(forContact: contacts[0]) else {
+        guard let cell = generateCell(forContact: targetContact) else {
             return UITableViewCell()
         }
         
@@ -259,19 +253,27 @@ extension ConversationListViewController: UITableViewDataSource {
             cell.profileImage.layer.borderColor = UIColor.lightGray.cgColor
         }
         cell.name = contact.name
-        cell.message = "Test message (HARD CODED)"
-        // TODO: replace hard-coded messages
-        cell.date = Date()
+        if let lastMessageInConversation = contact.conversation.messages?.last {
+            cell.message = lastMessageInConversation.text
+            cell.date = lastMessageInConversation.date as Date?
+        } else {
+            cell.message = "No messages yet."
+            cell.date = Date()
+            print("Unable to find last message within conversation.")
+        }
         cell.isOnline = contact.isOnline
         // TODO: Add custom color for online contacts cell background
         cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
-       cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
-        // TODO: Impliment logic for unread messages
-//        if (contact.hasUnreadMessages) {
-//            cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
-//        }
+        cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
+        cell.assignedConversationId = contact.conversation.id
+        cell.hasUnreadMessages = contact.conversation.hasUnreadMessages
         
-
+        if (cell.hasUnreadMessages) {
+            cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
+        } else {
+            cell.messageTextLabel.font = UIFont.systemFont(ofSize: cell.messageTextLabel.font.pointSize)
+        }
+        
         return cell
     }
     
@@ -302,7 +304,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
             
             self.tableView.reloadData()
         }
-    
+        
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
@@ -322,7 +324,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveInviteFromPeer peer: Peer, invintationClosure: @escaping (Bool) -> Void) {
         // NOTE: handle invite receiving
-
+        
         let title = peer.name + " wants to chat with you."
         let message = "Do you want to accept him?"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -331,12 +333,12 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         })
         alert.addAction(UIAlertAction(title: "Decline", style: .default) { action in
             // Removing user from the list. The task said we have to initially add everyone we discovered.
-
+            
             self.self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
             
             self.tableView.reloadData()
             invintationClosure(false)
-
+            
         })
         self.present(alert, animated: true, completion: nil)
     }
@@ -402,7 +404,7 @@ extension ConversationListViewController: NSFetchedResultsControllerDelegate {
             switch type {
             case .update:
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
-              //  self.tableView.reloadData()
+            //  self.tableView.reloadData()
             case .move:
                 guard let newIndexPath = newIndexPath else { break }
                 self.tableView.moveRow(at: indexPath, to: newIndexPath)
