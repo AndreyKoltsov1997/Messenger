@@ -25,7 +25,7 @@ class ConversationListModel {
     
     // MARK: - Properties
     weak var delegate: ConversationListModelDelegate?
-
+    
     public var contactsInfo = [String: Peer]()
     
     public var contacts = [ContactCD]() {
@@ -33,13 +33,13 @@ class ConversationListModel {
             delegate?.updateTable()
         }
     }
- 
+    
     private var connectedPeers = [Peer]()
-
+    
     
     // MARK: - Constructor
     init() {
-       // loadDialogues()
+        // loadDialogues()
     }
     
     // MARK: - Private methods
@@ -61,9 +61,9 @@ class ConversationListModel {
         } else {
             // TODO: Update user online status here
         }
-
-
-       
+        
+        
+        
     }
     
     public func isPeerExist(_ peer: Peer) -> Bool {
@@ -122,15 +122,7 @@ class ConversationListModel {
     }
     
     public func processPeerLoss(_ peer: Peer) {
-        
-        // TODO: Impliment method
-        
-        // NOTE: Possible problemms with tableView reloading here
-//        for contact in self.contacts {
-//            if contact.peer == peer {
-//                contact.isOnline = false
-//            }
-//        }
+        changeContactStatus(withPeer: peer, toOnlineStatus: false)
     }
     
     public func changeContactStatus(withPeer peer: Peer, toOnlineStatus isOnline: Bool) {
@@ -139,23 +131,7 @@ class ConversationListModel {
             // NOTE: Means contact doesnt exist
             return
         }
-        StorageCoreData.context.performAndWait {
-//            guard let contact = StorageCoreData.getContact(withID: "0") else {
-//                print("Contact with id \(contactID) hasn't been found in database.")
-//                return
-//            }
-//            contact.isOnline = isOnline
-//            self.delegate?.updateTable()
-//            try? StorageCoreData.context.save()
-             let predicate = NSPredicate(format: "id == %@", "1")
-            let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest()
-            fetchRequest.predicate = predicate
-                let foundContact = try? StorageCoreData.context.fetch(fetchRequest)
-                print("found amount", foundContact?.count)
-            foundContact?.first?.isOnline = true
-            foundContact?.first?.isInviteConfirmed = true
-                try? StorageCoreData.context.save()
-        }
+        StorageCoreData.changeContactStatus(withID: contactID, toStatus: isOnline)
     }
     
 }

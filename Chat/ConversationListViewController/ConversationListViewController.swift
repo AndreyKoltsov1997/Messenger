@@ -39,7 +39,7 @@ class ConversationListViewController: UIViewController {
     
     lazy var conversationFetchResultController: NSFetchedResultsController<Conversation> = {
         let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-        fetchRequest.sortDescriptors = []
+        fetchRequest.sortDescriptors = StorageCoreData.conversationSortDiscriptors
         fetchRequest.resultType = .managedObjectResultType
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: StorageCoreData.context, sectionNameKeyPath: nil, cacheName: nil)
         controller.delegate = self
@@ -73,7 +73,7 @@ class ConversationListViewController: UIViewController {
         self.conversationViewController.delegate = self
         configureCommunicationService()
         configureTableView()
-        try? contactsFetchResultController.performFetch()
+        self.configureFRCs()
         
     }
     
@@ -82,6 +82,14 @@ class ConversationListViewController: UIViewController {
         loadUserPic()
     }
     
+    private func configureFRCs() {
+        do {
+            try contactsFetchResultController.performFetch()
+            try conversationFetchResultController.performFetch()
+        } catch {
+            print("An error has occured while configuring fetch result controllers:", error.localizedDescription)
+        }
+    }
     
     private func configureCommunicationService() {
         communicationService.delegate = self
@@ -204,6 +212,10 @@ extension ConversationListViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let isOnline = (section == 0)
+        guard let amountOfSectionsInDataBase = conversationFetchResultController.sections else  {
+            print("Unable to find any sections within conversation DB table.")
+            return 0
+        }
         if let onlineContacts = conversationList.getContacts(onlineStatus: isOnline) {
             return onlineContacts.count
         }
@@ -294,7 +306,6 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
-        conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
         conversationList.processPeerLoss(peer)
         // NOTE: If user is in the chat, block message inpit
         if self.conversationViewController.viewIfLoaded?.window != nil {
@@ -391,7 +402,7 @@ extension ConversationListViewController: NSFetchedResultsControllerDelegate {
             switch type {
             case .update:
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                self.tableView.reloadData()
+              //  self.tableView.reloadData()
             case .move:
                 guard let newIndexPath = newIndexPath else { break }
                 self.tableView.moveRow(at: indexPath, to: newIndexPath)

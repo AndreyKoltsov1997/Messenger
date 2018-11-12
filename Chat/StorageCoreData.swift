@@ -13,12 +13,12 @@ import CoreData
 // ... I think it's better to have a single instance of a class which is working with core memory.
 class StorageCoreData: ProfileStorageManager {
     
-
+    
     
     // MARK: - Core Data stack
     
     public static let TAG = String(describing: StorageCoreData.self)
-
+    
     // NOTE: Constructor is private in order to confirm to Singleton pattern
     private init() {}
     
@@ -27,7 +27,7 @@ class StorageCoreData: ProfileStorageManager {
     }
     
     static var persistentContainer: NSPersistentContainer = {
-
+        
         let container = NSPersistentContainer(name: Constants.PROFILE_MODEL_TAG)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -108,7 +108,7 @@ class StorageCoreData: ProfileStorageManager {
             
         }
     }
-   
+    
     
     static func isEntityExist(withName name: String, withIn fetchRequest: NSFetchRequest<UserProfile>) -> Bool {
         fetchRequest.includesSubentities = false
@@ -122,7 +122,7 @@ class StorageCoreData: ProfileStorageManager {
         return entitiesCount > 0
     }
     
-
+    
 }
 
 
@@ -205,11 +205,41 @@ extension StorageCoreData {
         return contact
     }
     
+    static func changeContactStatus(withID id: String, toStatus isOnline: Bool) {
+        let fetchRequest: NSFetchRequest<ContactCD> = ContactCD.fetchRequest()
+        let predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = predicate
+        let context = StorageCoreData.context
+        context.performAndWait {
+            do {
+                guard let matchingContact = try? context.fetch(fetchRequest) else {
+                    print("No contact has been found with requested id", id)
+                    return
+                }
+                if matchingContact.isEmpty {
+                    print("No contact has been found with requested id", id)
+                    return
+                }
+                matchingContact.first?.isOnline = isOnline
+                try context.save()
+            } catch {
+                print("An error has occured while fetching contact with ID:", error.localizedDescription)
+                return
+            }
+        }
+    }
 }
 
 
 // MARK: - Operations With Conversation
 extension StorageCoreData {
+    
+    
+    
+    static var conversationSortDiscriptors: [NSSortDescriptor] {
+        let isContactOnline = NSSortDescriptor(key: "contact.isOnline", ascending: false)
+        return [isContactOnline]
+    }
     
     private static var conversationFactory = 0
     private static func getUniqueIdentifierForConversation() -> String {
@@ -226,7 +256,7 @@ extension StorageCoreData {
             print("template for fetching conversations hasn't been found.")
             return nil
         }
-         let context = StorageCoreData.context
+        let context = StorageCoreData.context
         context.performAndWait {
             guard let conversation = try? context.fetch(fetchRequest) else {
                 print("Unable to fetch conversations with requested ID")
