@@ -21,17 +21,12 @@ class ConversationListViewController: UIViewController {
         }
     }
     
-    // MARK: - Properties
-    
-    private lazy var conversationList = ContactProcessingService()
-    public func getConversationListModel() -> ContactProcessingService {
-        return conversationList
-    }
     
     // MARK: - Service Dependencies
     
     private var storage: IStorageManagerService?
     private var communicationService: CommunicationService?
+    private var contactProcessingService: IContactsProcessingService?
 
 
     // MARK: - Presentation Layer Dependencies
@@ -124,7 +119,7 @@ class ConversationListViewController: UIViewController {
     
     private func addUserToList(userPeer user: Peer) {
         DispatchQueue.main.async {
-            self.conversationList.processFoundContact(user)
+            self.contactProcessingService?.processFoundContact(user)
 
             self.tableView.reloadData()
         }
@@ -146,10 +141,11 @@ class ConversationListViewController: UIViewController {
 
     // MARK: - Public functions
     
-    public func setupViewController(presentationAssembly: PresentationAssembly, storage: IStorageManagerService, communicationService: ICommunicationService?) {
+    public func setupViewController(presentationAssembly: PresentationAssembly, storage: IStorageManagerService, communicationService: ICommunicationService?, contactProcessingService: IContactsProcessingService?) {
         self.presentationAssembly = presentationAssembly
         self.storage = storage
         self.communicationService = communicationService as? CommunicationService
+        self.contactProcessingService = contactProcessingService as? ContactProcessingService
     }
     
     public func configureProfile(profileInfo: ProfileModel?) {
@@ -175,7 +171,7 @@ extension ConversationListViewController: UITableViewDelegate {
         
         // TODO: Replace it with ConversationDelegate
         let isOnline = (indexPath.section == 0)
-        guard let loadingContact = self.conversationList.getContact(withIndex: indexPath.row, status: isOnline) else {
+        guard let loadingContact = self.contactProcessingService?.getContact(withIndex: indexPath.row, status: isOnline) else {
             return
         }
         if !loadingContact.isInviteConfirmed {
@@ -214,7 +210,7 @@ extension ConversationListViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let isOnline = (section == 0)
-        if let onlineContacts = conversationList.getContacts(onlineStatus: isOnline) {
+        if let onlineContacts = contactProcessingService?.getContacts(onlineStatus: isOnline) {
             return onlineContacts.count
         }
         return 0
@@ -223,7 +219,7 @@ extension ConversationListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let isOnline = (indexPath.section == 0)
         
-        guard let contact = conversationList.getContact(withIndex: indexPath.row, status: isOnline) else {
+        guard let contact = contactProcessingService?.getContact(withIndex: indexPath.row, status: isOnline) else {
             return UITableViewCell()
         }
         
@@ -273,10 +269,10 @@ extension ConversationListViewController: UITableViewDataSource {
 extension ConversationListViewController: CommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didAcceptInvite isAccepted: Bool, from peer: Peer) {
         // NOTE: handle invite acceptance here
-        self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
+        self.contactProcessingService?.changeContactStatus(withPeer: peer, toOnlineStatus: true)
         if (isAccepted) {
             DispatchQueue.main.async {
-                self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: true)
+                self.contactProcessingService?.changeContactStatus(withPeer: peer, toOnlineStatus: true)
                 self.tableView.reloadData()
             }
         }
@@ -288,7 +284,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         // NOTE: When peer is discovered, the contact will be added ...
         // ... to list. Once the dialogue has been tapped, the invite will be sent.
         DispatchQueue.main.async {
-            self.conversationList.processFoundContact(peer)
+            self.contactProcessingService?.processFoundContact(peer)
             
             self.tableView.reloadData()
         }
@@ -297,8 +293,8 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
-        conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
-        conversationList.processPeerLoss(peer)
+        contactProcessingService?.changeContactStatus(withPeer: peer, toOnlineStatus: false)
+        contactProcessingService?.processPeerLoss(peer)
         // NOTE: If user is in the chat, block message inpit
         guard let conversationViewController = self.conversationViewController else {
             print("Unable to load conversationViewController")
@@ -329,7 +325,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         alert.addAction(UIAlertAction(title: "Decline", style: .default) { action in
             // Removing user from the list. The task said we have to initially add everyone we discovered.
 
-            self.self.conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
+            self.contactProcessingService?.changeContactStatus(withPeer: peer, toOnlineStatus: false)
             
             self.tableView.reloadData()
             invintationClosure(false)
@@ -344,7 +340,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
-        if let contact = conversationList.findContact(withPeer: peer) {
+        if let contact = contactProcessingService?.findContact(withPeer: peer) {
             contact.dialoque.append(message)
             guard let conversationViewController = self.conversationViewController else {
                 print("Unable to load conversationViewController")
@@ -371,7 +367,12 @@ extension ConversationListViewController: ConversationListViewControllerDelegate
     }
     
     func updateDialogues(for contact: Contact) {
-        for currentContact in self.conversationList.contacts {
+        guard let contacts = self.contactProcessingService?.getContacts() else {
+            let emptyString = " "
+            print("Nothing to be updated for contact", contact.name ?? emptyString)
+            return
+        }
+        for currentContact in contacts {
             if contact == currentContact {
                 contact.dialoque = currentContact.dialoque
             }

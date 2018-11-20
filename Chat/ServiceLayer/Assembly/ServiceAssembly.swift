@@ -12,6 +12,7 @@ protocol IServicesAssembly {
     func communicationService(displayingName name: String) -> ICommunicationService
     func storageManagerService() -> IStorageManagerService
     func gcdDataManager() -> GCDDataManager
+    func contactProcessingService() -> IContactsProcessingService
 }
 
 class ServicesAssembly {
@@ -27,6 +28,10 @@ class ServicesAssembly {
 // MARK: - IServicesAssembly
 
 extension ServicesAssembly: IServicesAssembly {
+    func contactProcessingService() -> IContactsProcessingService {
+        return ContactProcessingService()
+    }
+    
     func gcdDataManager() -> GCDDataManager {
         return self.coreAssembly.gcdDataManager
     }

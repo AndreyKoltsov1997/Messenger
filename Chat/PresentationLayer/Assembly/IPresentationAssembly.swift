@@ -34,7 +34,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     func conversationListViewController() -> ConversationListViewController {
         let conversationListViewController = ConversationListViewController()
-        conversationListViewController.setupViewController(presentationAssembly: self, storage: serviceAssembly.storageManagerService(), communicationService: serviceAssembly.communicationService(displayingName: "Andrey Koltsov"))
+        conversationListViewController.setupViewController(presentationAssembly: self, storage: serviceAssembly.storageManagerService(), communicationService: serviceAssembly.communicationService(displayingName: "Andrey Koltsov"), contactProcessingService: serviceAssembly.contactProcessingService())
         return conversationListViewController
     }
     

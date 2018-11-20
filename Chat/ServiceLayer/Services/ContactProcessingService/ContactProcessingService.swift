@@ -15,11 +15,19 @@ enum NetworkType {
 
 protocol IContactsProcessingService {
     
+    // NOTE: Operations with contacts
     func isContactExist(withPeer peer: Peer) -> Bool
-    func getContact(withIndex index: Int, status isOnline: Bool) -> Contact?
+    func findContact(withPeer peer: Peer) -> Contact?
     func changeContactStatus(withPeer peer: Peer, toOnlineStatus isOnline: Bool)
+
+    func getContact(withIndex index: Int, status isOnline: Bool) -> Contact?
+    func getContacts() -> [Contact]
+    func getContacts(onlineStatus isOnline: Bool) -> [Contact]?
     
+    // NOTE: Handle peer discovery / loss
     func processFoundContact(_ peer: Peer)
+    func connectUser(withPeer peer: Peer)
+    func processPeerLoss(_ peer: Peer)
 }
 
 
@@ -32,19 +40,27 @@ class ContactProcessingService {
             delegate?.updateTable()
         }
     }
- 
     private var connectedPeers = [Peer]()
+
+    
+}
+
+// MARK: - IContactsProcessingService
+extension ContactProcessingService: IContactsProcessingService {
+    func getContacts() -> [Contact] {
+        return self.contacts
+    }
     
     public func processFoundContact(_ peer: Peer) {
         let foundContact = Contact(peer: peer, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
         let isContactExist = self.contacts.contains(where: { $0.peer?.identifier == peer.identifier })
-    
+        
         if !isContactExist {
             self.contacts.append(foundContact)
         } else {
             changeContactStatus(withPeer: peer, toOnlineStatus: true)
         }
-
+        
     }
     
     public func isContactExist(withPeer peer: Peer) -> Bool {
@@ -64,7 +80,7 @@ class ContactProcessingService {
         connectedPeers.append(peer)
     }
     
-    public func getContacts(onlineStatus isOnline: Bool) -> [Contact]?{
+    public func getContacts(onlineStatus isOnline: Bool) -> [Contact]? {
         var requiredContacts = [Contact]()
         for contact in self.contacts {
             if contact.isOnline == isOnline {
@@ -103,11 +119,4 @@ class ContactProcessingService {
             }
         }
     }
-    
-    
-}
-
-// MARK: - IContactsProcessingService
-extension ContactProcessingService: IContactsProcessingService {
-    
 }
