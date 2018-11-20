@@ -38,9 +38,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             activityIndicator.startAnimating()
             self.profile.discripton = userDiscriptionField.text
             self.profile.name = userNameField.text!
-            self.profile.saveIntoSQLite()
-            // NOTE: In order to save using Core Data, USE:
-            // self.profile.saveIntoCoreData()
+             self.profile.saveIntoCoreData()
         }
     }
     

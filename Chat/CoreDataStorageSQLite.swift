@@ -13,12 +13,10 @@ import UIKit
 // NOTE: @CoreDataStorageSQLite is used to manage data operations with NSPersistentContainer. It's a single-ton because ...
 // ... I think it's better to have a single instance of a class which is working with core memory.
 
-class CoreDataStorageSQLite: ProfileStorageManager {    
+class CoreDataStorageSQLite: IStorageManagerService {
     
     public static let TAG = String(describing: CoreDataStorageSQLite.self)
     
-    // NOTE: Constructor is private in order to confirm to Singleton pattern
-    private init() {}
     
     static var privateManagedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
@@ -56,9 +54,9 @@ class CoreDataStorageSQLite: ProfileStorageManager {
     }()
     
     
-    static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
+    func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
         let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
-        if (CoreDataStorageSQLite.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
+        if (self.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
             do {
                 let userProfileInfo = try CoreDataStorageSQLite.privateManagedObjectContext.fetch(fetchRequest)
                 if !userProfileInfo.isEmpty {
@@ -70,7 +68,7 @@ class CoreDataStorageSQLite: ProfileStorageManager {
                     userProfileInfo.last?.image = image
                 }
             } catch {
-                print(TAG, "An error has occured while re-writing profile info:", error.localizedDescription)
+                print(CoreDataStorageSQLite.TAG, "An error has occured while re-writing profile info:", error.localizedDescription)
             }
         } else {
             let userProfile = NSEntityDescription.insertNewObject(forEntityName: UserProfile.TAG, into: CoreDataStorageSQLite.privateManagedObjectContext) as? UserProfile
@@ -84,13 +82,13 @@ class CoreDataStorageSQLite: ProfileStorageManager {
         }
         
         do {
-            try privateManagedObjectContext.save()
+            try CoreDataStorageSQLite.privateManagedObjectContext.save()
         } catch {
-            print(TAG, "An error has occured while saving data into SQLite:", error.localizedDescription)
+            print(CoreDataStorageSQLite.TAG, "An error has occured while saving data into SQLite:", error.localizedDescription)
         }
     }
     
-    static func loadProfile(completion: @escaping (_ name: String?, _ discription: String?, _ image: NSData?) -> Void) {
+    func loadProfile(completion: @escaping (_ name: String?, _ discription: String?, _ image: NSData?) -> Void) {
         
         DispatchQueue.main.async {
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
@@ -114,14 +112,14 @@ class CoreDataStorageSQLite: ProfileStorageManager {
 }
 
 extension CoreDataStorageSQLite {
-    static func isEntityExist(withName name: String, withIn fetchRequest: NSFetchRequest<UserProfile>) -> Bool {
+    func isEntityExist(withName name: String, withIn fetchRequest: NSFetchRequest<UserProfile>) -> Bool {
         fetchRequest.includesSubentities = false
         var entitiesCount = 0
         do {
             entitiesCount = try CoreDataStorageSQLite.privateManagedObjectContext.count(for: fetchRequest)
         }
         catch {
-            print(TAG, "error executing fetch request:", error.localizedDescription)
+            print(CoreDataStorageSQLite.TAG, "error executing fetch request:", error.localizedDescription)
         }
         return entitiesCount > 0
     }

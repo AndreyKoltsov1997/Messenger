@@ -12,12 +12,7 @@ import MultipeerConnectivity
 struct Peer: Hashable  {
     let identifier: MCPeerID
     let name: String
-    
-//    private static var peerIdentifierFactory = 0
-//    private static func getUniqueIdentifier() -> Int {
-//        peerIdentifierFactory += 1
-//        return Peer.peerIdentifierFactory
-//    }
+ 
     
     init(name: String, id: MCPeerID) {
         self.name = name

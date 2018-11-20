@@ -11,14 +11,12 @@ import CoreData
 
 // NOTE: @StorageCoreData is used to manage data operations with NSPersistentContainer. It's a single-ton because ...
 // ... I think it's better to have a single instance of a class which is working with core memory.
-class StorageCoreData: ProfileStorageManager {
+class StorageCoreData: IStorageManagerService {
     
     // MARK: - Core Data stack
     
     public static let TAG = String(describing: StorageCoreData.self)
 
-    // NOTE: Constructor is private in order to confirm to Singleton pattern
-    private init() {}
     
     static var context: NSManagedObjectContext {
         return persistentContainer.viewContext
@@ -37,8 +35,8 @@ class StorageCoreData: ProfileStorageManager {
     
     // MARK: - Core Data Saving support
     
-    static func saveContext () {
-        let context = persistentContainer.viewContext
+    func saveContext () {
+        let context = StorageCoreData.persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()
@@ -49,7 +47,7 @@ class StorageCoreData: ProfileStorageManager {
         }
     }
     
-    static func loadProfile(completion: @escaping (_ name: String?, _ discription: String?, _ image: NSData?) -> Void) {
+    func loadProfile(completion: @escaping (_ name: String?, _ discription: String?, _ image: NSData?) -> Void) {
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
             do {
@@ -73,10 +71,10 @@ class StorageCoreData: ProfileStorageManager {
         }
     }
     
-    static func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
+    func saveProfile(_ name: String?, _ discription: String?, _ image: NSData?) {
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
-            if (StorageCoreData.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
+            if (self.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
                 // NOTE: Changing existing profile info
                 do {
                     let userProfileInfo = try StorageCoreData.context.fetch(fetchRequest)
@@ -85,9 +83,9 @@ class StorageCoreData: ProfileStorageManager {
                     if let image = image as NSData? {
                         userProfileInfo.first?.image = image
                     } else {
-                        print(TAG, "Unable to save image.")
+                        print(StorageCoreData.TAG, "Unable to save image.")
                     }
-                    StorageCoreData.saveContext()
+                    self.saveContext()
                 } catch {
                     // TODO: Handle error correctly
                     print(StorageCoreData.TAG, "An error has occured while re-writing profile info:", error.localizedDescription)
@@ -99,22 +97,22 @@ class StorageCoreData: ProfileStorageManager {
                 if let image = image as NSData? {
                     userProfile.image = image
                 } else {
-                    print(TAG, "Unable to save image.")
+                    print(StorageCoreData.TAG, "Unable to save image.")
                 }
-                StorageCoreData.saveContext()
+                self.saveContext()
             }
             
         }
     }
     
-    static func isEntityExist(withName name: String, withIn fetchRequest: NSFetchRequest<UserProfile>) -> Bool {
+    func isEntityExist(withName name: String, withIn fetchRequest: NSFetchRequest<UserProfile>) -> Bool {
         fetchRequest.includesSubentities = false
         var entitiesCount = 0
         do {
             entitiesCount = try StorageCoreData.context.count(for: fetchRequest)
         }
         catch {
-            print(TAG, "An error has occured while counting required entities:", error.localizedDescription)
+            print(StorageCoreData.TAG, "An error has occured while counting required entities:", error.localizedDescription)
         }
         return entitiesCount > 0
     }

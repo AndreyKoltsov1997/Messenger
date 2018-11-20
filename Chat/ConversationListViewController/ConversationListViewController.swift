@@ -27,6 +27,9 @@ class ConversationListViewController: UIViewController {
     public func getConversationListModel() -> ConversationListModel {
         return conversationList
     }
+    
+    var storage: StorageCoreData?
+    
     // MARK: - Dependencies
     private var presentationAssembly: IPresentationAssembly!
     
@@ -54,6 +57,7 @@ class ConversationListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.storage = StorageCoreData()
         configureCommunicationService()
         configureTableView()
         
@@ -143,7 +147,11 @@ class ConversationListViewController: UIViewController {
     
     public func configureProfile(profileInfo: ProfileModel?) {
         // TODO: Update user profile picture here
-        CoreDataStorageSQLite.loadProfile { name, discription, image in
+        guard let storage = self.storage else {
+            print("Storage hasn't been configured.")
+            return
+        }
+        storage.loadProfile { name, discription, image in
             DispatchQueue.main.async {
                 if let image = image as Data? {
                     self.profilePicturePreview.image = UIImage(data: image, scale: 1.0)

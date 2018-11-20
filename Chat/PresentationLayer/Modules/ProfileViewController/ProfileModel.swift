@@ -33,12 +33,14 @@ class ProfileModel {
     }
     
     weak var delegate: ProfileViewControllerDelegate?
-    
+    var storage: StorageCoreData?
     
     // MARK: - Constructor
     
     init() {
-        self.loadFromSQLite()
+        self.loadFromCoreData()
+        self.storage = StorageCoreData()
+        
         // NOTE: To load using Core Data, use:
         // self.loadFromCoreData()
     }
@@ -46,7 +48,11 @@ class ProfileModel {
     // MARK: - Methods
     
     public func loadFromCoreData() {
-        StorageCoreData.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+        guard let storage = storage else {
+            print("Storage hasn't been initialized")
+            return
+        }
+        storage.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
             if ((fetchedName == nil) && (fetchedDiscription == nil) && (fetchedImage == nil)) {
                 print(ProfileModel.TAG, "Unable to find any saved info for user profile")
                 return
@@ -69,50 +75,54 @@ class ProfileModel {
         }
     }
     
-    public func loadFromSQLite() {
-        DispatchQueue.main.async {
-            CoreDataStorageSQLite.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
-                DispatchQueue.main.async {
-                    if let fetchedName = fetchedName {
-                        self.name = fetchedName
-                    }
-                    
-                    if let fetchedDiscription = fetchedDiscription {
-                        self.discripton = fetchedDiscription
-                    }
-                    if let fetchedImage = fetchedImage as Data? {
-                        self.image = fetchedImage
-                    } else {
-                        print(ProfileModel.TAG, "Couldn't convert binary to image.")
-                    }
-                    self.delegate?.finishLoading(self)
-                }
-            }
-        }
-    }
+//    public func loadFromSQLite() {
+//        DispatchQueue.main.async {
+//            CoreDataStorageSQLite.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+//                DispatchQueue.main.async {
+//                    if let fetchedName = fetchedName {
+//                        self.name = fetchedName
+//                    }
+//
+//                    if let fetchedDiscription = fetchedDiscription {
+//                        self.discripton = fetchedDiscription
+//                    }
+//                    if let fetchedImage = fetchedImage as Data? {
+//                        self.image = fetchedImage
+//                    } else {
+//                        print(ProfileModel.TAG, "Couldn't convert binary to image.")
+//                    }
+//                    self.delegate?.finishLoading(self)
+//                }
+//            }
+//        }
+//    }
     
     public func saveIntoCoreData() {
         DispatchQueue.main.async {
+            guard let storage = self.storage else {
+                print("Storage hasn't been initialized")
+                return
+            }
             if let image = self.image as NSData? {
-                StorageCoreData.saveProfile(self.name, self.discripton, image)
+                storage.saveProfile(self.name, self.discripton, image)
             } else {
-                StorageCoreData.saveProfile(self.name, self.discripton, nil)
+                storage.saveProfile(self.name, self.discripton, nil)
                 
             }
             self.delegate?.onFinishSaving()
         }
     }
     
-    public func saveIntoSQLite() {
-        DispatchQueue.main.async {
-            if let image = self.image as NSData? {
-                CoreDataStorageSQLite.saveProfile(self.name, self.discripton, image)
-            } else {
-                CoreDataStorageSQLite.saveProfile(self.name, self.discripton, nil)
-            }
-        }
-        self.delegate?.onFinishSaving()
-    }
+//    public func saveIntoSQLite() {
+//        DispatchQueue.main.async {
+//            if let image = self.image as NSData? {
+//                CoreDataStorageSQLite.saveProfile(self.name, self.discripton, image)
+//            } else {
+//                CoreDataStorageSQLite.saveProfile(self.name, self.discripton, nil)
+//            }
+//        }
+//        self.delegate?.onFinishSaving()
+//    }
     
     // MARK: - GCD Operations
     
