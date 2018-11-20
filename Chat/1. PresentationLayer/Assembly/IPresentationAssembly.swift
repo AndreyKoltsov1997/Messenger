@@ -33,7 +33,13 @@ class PresentationAssembly: IPresentationAssembly {
     }
     
     func conversationListViewController() -> ConversationListViewController {
-        let conversationListViewController = ConversationListViewController()
+        let storyboard = UIStoryboard(name: "ConversationListViewController", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "NavigationController")
+        
+        guard let navigator = controller as? UINavigationController else { fatalError() }
+        
+         guard let conversationListViewController = navigator.viewControllers.first as? ConversationListViewController else { fatalError() }
+        
         conversationListViewController.setupViewController(presentationAssembly: self, storage: serviceAssembly.storageManagerService(), communicationService: serviceAssembly.communicationService(displayingName: "Andrey Koltsov"), contactProcessingService: serviceAssembly.contactProcessingService())
                 return conversationListViewController
     }

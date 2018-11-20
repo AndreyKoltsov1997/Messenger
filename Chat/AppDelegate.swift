@@ -12,6 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private let rootAssembly = RootAssembly()
+
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         return true
@@ -20,6 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //Method called when the launch process is nearly complete.
         // STATE NOTE: state changes INACTIVE -> ACTIVE
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let controller = rootAssembly.presentationAssembly.conversationListViewController()
+        window?.rootViewController = controller
+        window?.makeKeyAndVisible()
         return true
     }
     
