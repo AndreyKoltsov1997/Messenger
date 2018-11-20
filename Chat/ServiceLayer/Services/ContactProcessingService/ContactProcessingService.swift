@@ -1,5 +1,5 @@
 //
-//  ConversationListModel.swift
+//  ContactProcessingService.swift
 //  Chat
 //
 //  Created by Andrey Koltsov on 06/11/2018.
@@ -13,7 +13,17 @@ enum NetworkType {
     case wifi
 }
 
-class ConversationListModel {
+protocol IContactsProcessingService {
+    
+    func isContactExist(withPeer peer: Peer) -> Bool
+    func getContact(withIndex index: Int, status isOnline: Bool) -> Contact?
+    func changeContactStatus(withPeer peer: Peer, toOnlineStatus isOnline: Bool)
+    
+    func processFoundContact(_ peer: Peer)
+}
+
+
+class ContactProcessingService {
     
     weak var delegate: ConversationListModelDelegate?
 
@@ -25,7 +35,7 @@ class ConversationListModel {
  
     private var connectedPeers = [Peer]()
     
-    public func processFoundPeer(_ peer: Peer) {
+    public func processFoundContact(_ peer: Peer) {
         let foundContact = Contact(peer: peer, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
         let isContactExist = self.contacts.contains(where: { $0.peer?.identifier == peer.identifier })
     
@@ -94,5 +104,10 @@ class ConversationListModel {
         }
     }
     
+    
+}
+
+// MARK: - IContactsProcessingService
+extension ContactProcessingService: IContactsProcessingService {
     
 }

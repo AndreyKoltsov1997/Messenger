@@ -14,7 +14,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - Outlets
     
-    
     @IBOutlet weak var userDiscriptionField: UITextView!
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var profilePictureImage: UIImageView!

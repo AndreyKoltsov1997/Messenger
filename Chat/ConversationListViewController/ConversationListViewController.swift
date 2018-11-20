@@ -23,8 +23,8 @@ class ConversationListViewController: UIViewController {
     
     // MARK: - Properties
     
-    private lazy var conversationList = ConversationListModel()
-    public func getConversationListModel() -> ConversationListModel {
+    private lazy var conversationList = ContactProcessingService()
+    public func getConversationListModel() -> ContactProcessingService {
         return conversationList
     }
     
@@ -124,7 +124,7 @@ class ConversationListViewController: UIViewController {
     
     private func addUserToList(userPeer user: Peer) {
         DispatchQueue.main.async {
-            self.conversationList.processFoundPeer(user)
+            self.conversationList.processFoundContact(user)
 
             self.tableView.reloadData()
         }
@@ -179,7 +179,7 @@ extension ConversationListViewController: UITableViewDelegate {
             return
         }
         if !loadingContact.isInviteConfirmed {
-            guard var communicationService = self.communicationService else {
+            guard let communicationService = self.communicationService else {
                 print("Communication service hasn't been set up yet.")
                 return
             }
@@ -288,7 +288,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         // NOTE: When peer is discovered, the contact will be added ...
         // ... to list. Once the dialogue has been tapped, the invite will be sent.
         DispatchQueue.main.async {
-            self.conversationList.processFoundPeer(peer)
+            self.conversationList.processFoundContact(peer)
             
             self.tableView.reloadData()
         }
