@@ -11,6 +11,11 @@ import Foundation
 class ProfileModel {
     public static let TAG = String(describing: ProfileModel.self)
     
+    
+    // MARK: - Dependencies
+    
+    private var profileStorageService: IProfileStorageService?
+    
     // MARK: - Properties
     
     public var name = Constants.DEFAULT_USERNAME {
@@ -33,13 +38,13 @@ class ProfileModel {
     }
     
     weak var delegate: ProfileViewControllerDelegate?
-    var storage: StorageCoreData?
+//    var storage: StorageCoreData?
     
     // MARK: - Constructor
     
     init() {
         self.loadFromCoreData()
-        self.storage = StorageCoreData()
+//        self.storage = StorageCoreData()
         
         // NOTE: To load using Core Data, use:
         // self.loadFromCoreData()
@@ -48,11 +53,11 @@ class ProfileModel {
     // MARK: - Methods
     
     public func loadFromCoreData() {
-        guard let storage = storage else {
-            print("Storage hasn't been initialized")
+        guard let profileStorageService = profileStorageService else {
+            print(ProfileModel.TAG, "Storage Service hasn't been initialized")
             return
         }
-        storage.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
+        profileStorageService.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
             if ((fetchedName == nil) && (fetchedDiscription == nil) && (fetchedImage == nil)) {
                 print(ProfileModel.TAG, "Unable to find any saved info for user profile")
                 return
@@ -99,14 +104,14 @@ class ProfileModel {
     
     public func saveIntoCoreData() {
         DispatchQueue.main.async {
-            guard let storage = self.storage else {
+            guard let profileStorageService = self.profileStorageService else {
                 print("Storage hasn't been initialized")
                 return
             }
             if let image = self.image as NSData? {
-                storage.saveProfile(self.name, self.discripton, image)
+                profileStorageService.saveProfile(self.name, self.discripton, image)
             } else {
-                storage.saveProfile(self.name, self.discripton, nil)
+                profileStorageService.saveProfile(self.name, self.discripton, nil)
                 
             }
             self.delegate?.onFinishSaving()
