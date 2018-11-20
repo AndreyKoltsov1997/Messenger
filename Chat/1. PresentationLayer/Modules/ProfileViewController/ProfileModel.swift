@@ -38,16 +38,12 @@ class ProfileModel {
     }
     
     weak var delegate: ProfileViewControllerDelegate?
-//    var storage: StorageCoreData?
     
     // MARK: - Constructor
     
-    init() {
+    init(profileStorageService: IProfileStorageService) {
+        self.profileStorageService = profileStorageService
         self.loadFromCoreData()
-//        self.storage = StorageCoreData()
-        
-        // NOTE: To load using Core Data, use:
-        // self.loadFromCoreData()
     }
     
     // MARK: - Methods
@@ -55,11 +51,13 @@ class ProfileModel {
     public func loadFromCoreData() {
         guard let profileStorageService = profileStorageService else {
             print(ProfileModel.TAG, "Storage Service hasn't been initialized")
+            self.delegate?.onFinishSaving()
             return
         }
         profileStorageService.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
             if ((fetchedName == nil) && (fetchedDiscription == nil) && (fetchedImage == nil)) {
                 print(ProfileModel.TAG, "Unable to find any saved info for user profile")
+                self.delegate?.onFinishSaving()
                 return
             }
             DispatchQueue.main.async {
@@ -106,6 +104,7 @@ class ProfileModel {
         DispatchQueue.main.async {
             guard let profileStorageService = self.profileStorageService else {
                 print("Storage hasn't been initialized")
+                self.delegate?.onFinishSaving()
                 return
             }
             if let image = self.image as NSData? {
@@ -117,17 +116,6 @@ class ProfileModel {
             self.delegate?.onFinishSaving()
         }
     }
-    
-//    public func saveIntoSQLite() {
-//        DispatchQueue.main.async {
-//            if let image = self.image as NSData? {
-//                CoreDataStorageSQLite.saveProfile(self.name, self.discripton, image)
-//            } else {
-//                CoreDataStorageSQLite.saveProfile(self.name, self.discripton, nil)
-//            }
-//        }
-//        self.delegate?.onFinishSaving()
-//    }
     
     // MARK: - GCD Operations
     

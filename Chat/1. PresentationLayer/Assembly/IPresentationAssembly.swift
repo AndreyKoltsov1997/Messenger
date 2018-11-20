@@ -40,6 +40,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     func profileViewController() -> ProfileViewController {
         let profileViewController = ProfileViewController()
+    
         return profileViewController
     }
     

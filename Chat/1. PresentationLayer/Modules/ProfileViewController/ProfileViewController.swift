@@ -22,12 +22,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var saveButton: UIButton!
     
+    // MARK: - Dependencies
+    public var profileStorageService: IProfileStorageService?
+    
     // MARK: - Properies
     
-    private lazy var profile = ProfileModel()
-    public func getProfileModel() -> ProfileModel {
-        return profile
-    }
+    private var profile: ProfileModel!
     
     
     // MARK: - Outlet methods
@@ -201,7 +201,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         userDiscriptionField.resignFirstResponder() // when we touch outside of the field, the keyboard will dismiss and handle here
     }
     
-    // MARK: UI configuring methods
+    // MARK:- UI configuring methods
     
     private func setUpLayoutSources() {
         // NOTE: Here I'm setting up initial values for sources that could be changed in a runtime
@@ -291,6 +291,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             setButtonInteraction(avaliable: true)
         }
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: - Public Methods
+    public func configureViewController(profileStorageService: IProfileStorageService) {
+        self.profile = ProfileModel(profileStorageService: profileStorageService)
     }
 }
 

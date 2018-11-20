@@ -14,10 +14,14 @@ protocol IDataManager {
 }
 class GCDDataManager {
     
+    // Dependencies
+    private let profileStorageService: IProfileStorageService? = nil
+    
     let concurrentQueue = DispatchQueue(label: "Tinkoff.GCDDataManager.concurrent", attributes: .concurrent)
     var profileInfo: ProfileModel?
     var hasValueChanged: Bool? = true
     weak var delegate: ProfileViewControllerDelegate?
+    
 }
 
 // MARK: - IDataManager
@@ -26,7 +30,10 @@ extension GCDDataManager: IDataManager {
     
     public func loadProfile(sender: UIViewController) {
         let group = DispatchGroup()
-        self.profileInfo = ProfileModel()
+        if let profileStorageService = profileStorageService {
+            self.profileInfo = ProfileModel(profileStorageService: profileStorageService)
+        }
+        
         
         group.enter()
         concurrentQueue.async {

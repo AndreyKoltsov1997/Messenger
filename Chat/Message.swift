@@ -9,6 +9,7 @@
 import Foundation
 
 struct Message {
+    
     enum `Type`: String {
         case textMessage = "TextMessage"
     }

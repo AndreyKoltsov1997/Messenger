@@ -15,16 +15,14 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var messageInputTextField: UITextField!
     
     // MARK: - Properties
-    var contact: Contact!
+    public var contact: Contact!
+    public var userName: String = ""
     weak var delegate: ConversationListViewControllerDelegate?
     private let sentMessageIdentifier = String(describing: SentMessageCell.self)
     private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
 
-
-    public var userName: String = ""
     
     // MARK: - Lifecycle
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +50,6 @@ class ConversationViewController: UIViewController {
         chatTableView.dataSource = self
         self.title = userName
         self.messageInputTextField.delegate = self
-        // TODO: Replace with delegate
         self.messageInputTextField.isEnabled = true
     }
     
@@ -122,11 +119,6 @@ extension ConversationViewController: UITableViewDataSource {
     }
     
     
-    func generateMessageID() -> String {
-        let string = "\(arc4random_uniform(UINT32_MAX))+\(Date.timeIntervalSinceReferenceDate)+\(arc4random_uniform(UINT32_MAX))".data(using: .utf8)?.base64EncodedString()
-        return string!
-    }
-    
 }
 
 // MARK: - UITextFieldDelegate
@@ -140,6 +132,11 @@ extension ConversationViewController: UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return true
+    }
+    
+    func generateMessageID() -> String {
+        let string = "\(arc4random_uniform(UINT32_MAX))+\(Date.timeIntervalSinceReferenceDate)+\(arc4random_uniform(UINT32_MAX))".data(using: .utf8)?.base64EncodedString()
+        return string!
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
