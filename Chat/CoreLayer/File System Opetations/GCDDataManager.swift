@@ -8,12 +8,21 @@
 
 import UIKit
 
+protocol IDataManager {
+    func loadProfile(sender: UIViewController)
+    func saveProfile(sender: ProfileModel)
+}
 class GCDDataManager {
     
     let concurrentQueue = DispatchQueue(label: "Tinkoff.GCDDataManager.concurrent", attributes: .concurrent)
     var profileInfo: ProfileModel?
     var hasValueChanged: Bool? = true
     weak var delegate: ProfileViewControllerDelegate?
+}
+
+// MARK: - IDataManager
+
+extension GCDDataManager: IDataManager {
     
     public func loadProfile(sender: UIViewController) {
         let group = DispatchGroup()
@@ -38,7 +47,7 @@ class GCDDataManager {
         
         group.enter()
         concurrentQueue.async {
-            if let image = FileLoader.getImage(fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue) {
+            if FileLoader.getImage(fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue) != nil {
                 // TODO: Update image here
             }
             
@@ -46,10 +55,10 @@ class GCDDataManager {
         }
         
         group.notify(queue: .main) {
-            if let distinationViewController = sender as? ProfileViewController {
+            if sender is ProfileViewController {
                 if let profileInfo = self.profileInfo {
                     self.delegate?.finishLoading(profileInfo)
-//                    distinationViewController.configureProfile(profileInfo: profileInfo)
+                    
                 } else {
                     print("User data hasn't changed yet.")
                 }
@@ -71,7 +80,11 @@ class GCDDataManager {
         
         let username = profileInfo?.name
         let information = profileInfo?.discripton
-        let image = UIImage(data: sender.image as! Data, scale: 1.0)
+        
+        var image = UIImage()
+        if let imageData = sender.image {
+            image = UIImage(data: imageData, scale: 1.0) ?? UIImage()
+        }
         
         group.enter()
         concurrentQueue.async {
@@ -91,9 +104,7 @@ class GCDDataManager {
         
         group.enter()
         concurrentQueue.async {
-            if let image = image {
-                self.hasValueChanged = FileSaver.saveImage(image: image, fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue)
-            }
+            self.hasValueChanged = FileSaver.saveImage(image: image, fileName: FileName.USER_PROFILE_PICTURE_FILENAME.rawValue)
             group.leave()
         }
         
