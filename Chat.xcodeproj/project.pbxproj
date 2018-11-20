@@ -30,6 +30,7 @@
 		55537EB421A4853600DBB885 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB321A4853600DBB885 /* CoreAssembly.swift */; };
 		55537EB621A4B11400DBB885 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB521A4B11400DBB885 /* ServiceAssembly.swift */; };
 		55537EB821A4B65000DBB885 /* ProfileStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB721A4B65000DBB885 /* ProfileStorageService.swift */; };
+		55537EC321A4D2CA00DBB885 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EC221A4D2CA00DBB885 /* RootAssembly.swift */; };
 		5565F69E219837AB00F14504 /* ConversationListModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F69D219837AB00F14504 /* ConversationListModelDelegate.swift */; };
 		5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */; };
 		5573D000218F6A0D00F82D05 /* IStorageManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573CFFF218F6A0D00F82D05 /* IStorageManagerService.swift */; };
@@ -86,6 +87,7 @@
 		55537EB321A4853600DBB885 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		55537EB521A4B11400DBB885 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		55537EB721A4B65000DBB885 /* ProfileStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageService.swift; sourceTree = "<group>"; };
+		55537EC221A4D2CA00DBB885 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		5565F69D219837AB00F14504 /* ConversationListModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListModelDelegate.swift; sourceTree = "<group>"; };
 		5573CFFD218F359800F82D05 /* CoreDataStorageSQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorageSQLite.swift; sourceTree = "<group>"; };
 		5573CFFF218F6A0D00F82D05 /* IStorageManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IStorageManagerService.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				5509958F2157955700D377E5 /* LaunchScreen.storyboard */,
 				550995862157955600D377E5 /* AppDelegate.swift */,
 				550995922157955700D377E5 /* Info.plist */,
+				55537EC221A4D2CA00DBB885 /* RootAssembly.swift */,
 			);
 			name = "Supporting files";
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				552810A2216529ED001A304A /* ConversationListViewController.swift in Sources */,
 				553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */,
 				55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */,
+				55537EC321A4D2CA00DBB885 /* RootAssembly.swift in Sources */,
 				55A6D223217CDDCA00B9A135 /* GCDDataManager.swift in Sources */,
 				55E23642216A85770040E4DB /* MessageCellConfiguration.swift in Sources */,
 				55D2AECF218EF06C00625FFB /* ProfileModel.xcdatamodeld in Sources */,

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Peter the Great St.Petersburg Polytechnic University. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol IPresentationAssembly {
     // Screen with chat
@@ -16,7 +16,7 @@ protocol IPresentationAssembly {
     func conversationListViewController() -> ConversationListViewController
 
     // Screen with user profile
-    func profileViewController() -> ProfileViewController
+    func profileViewController() -> ProfileViewController?
 }
 
 class PresentationAssembly: IPresentationAssembly {
@@ -35,12 +35,12 @@ class PresentationAssembly: IPresentationAssembly {
     func conversationListViewController() -> ConversationListViewController {
         let conversationListViewController = ConversationListViewController()
         conversationListViewController.setupViewController(presentationAssembly: self, storage: serviceAssembly.storageManagerService(), communicationService: serviceAssembly.communicationService(displayingName: "Andrey Koltsov"), contactProcessingService: serviceAssembly.contactProcessingService())
-        return conversationListViewController
+                return conversationListViewController
     }
     
-    func profileViewController() -> ProfileViewController {
-        let profileViewController = ProfileViewController()
-    
+    func profileViewController() -> ProfileViewController? {
+        let profileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as? ProfileViewController
+        profileViewController?.configureViewController(profileStorageService: serviceAssembly.profileStorageService())
         return profileViewController
     }
     

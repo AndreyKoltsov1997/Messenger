@@ -18,8 +18,10 @@ protocol ICoreAssembly {
 }
 
 
-class CoreAssembly {
+class CoreAssembly: ICoreAssembly {
     lazy var gcdDataManager = GCDDataManager()
     lazy var operationsDataManager = OperationDataManager()
     lazy var coreDataStorage = StorageCoreData()
 }
+
+

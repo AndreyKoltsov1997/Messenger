@@ -16,9 +16,10 @@ class ConversationListViewController: UIViewController {
     @IBOutlet weak var profilePicturePreview: UIImageView!
     
     @IBAction func userPicTapped(_ sender: Any) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() {
-            self.present(vc, animated: true)
+        if let profileViewController = presentationAssembly.profileViewController() {
+            self.present(profileViewController, animated: true)
         }
+        
     }
     
     

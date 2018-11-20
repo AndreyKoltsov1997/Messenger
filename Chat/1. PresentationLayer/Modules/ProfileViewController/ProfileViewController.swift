@@ -189,11 +189,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.profile.delegate = self
+        if profile != nil {
+             self.profile.delegate = self
+        } else {
+            print("Profile hasn't been set.")
+        }
+       
         setUpLayoutSources()
         userDiscriptionField.delegate = self
-       
     }
+    
     
     
     // when we recive a touch event, we can do something
@@ -297,6 +302,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     public func configureViewController(profileStorageService: IProfileStorageService) {
         self.profile = ProfileModel(profileStorageService: profileStorageService)
     }
+    
 }
 
 // MARK: - UITextViewDelegate

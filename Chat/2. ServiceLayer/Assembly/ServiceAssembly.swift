@@ -13,6 +13,7 @@ protocol IServicesAssembly {
     func storageManagerService() -> IStorageManagerService
     func gcdDataManager() -> GCDDataManager
     func contactProcessingService() -> IContactsProcessingService
+    func profileStorageService() -> ProfileStorageService
 }
 
 class ServicesAssembly {
@@ -28,6 +29,10 @@ class ServicesAssembly {
 // MARK: - IServicesAssembly
 
 extension ServicesAssembly: IServicesAssembly {
+    func profileStorageService() -> ProfileStorageService {
+        return ProfileStorageService(storageManager: self.coreAssembly.coreDataStorage)
+    }
+    
     func contactProcessingService() -> IContactsProcessingService {
         return ContactProcessingService()
     }
