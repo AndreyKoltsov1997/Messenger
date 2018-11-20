@@ -27,6 +27,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     func conversationListViewController() -> ConversationListViewController {
         let conversationListViewController = ConversationListViewController()
+        conversationListViewController.setupViewController(presentationAssembly: self)
         return conversationListViewController
     }
     

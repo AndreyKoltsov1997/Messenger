@@ -27,10 +27,12 @@ class ConversationListViewController: UIViewController {
     public func getConversationListModel() -> ConversationListModel {
         return conversationList
     }
+    // MARK: - Dependencies
+    private var presentationAssembly: IPresentationAssembly!
     
      weak var conversationViewControllerDelegate: ConversationViewControllerDelegate?
     
-    var conversationViewController = ConversationViewController()
+    var conversationViewController: ConversationViewController?
     private let identifier = String(describing: ConversationsListCell.self)
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
 
@@ -52,7 +54,6 @@ class ConversationListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.conversationViewController.delegate = self
         configureCommunicationService()
         configureTableView()
         
@@ -63,6 +64,8 @@ class ConversationListViewController: UIViewController {
         loadUserPic()
     }
     
+    // MARK: - Private functions
+
     
     private func configureCommunicationService() {
         communicationService.delegate = self
@@ -132,6 +135,11 @@ class ConversationListViewController: UIViewController {
         tableView.delegate = self
     }
 
+    // MARK: - Public functions
+    
+    public func setupViewController(presentationAssembly: PresentationAssembly) {
+        self.presentationAssembly = presentationAssembly
+    }
     
     public func configureProfile(profileInfo: ProfileModel?) {
         // TODO: Update user profile picture here
@@ -164,7 +172,13 @@ extension ConversationListViewController: UITableViewDelegate {
             }
             return
         }
+        self.conversationViewController = self.presentationAssembly.conversationViewController()
+        guard let conversationViewController = conversationViewController else {
+            print("ConversationViewController hasn't been found")
+            return
+        }
         conversationViewController.contact = loadingContact
+        conversationViewController.delegate = self
        conversationViewControllerDelegate?.loadDialoque(withContact: loadingContact)
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
@@ -267,8 +281,13 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         conversationList.changeContactStatus(withPeer: peer, toOnlineStatus: false)
         conversationList.processPeerLoss(peer)
         // NOTE: If user is in the chat, block message inpit
-        if self.conversationViewController.viewIfLoaded?.window != nil {
-            self.conversationViewController.blockUserInput()
+        guard let conversationViewController = self.conversationViewController else {
+            print("Unable to load conversationViewController")
+            tableView.reloadData()
+            return
+        }
+        if conversationViewController.viewIfLoaded?.window != nil {
+            conversationViewController.blockUserInput()
         }
         tableView.reloadData()
     }
@@ -308,9 +327,14 @@ extension ConversationListViewController: CommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
         if let contact = conversationList.findContact(withPeer: peer) {
             contact.dialoque.append(message)
-            if self.conversationViewController.viewIfLoaded?.window != nil {
-                self.conversationViewController.contact.dialoque = contact.dialoque
-                self.conversationViewController.updateView()
+            guard let conversationViewController = self.conversationViewController else {
+                print("Unable to load conversationViewController")
+                tableView.reloadData()
+                return
+            }
+            if conversationViewController.viewIfLoaded?.window != nil {
+                conversationViewController.contact.dialoque = contact.dialoque
+                conversationViewController.updateView()
             } else {
                 contact.hasUnreadMessages = true
             }
