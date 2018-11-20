@@ -148,11 +148,9 @@
 				55537EAE21A484B200DBB885 /* CoreLayer */,
 				55537EAD21A4847600DBB885 /* ServiceLayer */,
 				55537EA821A478CB00DBB885 /* PresentationLayer */,
-				55A6D221217CDDAE00B9A135 /* File System Opetations */,
 				551858CF2173AC000075AC1F /* ChatPlayground.playground */,
 				558252552161079300AA3FD0 /* Supporting files */,
 				550995982157A18600D377E5 /* Constants.swift */,
-				55D2AECC218EF02900625FFB /* CoreData */,
 				553967202184BB2300AA4D05 /* MultipeerFunctionality */,
 			);
 			path = Chat;
@@ -252,6 +250,8 @@
 		55537EAE21A484B200DBB885 /* CoreLayer */ = {
 			isa = PBXGroup;
 			children = (
+				55D2AECC218EF02900625FFB /* CoreData */,
+				55A6D221217CDDAE00B9A135 /* File System Opetations */,
 				55537EAF21A484CB00DBB885 /* Assembly */,
 			);
 			path = CoreLayer;
@@ -344,6 +344,7 @@
 				5573CFFF218F6A0D00F82D05 /* IStorageManagerService.swift */,
 			);
 			name = CoreData;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		55E2362D216A40260040E4DB /* ConversationListCell */ = {

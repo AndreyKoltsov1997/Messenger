@@ -11,7 +11,7 @@ import Foundation
 protocol ICommunicationService  {
     var delegate: CommunicationServiceDelegate? { get set }
     /// Онлайн/Не онлайн
-    var online: Bool { get set }
+    var isOnline: Bool { get set }
     /// Отправляет сообщение участнику
     func send(_ message: Message, to peer: Peer)
 }

@@ -9,10 +9,17 @@
 import Foundation
 
 protocol ICoreAssembly {
- 
+    // SQLite-based Storage
+    var coreDataStorage: StorageCoreData { get }
+    
+    // File System Storage
+    var gcdDataManager: GCDDataManager { get }
+    var operationsDataManager: OperationDataManager { get }
 }
 
 
 class CoreAssembly {
-    
+    lazy var gcdDataManager = GCDDataManager()
+    lazy var operationsDataManager = OperationDataManager()
+    lazy var coreDataStorage = StorageCoreData()
 }

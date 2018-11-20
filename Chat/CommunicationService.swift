@@ -13,7 +13,7 @@ import CoreBluetooth
 class CommunicationService: NSObject, ICommunicationService {
     
     var delegate: CommunicationServiceDelegate?
-    var online: Bool = true // TODO: change value depend on bluetooth / WiFi accessability
+    var isOnline: Bool = true // TODO: change value depend on bluetooth / WiFi accessability
     
     // Multipeer Connectivity Properties
     
@@ -41,7 +41,7 @@ class CommunicationService: NSObject, ICommunicationService {
     
     init(displayingName name: String) {
 
-        self.online = false
+        self.isOnline = false
         self.discoveryInfo = ["userName": name]
         
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: self.peerID, discoveryInfo: self.discoveryInfo, serviceType: self.serviceType)

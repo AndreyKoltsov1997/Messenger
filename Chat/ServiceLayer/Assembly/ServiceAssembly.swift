@@ -11,19 +11,9 @@ import Foundation
 protocol IServicesAssembly {
     func communicationService(displayingName name: String) -> ICommunicationService
     func storageManagerService() -> IStorageManagerService
-    
-    
 }
 
-class ServicesAssembly: IServicesAssembly {
-    func storageManagerService() -> IStorageManagerService {
-        return StorageCoreData()
-    }
-    
-    func communicationService(displayingName name: String) -> ICommunicationService {
-        return CommunicationService(displayingName: name)
-    }
-    
+class ServicesAssembly {
     
     private let coreAssembly: ICoreAssembly
     
@@ -31,5 +21,16 @@ class ServicesAssembly: IServicesAssembly {
         self.coreAssembly = coreAssembly
     }
     
+}
+
+// MARK: - IServicesAssembly
+extension ServicesAssembly: IServicesAssembly {
+    func storageManagerService() -> IStorageManagerService {
+        return StorageCoreData()
+    }
+    
+    func communicationService(displayingName name: String) -> ICommunicationService {
+        return CommunicationService(displayingName: name)
+    }
     
 }

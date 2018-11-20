@@ -73,12 +73,12 @@ class ConversationListViewController: UIViewController {
 
     
     private func configureCommunicationService() {
-       guard var communicationService = self.communicationService else {
+       guard let communicationService = self.communicationService else {
             print("Communication service hasn't been set up yet.")
             return
         }
         communicationService.delegate = self
-        if (!communicationService.online) {
+        if (!communicationService.isOnline) {
             // TODO: Add options to turn the bluetooth on
             let misleadingMsg = "Bluetooth is not avaliable. Turn it on in order to improve connection."
             showNetworkSettingsAlert(message: misleadingMsg, for: .bluetooth)
