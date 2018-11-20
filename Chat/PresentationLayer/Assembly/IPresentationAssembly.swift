@@ -20,6 +20,13 @@ protocol IPresentationAssembly {
 }
 
 class PresentationAssembly: IPresentationAssembly {
+    
+    private let serviceAssembly: IServicesAssembly
+
+    init(serviceAssembly: IServicesAssembly) {
+        self.serviceAssembly = serviceAssembly
+    }
+    
     func conversationViewController() -> ConversationViewController {
         let conversationViewController = ConversationViewController()
         return conversationViewController
@@ -27,7 +34,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     func conversationListViewController() -> ConversationListViewController {
         let conversationListViewController = ConversationListViewController()
-        conversationListViewController.setupViewController(presentationAssembly: self)
+        conversationListViewController.setupViewController(presentationAssembly: self, storage: serviceAssembly.storageManagerService(), communicationService: serviceAssembly.communicationService(displayingName: "Andrey Koltsov"))
         return conversationListViewController
     }
     

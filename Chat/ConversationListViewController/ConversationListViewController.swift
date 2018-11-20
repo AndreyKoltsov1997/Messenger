@@ -28,9 +28,13 @@ class ConversationListViewController: UIViewController {
         return conversationList
     }
     
-    var storage: StorageCoreData?
+    // MARK: - Service Dependencies
     
-    // MARK: - Dependencies
+    private var storage: IStorageManagerService?
+    private var communicationService: CommunicationService?
+
+
+    // MARK: - Presentation Layer Dependencies
     private var presentationAssembly: IPresentationAssembly!
     
      weak var conversationViewControllerDelegate: ConversationViewControllerDelegate?
@@ -39,8 +43,6 @@ class ConversationListViewController: UIViewController {
     private let identifier = String(describing: ConversationsListCell.self)
     private let chatSections = [Constants.ONLINE_USERS_SECTION_HEADER, Constants.OFFLINE_USERS_SECTION_HEADER]
 
-    
-    private var communicationService: CommunicationService  = CommunicationService(displayingName: "Andrey Koltsov")
     
     var image: UIImage? {
         didSet(newValue) {
@@ -57,7 +59,6 @@ class ConversationListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.storage = StorageCoreData()
         configureCommunicationService()
         configureTableView()
         
@@ -72,8 +73,12 @@ class ConversationListViewController: UIViewController {
 
     
     private func configureCommunicationService() {
+       guard var communicationService = self.communicationService else {
+            print("Communication service hasn't been set up yet.")
+            return
+        }
         communicationService.delegate = self
-        if (!self.communicationService.online) {
+        if (!communicationService.online) {
             // TODO: Add options to turn the bluetooth on
             let misleadingMsg = "Bluetooth is not avaliable. Turn it on in order to improve connection."
             showNetworkSettingsAlert(message: misleadingMsg, for: .bluetooth)
@@ -141,8 +146,10 @@ class ConversationListViewController: UIViewController {
 
     // MARK: - Public functions
     
-    public func setupViewController(presentationAssembly: PresentationAssembly) {
+    public func setupViewController(presentationAssembly: PresentationAssembly, storage: IStorageManagerService, communicationService: ICommunicationService?) {
         self.presentationAssembly = presentationAssembly
+        self.storage = storage
+        self.communicationService = communicationService as? CommunicationService
     }
     
     public func configureProfile(profileInfo: ProfileModel?) {
@@ -172,7 +179,11 @@ extension ConversationListViewController: UITableViewDelegate {
             return
         }
         if !loadingContact.isInviteConfirmed {
-            self.communicationService.sendInvite(toPeer: loadingContact.peer)
+            guard var communicationService = self.communicationService else {
+                print("Communication service hasn't been set up yet.")
+                return
+            }
+            communicationService.sendInvite(toPeer: loadingContact.peer)
             // TODO: Change background to yellow here
             print("Invite send")
             DispatchQueue.main.async {
@@ -356,7 +367,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
 // MARK: - ConversationListViewControllerDelegate
 extension ConversationListViewController: ConversationListViewControllerDelegate {
     func sendMessage(_ message: Message, to peer: Peer) {
-        self.communicationService.send(message, to: peer)
+        self.communicationService?.send(message, to: peer)
     }
     
     func updateDialogues(for contact: Contact) {
