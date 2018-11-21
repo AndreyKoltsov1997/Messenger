@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     public var profileStorageService: IProfileStorageService?
     
     // MARK: - Properies
-    weak var conversationListDelegate: ConversationListDelegate?
+    weak var conversationListDelegate: ConversationListViewDelegate?
     private var profile: ProfileModel!
     
     // MARK: - Outlet methods

@@ -57,7 +57,7 @@
 		55E23640216A7FA80040E4DB /* SentMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55E2363E216A7FA80040E4DB /* SentMessageCell.xib */; };
 		55E23642216A85770040E4DB /* MessageCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E23641216A85770040E4DB /* MessageCellConfiguration.swift */; };
 		55F7BBAF2191E89800752AB6 /* ContactProcessingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7BBAE2191E89800752AB6 /* ContactProcessingService.swift */; };
-		55F7BBB12191E90000752AB6 /* ConversationListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7BBB02191E90000752AB6 /* ConversationListDelegate.swift */; };
+		55F7BBB12191E90000752AB6 /* ConversationListViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7BBB02191E90000752AB6 /* ConversationListViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,7 +114,7 @@
 		55E2363E216A7FA80040E4DB /* SentMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SentMessageCell.xib; sourceTree = "<group>"; };
 		55E23641216A85770040E4DB /* MessageCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellConfiguration.swift; sourceTree = "<group>"; };
 		55F7BBAE2191E89800752AB6 /* ContactProcessingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactProcessingService.swift; sourceTree = "<group>"; };
-		55F7BBB02191E90000752AB6 /* ConversationListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListDelegate.swift; sourceTree = "<group>"; };
+		55F7BBB02191E90000752AB6 /* ConversationListViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,8 +162,6 @@
 			children = (
 				553967252185DD3500AA4D05 /* ConversationListViewController */,
 				55E2362D216A40260040E4DB /* ConversationListCell */,
-				55E23629216A387B0040E4DB /* Message.swift */,
-				55E2362B216A38CE0040E4DB /* Contact.swift */,
 			);
 			name = ConversationList;
 			path = ../..;
@@ -184,6 +182,7 @@
 		553967202184BB2300AA4D05 /* MultipeerFunctionality */ = {
 			isa = PBXGroup;
 			children = (
+				55E23629216A387B0040E4DB /* Message.swift */,
 				553967212184BB3E00AA4D05 /* Peer.swift */,
 				5539672821863A7300AA4D05 /* CodableMessage.swift */,
 			);
@@ -195,7 +194,7 @@
 			children = (
 				552810A421652A4E001A304A /* ConversationListViewController.storyboard */,
 				552810A0216529ED001A304A /* ConversationListViewController.swift */,
-				55F7BBB02191E90000752AB6 /* ConversationListDelegate.swift */,
+				55F7BBB02191E90000752AB6 /* ConversationListViewDelegate.swift */,
 				5539672621862E6600AA4D05 /* ConversationListViewControllerDelegate.swift */,
 			);
 			path = ConversationListViewController;
@@ -286,6 +285,7 @@
 		55537EB921A4B65700DBB885 /* ProfileStorageService */ = {
 			isa = PBXGroup;
 			children = (
+				55D2AED6218F04ED00625FFB /* ProfileModel.swift */,
 				55537EB721A4B65000DBB885 /* ProfileStorageService.swift */,
 			);
 			path = ProfileStorageService;
@@ -294,6 +294,7 @@
 		55537EBA21A4C2E100DBB885 /* ContactProcessingService */ = {
 			isa = PBXGroup;
 			children = (
+				55E2362B216A38CE0040E4DB /* Contact.swift */,
 				55F7BBAE2191E89800752AB6 /* ContactProcessingService.swift */,
 				5565F69D219837AB00F14504 /* ConversationListModelDelegate.swift */,
 			);
@@ -354,7 +355,6 @@
 				5509958A2157955600D377E5 /* ProfileViewController.storyboard */,
 				558252532160224800AA3FD0 /* ProfileViewController.swift */,
 				55D2AED8218F14CF00625FFB /* ProvileViewControllerDelegate.swift */,
-				55D2AED6218F04ED00625FFB /* ProfileModel.swift */,
 			);
 			path = ProfileViewController;
 			sourceTree = "<group>";
@@ -504,7 +504,7 @@
 				55E23626216A30230040E4DB /* ConversationCellConfiguration.swift in Sources */,
 				55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */,
 				55D2AED9218F14CF00625FFB /* ProvileViewControllerDelegate.swift in Sources */,
-				55F7BBB12191E90000752AB6 /* ConversationListDelegate.swift in Sources */,
+				55F7BBB12191E90000752AB6 /* ConversationListViewDelegate.swift in Sources */,
 				5539672721862E6600AA4D05 /* ConversationListViewControllerDelegate.swift in Sources */,
 				55A6D237217CF21D00B9A135 /* UserNameSavingOperation.swift in Sources */,
 				55537EB621A4B11400DBB885 /* ServiceAssembly.swift in Sources */,

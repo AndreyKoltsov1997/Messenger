@@ -30,8 +30,8 @@ class ConversationListViewController: UIViewController {
 
 
     // MARK: - Presentation Layer Dependencies
-    private var presentationAssembly: IPresentationAssembly!
     
+    private var presentationAssembly: IPresentationAssembly!
      weak var conversationViewControllerDelegate: ConversationViewControllerDelegate?
     
     var conversationViewController: ConversationViewController?
@@ -250,7 +250,6 @@ extension ConversationListViewController: UITableViewDataSource {
         cell.message = contact.getLastMessageFromDialog()
         cell.date = contact.getLastMessageDate()
         cell.isOnline = contact.isOnline
-        // TODO: Add custom color for online contacts cell background
         cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
         if (contact.hasUnreadMessages) {
             cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
@@ -394,7 +393,7 @@ extension ConversationListViewController: ConversationListModelDelegate {
 }
 
 // MARK: - ConversationListDelegate
-extension ConversationListViewController: ConversationListDelegate {
+extension ConversationListViewController: ConversationListViewDelegate {
    
     func addContact(_ contect: Contact) {
         self.tableView.reloadData()
