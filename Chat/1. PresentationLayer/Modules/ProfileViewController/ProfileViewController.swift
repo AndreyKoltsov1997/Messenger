@@ -26,9 +26,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     public var profileStorageService: IProfileStorageService?
     
     // MARK: - Properies
-    
+    weak var conversationListDelegate: ConversationListDelegate?
     private var profile: ProfileModel!
-    
     
     // MARK: - Outlet methods
     
@@ -324,6 +323,7 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     
     func updateImage(_ image: Data) {
         self.profilePictureImage.image =  UIImage(data: image, scale: 1.0)
+        conversationListDelegate?.updateImage(image)
     }
     
     func finishLoading(_ model: ProfileModel) {

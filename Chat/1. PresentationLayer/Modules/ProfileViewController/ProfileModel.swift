@@ -77,28 +77,7 @@ class ProfileModel {
             }
         }
     }
-    
-//    public func loadFromSQLite() {
-//        DispatchQueue.main.async {
-//            CoreDataStorageSQLite.loadProfile { fetchedName, fetchedDiscription, fetchedImage in
-//                DispatchQueue.main.async {
-//                    if let fetchedName = fetchedName {
-//                        self.name = fetchedName
-//                    }
-//
-//                    if let fetchedDiscription = fetchedDiscription {
-//                        self.discripton = fetchedDiscription
-//                    }
-//                    if let fetchedImage = fetchedImage as Data? {
-//                        self.image = fetchedImage
-//                    } else {
-//                        print(ProfileModel.TAG, "Couldn't convert binary to image.")
-//                    }
-//                    self.delegate?.finishLoading(self)
-//                }
-//            }
-//        }
-//    }
+
     
     public func saveIntoCoreData() {
         DispatchQueue.main.async {

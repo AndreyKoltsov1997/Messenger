@@ -17,11 +17,10 @@ class ConversationListViewController: UIViewController {
     
     @IBAction func userPicTapped(_ sender: Any) {
         if let profileViewController = presentationAssembly.profileViewController() {
+            profileViewController.conversationListDelegate = self
             self.present(profileViewController, animated: true)
         }
-        
     }
-    
     
     // MARK: - Service Dependencies
     
@@ -388,4 +387,20 @@ extension ConversationListViewController: ConversationListModelDelegate {
     func updateTable() {
         self.tableView.reloadData()
     }
+}
+
+// MARK: - ConversationListDelegate
+extension ConversationListViewController: ConversationListDelegate {
+   
+    func addContact(_ contect: Contact) {
+        self.tableView.reloadData()
+    }
+    
+    func updateImage(_ image: Data) {
+        if let newImage = UIImage(data: image) {
+           self.image = newImage
+        }
+    }
+    
+    
 }
