@@ -55,6 +55,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="5cy-zH-gBV" firstAttribute="top" secondItem="OHN-Ph-5v8" secondAttribute="top" id="02I-K2-dhu"/>
                             <constraint firstItem="OHN-Ph-5v8" firstAttribute="trailing" secondItem="GMs-sS-ZA6" secondAttribute="trailing" id="62n-iZ-mYb"/>
                             <constraint firstItem="GMs-sS-ZA6" firstAttribute="top" secondItem="5cy-zH-gBV" secondAttribute="bottom" id="8UM-cR-oCI"/>
                             <constraint firstItem="5cy-zH-gBV" firstAttribute="height" secondItem="qhp-BA-alR" secondAttribute="height" multiplier="0.05" id="EFo-G1-AuF"/>
@@ -62,7 +63,6 @@
                             <constraint firstItem="GMs-sS-ZA6" firstAttribute="leading" secondItem="OHN-Ph-5v8" secondAttribute="leading" id="PSc-Td-ZFk"/>
                             <constraint firstItem="OHN-Ph-5v8" firstAttribute="bottom" secondItem="GMs-sS-ZA6" secondAttribute="bottom" id="S5m-Bj-wiu"/>
                             <constraint firstItem="5cy-zH-gBV" firstAttribute="leading" secondItem="OHN-Ph-5v8" secondAttribute="leading" id="gRf-Dn-Izc"/>
-                            <constraint firstItem="5cy-zH-gBV" firstAttribute="top" secondItem="OHN-Ph-5v8" secondAttribute="top" id="wt9-Zh-yBr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OHN-Ph-5v8"/>
                     </view>
