@@ -10,7 +10,7 @@
 		55064610216A97BD00EB961B /* RecivedMessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506460E216A97BD00EB961B /* RecivedMessagesCell.swift */; };
 		55064611216A97BD00EB961B /* RecivedMessagesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506460F216A97BD00EB961B /* RecivedMessagesCell.xib */; };
 		550995872157955600D377E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550995862157955600D377E5 /* AppDelegate.swift */; };
-		5509958C2157955600D377E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5509958A2157955600D377E5 /* Main.storyboard */; };
+		5509958C2157955600D377E5 /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5509958A2157955600D377E5 /* ProfileViewController.storyboard */; };
 		5509958E2157955700D377E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5509958D2157955700D377E5 /* Assets.xcassets */; };
 		550995912157955700D377E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5509958F2157955700D377E5 /* LaunchScreen.storyboard */; };
 		550995992157A18600D377E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550995982157A18600D377E5 /* Constants.swift */; };
@@ -65,7 +65,7 @@
 		5506460F216A97BD00EB961B /* RecivedMessagesCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecivedMessagesCell.xib; sourceTree = "<group>"; };
 		550995832157955600D377E5 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		550995862157955600D377E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5509958B2157955600D377E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5509958B2157955600D377E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProfileViewController.storyboard; sourceTree = "<group>"; };
 		5509958D2157955700D377E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		550995902157955700D377E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		550995922157955700D377E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -351,7 +351,7 @@
 		55A6D21C217B520A00B9A135 /* ProfileViewController */ = {
 			isa = PBXGroup;
 			children = (
-				5509958A2157955600D377E5 /* Main.storyboard */,
+				5509958A2157955600D377E5 /* ProfileViewController.storyboard */,
 				558252532160224800AA3FD0 /* ProfileViewController.swift */,
 				55D2AED8218F14CF00625FFB /* ProvileViewControllerDelegate.swift */,
 				55D2AED6218F04ED00625FFB /* ProfileModel.swift */,
@@ -480,7 +480,7 @@
 				55E23638216A7D4B0040E4DB /* ConversationViewController.xib in Resources */,
 				55E23640216A7FA80040E4DB /* SentMessageCell.xib in Resources */,
 				552810A521652A4E001A304A /* ConversationListViewController.storyboard in Resources */,
-				5509958C2157955600D377E5 /* Main.storyboard in Resources */,
+				5509958C2157955600D377E5 /* ProfileViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,12 +540,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		5509958A2157955600D377E5 /* Main.storyboard */ = {
+		5509958A2157955600D377E5 /* ProfileViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5509958B2157955600D377E5 /* Base */,
 			);
-			name = Main.storyboard;
+			name = ProfileViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		5509958F2157955700D377E5 /* LaunchScreen.storyboard */ = {
