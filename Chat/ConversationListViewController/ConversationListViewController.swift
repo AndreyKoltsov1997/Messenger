@@ -56,7 +56,6 @@ class ConversationListViewController: UIViewController {
         super.viewDidLoad()
         configureCommunicationService()
         configureTableView()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -193,6 +192,7 @@ extension ConversationListViewController: UITableViewDelegate {
             return
         }
         conversationViewController.contact = loadingContact
+        loadingContact.hasUnreadMessages = false // invalidating "unread" status
         conversationViewController.delegate = self
        conversationViewControllerDelegate?.loadDialoque(withContact: loadingContact)
         self.navigationController?.pushViewController(conversationViewController, animated: true)
@@ -254,8 +254,9 @@ extension ConversationListViewController: UITableViewDataSource {
         cell.backgroundColor = Constants.ONLINE_CONTACT_BACKGROUND_DEFAULT_COLOR
         if (contact.hasUnreadMessages) {
             cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: cell.messageTextLabel.font.pointSize)
+        } else {
+            cell.messageTextLabel.font = UIFont.systemFont(ofSize: cell.messageTextLabel.font.pointSize)
         }
-
         return cell
     }
     
@@ -343,15 +344,18 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         if let contact = contactProcessingService?.findContact(withPeer: peer) {
             contact.dialoque.append(message)
             guard let conversationViewController = self.conversationViewController else {
-                print("Unable to load conversationViewController")
+                // NOTE: Situation when view controller hasn't been loaded yet
+                print("Unable to connect to conversationViewController.")
+                contact.hasUnreadMessages = true
                 tableView.reloadData()
                 return
             }
             if conversationViewController.viewIfLoaded?.window != nil {
+                contact.hasUnreadMessages = true
                 conversationViewController.contact.dialoque = contact.dialoque
                 conversationViewController.updateView()
             } else {
-                contact.hasUnreadMessages = true
+                contact.hasUnreadMessages = false
             }
             
             tableView.reloadData()
@@ -401,6 +405,5 @@ extension ConversationListViewController: ConversationListDelegate {
            self.image = newImage
         }
     }
-    
     
 }
