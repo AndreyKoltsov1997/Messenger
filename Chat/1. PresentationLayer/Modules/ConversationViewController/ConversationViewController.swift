@@ -31,9 +31,10 @@ class ConversationViewController: UIViewController {
     private let SEND_MESSAGE_TITLE = "Send"
     
     private let CONTACT_LABEL_COLOR_OFFLINE = UIColor.black
-    private let CONTACT_LABEL_COLOR_ONLINE = UIColor.green
+    private let CONTACT_LABEL_COLOR_ONLINE = UIColor(red:0.20, green:0.80, blue:0.20, alpha:1.0)
+
     
-    private let SEND_BUTTON_COLOR_ONLINE = UIColor.blue
+    private let SEND_BUTTON_COLOR_ONLINE = UIColor(red:0.00, green:0.47, blue:1.00, alpha:1.0)
     private let SEND_BUTTON_COLOR_OFFLINE = UIColor.gray
 
     // MARK: - Lifecycle
@@ -93,6 +94,7 @@ class ConversationViewController: UIViewController {
         chatTableView.estimatedRowHeight = 60
         chatTableView.separatorColor = UIColor.clear
         chatTableView.dataSource = self
+        chatTableView.allowsSelection = false
         self.title = userName
         self.messageInputTextField.delegate = self
         self.messageInputTextField.isEnabled = true
@@ -240,7 +242,7 @@ extension ConversationViewController: UITableViewDataSource {
         // NOTE: Changing "send" button color to gray based on homework's text (should't be highlighted when ...
         // .. texfield input is empty.
         let isButtonHighlighted = false
-        self.changeContactNameLabelAppearence(forOnlineState: isButtonHighlighted)
+        self.changeSendMessageButtonAppearence(forOnlineState: isButtonHighlighted)
     }
     
 }
