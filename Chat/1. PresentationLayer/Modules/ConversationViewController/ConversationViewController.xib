@@ -24,20 +24,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ceU-jr-N6w">
-                    <rect key="frame" x="0.0" y="20" width="375" height="614.5"/>
+                    <rect key="frame" x="0.0" y="20" width="324" height="614.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VSX-SA-XKc" userLabel="Message Input">
-                    <rect key="frame" x="0.0" y="634.5" width="319" height="32.5"/>
+                    <rect key="frame" x="0.0" y="634.5" width="269" height="32.5"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gt-k3-7IU">
-                    <rect key="frame" x="324" y="634.5" width="51" height="32.5"/>
+                    <rect key="frame" x="274" y="634.5" width="45" height="32.5"/>
                     <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="84p-1P-z39"/>
-                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="sIm-Im-eiv"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="45" id="84p-1P-z39"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="sIm-Im-eiv"/>
                     </constraints>
                     <state key="normal" title="Send"/>
                     <connections>
@@ -49,16 +49,16 @@
             <constraints>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="top" secondItem="ceU-jr-N6w" secondAttribute="bottom" id="3Uj-9c-cFV"/>
                 <constraint firstItem="1gt-k3-7IU" firstAttribute="height" secondItem="VSX-SA-XKc" secondAttribute="height" id="7gf-W6-91p"/>
-                <constraint firstItem="1gt-k3-7IU" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="83H-cq-M8g"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="85R-u5-IFQ"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Oyz-yl-FFQ"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.05" id="PZJ-W8-NaE"/>
                 <constraint firstItem="1gt-k3-7IU" firstAttribute="centerY" secondItem="VSX-SA-XKc" secondAttribute="centerY" id="VEN-Bl-jEK"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="XqD-7P-rEA"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="djh-cg-Sde"/>
-                <constraint firstItem="VSX-SA-XKc" firstAttribute="width" secondItem="ceU-jr-N6w" secondAttribute="width" multiplier="0.85" id="eyH-Tj-wSu"/>
+                <constraint firstItem="VSX-SA-XKc" firstAttribute="width" secondItem="ceU-jr-N6w" secondAttribute="width" multiplier="0.83" id="eyH-Tj-wSu"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="gjt-Bw-ELv"/>
-                <constraint firstItem="1gt-k3-7IU" firstAttribute="leading" secondItem="VSX-SA-XKc" secondAttribute="trailing" constant="5" id="odA-mF-jS9"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="leading" secondItem="VSX-SA-XKc" secondAttribute="trailing" constant="5" id="kKi-8W-jAS"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-5" id="odA-mF-jS9"/>
                 <constraint firstItem="1gt-k3-7IU" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="ouF-9Z-bx0"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
