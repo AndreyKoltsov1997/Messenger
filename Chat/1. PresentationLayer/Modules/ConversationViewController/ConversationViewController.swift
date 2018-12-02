@@ -17,11 +17,13 @@ class ConversationViewController: UIViewController {
     // MARK: - Properties
     public var contact: Contact!
     public var userName: String = ""
+    public var isInputBlocked: Bool = false
     weak var delegate: ConversationListViewControllerDelegate?
     private let sentMessageIdentifier = String(describing: SentMessageCell.self)
     private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
 
-    
+    private let AVALIABLE_USER_INPUT_PLACEHOLDER = "Message..."
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -33,7 +35,7 @@ class ConversationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.messageInputTextField.placeholder = "Message..."
+        self.messageInputTextField.placeholder = self.AVALIABLE_USER_INPUT_PLACEHOLDER
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,6 +72,15 @@ class ConversationViewController: UIViewController {
         self.messageInputTextField.placeholder =  username + " is not avaliable."
         showAlert(message: username + " is no longer avaliable.")
         self.messageInputTextField.isEnabled = false
+        isInputBlocked = true
+    }
+    
+    public func unblockUserInput() {
+        self.messageInputTextField.isEnabled = true
+        self.messageInputTextField.placeholder =  self.AVALIABLE_USER_INPUT_PLACEHOLDER
+
+        contact.isOnline = true
+        isInputBlocked = false
     }
 }
 

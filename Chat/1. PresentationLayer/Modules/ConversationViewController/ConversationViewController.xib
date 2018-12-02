@@ -34,7 +34,7 @@
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gt-k3-7IU">
                     <rect key="frame" x="319" y="634.5" width="56" height="32.5"/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" title="Send"/>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -25,7 +25,7 @@ protocol IContactsProcessingService {
     func getContacts(onlineStatus isOnline: Bool) -> [Contact]?
     
     // NOTE: Handle peer discovery / loss
-    func processFoundContact(_ peer: Peer)
+    func processFoundContact(_ peer: Peer, completion: @escaping (_ isExist: Bool, _ contact: Contact?) -> Void)
     func connectUser(withPeer peer: Peer)
     func processPeerLoss(_ peer: Peer)
 }
@@ -51,13 +51,15 @@ extension ContactProcessingService: IContactsProcessingService {
         return self.contacts
     }
     
-    public func processFoundContact(_ peer: Peer) {
+    public func processFoundContact(_ peer: Peer, completion: @escaping (_ isExist: Bool, _ contact: Contact?) -> Void) {
         let foundContact = Contact(peer: peer, message: nil, date: nil, hasUnreadMessages: false, isOnline: true)
         let isContactExist = self.contacts.contains(where: { $0.peer?.identifier == peer.identifier })
         
         if !isContactExist {
+            completion(false, nil)
             self.contacts.append(foundContact)
         } else {
+            completion(true, foundContact)
             changeContactStatus(withPeer: peer, toOnlineStatus: true)
         }
         

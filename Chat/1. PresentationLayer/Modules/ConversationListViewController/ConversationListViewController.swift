@@ -118,9 +118,40 @@ class ConversationListViewController: UIViewController {
     
     private func addUserToList(userPeer user: Peer) {
         DispatchQueue.main.async {
-            self.contactProcessingService?.processFoundContact(user)
-
+//            let contact = self.contactProcessingService?.findContact(withPeer: user)
+//            let isContactExist = (contact != nil)
+//            if !isContactExist {
+//
+//            }
+            
+            self.contactProcessingService?.processFoundContact(user, completion: { isContactExist, contact in
+                if !isContactExist {
+                    return
+                }
+                if let contact = contact {
+                    self.processFoundLoadedContact(contact: contact)
+                }
+            })
             self.tableView.reloadData()
+            
+        }
+    }
+    
+    private func processFoundLoadedContact(contact: Contact) {
+        self.contactProcessingService?.changeContactStatus(withPeer: contact.peer, toOnlineStatus: true)
+        // NOTE: If user is in the chat, block message inpit
+        guard let conversationViewController = self.conversationViewController else {
+            print("Unable to load conversationViewController")
+            self.tableView.reloadData()
+            return
+        }
+        if conversationViewController.viewIfLoaded?.window != nil {
+            if (contact.peer.identifier != conversationViewController.contact.peer.identifier) {
+                print("Idenfiriers are not equal")
+                return
+            }
+            print("found existing contact. Inside ConvVC conversationViewController.contact.isOnline: ", conversationViewController.contact.isOnline)
+            conversationViewController.unblockUserInput()
         }
     }
     
@@ -284,7 +315,18 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         // NOTE: When peer is discovered, the contact will be added ...
         // ... to list. Once the dialogue has been tapped, the invite will be sent.
         DispatchQueue.main.async {
-            self.contactProcessingService?.processFoundContact(peer)
+            self.contactProcessingService?.processFoundContact(peer, completion: { isContactExist, contact in
+                if (!isContactExist) {
+                    print("[communicationService] contact doesnt exist" )
+                    return
+                }
+                if let contact = contact {
+                    self.processFoundLoadedContact(contact: contact)
+                    print("[communicationService]: process existing contact")
+
+
+                }
+            })
             
             self.tableView.reloadData()
         }
@@ -302,7 +344,8 @@ extension ConversationListViewController: CommunicationServiceDelegate {
             return
         }
         if conversationViewController.viewIfLoaded?.window != nil {
-            print("Lost contact")
+            print("Lost contact. Inside ConvVC conversationViewController.contact.isOnline: ", conversationViewController.contact.isOnline)
+            
             conversationViewController.blockUserInput()
         }
         tableView.reloadData()
@@ -339,6 +382,8 @@ extension ConversationListViewController: CommunicationServiceDelegate {
         // todo: handle searching for users process
         showNetworkErrorAlert(message: "Unable to host users. Reason:" + error.localizedDescription)
     }
+    
+
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
         if let contact = contactProcessingService?.findContact(withPeer: peer) {
