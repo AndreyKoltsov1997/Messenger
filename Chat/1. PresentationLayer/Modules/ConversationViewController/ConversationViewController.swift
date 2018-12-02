@@ -29,13 +29,20 @@ class ConversationViewController: UIViewController {
 
     private let AVALIABLE_USER_INPUT_PLACEHOLDER = "Message..."
     private let SEND_MESSAGE_TITLE = "Send"
+    
+    private let CONTACT_LABEL_COLOR_OFFLINE = UIColor.black
+    private let CONTACT_LABEL_COLOR_ONLINE = UIColor.green
+    
+    private let SEND_BUTTON_COLOR_ONLINE = UIColor.blue
+    private let SEND_BUTTON_COLOR_OFFLINE = UIColor.gray
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         configureChatTableView()
-        navigationItem.title = contact.name
+        configureNavBar()
     }
     
     override func awakeFromNib() {
@@ -45,7 +52,6 @@ class ConversationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.messageInputTextField.placeholder = self.AVALIABLE_USER_INPUT_PLACEHOLDER
-        
         self.configureSendMessageButton()
     }
     
@@ -57,9 +63,19 @@ class ConversationViewController: UIViewController {
     private func configureSendMessageButton() {
         self.sendMessageBtn.setTitle(self.SEND_MESSAGE_TITLE, for: .normal)
         self.sendMessageBtn.setTitleColor(UIColor.white, for: .normal)
-        
-        self.sendMessageBtn.backgroundColor = UIColor.blue
         self.sendMessageBtn.layer.cornerRadius = 15
+        
+        self.changeSendMessageButtonAppearence(forOblineState: contact.isOnline)
+    }
+    
+    private func configureNavBar() {
+        let titleFrame = CGRect(x: 10.0, y: 10.0, width: self.view.frame.width, height: self.view.frame.width * 0.10)
+        let title = UILabel(frame: titleFrame)
+        title.text = contact.name
+        title.textAlignment = .center
+        navigationItem.titleView = title
+        self.changeContactNameLabelAppearence(forOnlineState: contact.isOnline)
+
     }
     
     private func configureChatTableView() {
@@ -94,12 +110,27 @@ class ConversationViewController: UIViewController {
         
     }
     
+    private func getContactNameLabelInstance() -> UILabel? {
+        guard let contactNameLabel = navigationItem.titleView as? UILabel else {
+            print("Unable to get instance of navigation item label.")
+            return nil
+        }
+
+        return contactNameLabel
+    }
+    
     private func processOnlineStateChaning(toOnlineStatus isOnline: Bool) {
         self.messageInputTextField.isEnabled = isOnline
         isInputEnabled = isOnline
+        changeContactNameLabelAppearence(forOnlineState: isOnline)
+        changeSendMessageButtonAppearence(forOblineState: isOnline)
+    }
+    
+    private func changeSendMessageButtonAppearence(forOblineState isOnline: Bool) {
         let colorTransitionAnimation: () -> Void = {
-            self.sendMessageBtn.backgroundColor = isOnline ? UIColor.blue : UIColor.red
+            self.sendMessageBtn.backgroundColor = isOnline ? self.SEND_BUTTON_COLOR_ONLINE : self.SEND_BUTTON_COLOR_OFFLINE
         }
+        
         UIView.transition(with: self.sendMessageBtn, duration: 0.5, options: .transitionCrossDissolve, animations: colorTransitionAnimation)
         
         let stateChangingAnimDuration = 0.5
@@ -112,6 +143,24 @@ class ConversationViewController: UIViewController {
             }, completion: nil)
             
         })
+    }
+    
+    private func changeContactNameLabelAppearence(forOnlineState isOnline: Bool) {
+        guard let contactNameLabel = self.getContactNameLabelInstance() else {
+            return
+        }
+        let colorTransitionAnimation: () -> Void = {
+            contactNameLabel.textColor = isOnline ? self.CONTACT_LABEL_COLOR_ONLINE : self.CONTACT_LABEL_COLOR_OFFLINE
+        }
+        let transitionDuration = 1.0
+        let labelGrownInPercentage = CGFloat(1.10)
+        
+        UIView.transition(with: contactNameLabel, duration: 0.5, options: .transitionCrossDissolve, animations: colorTransitionAnimation)
+
+        UIView.animate(withDuration: transitionDuration, delay: 0, options: [], animations: {
+            contactNameLabel.transform = isOnline ? CGAffineTransform(scaleX: labelGrownInPercentage, y: labelGrownInPercentage) : CGAffineTransform.identity
+        }, completion: nil)
+
     }
     
     public func unblockUserInput() {
