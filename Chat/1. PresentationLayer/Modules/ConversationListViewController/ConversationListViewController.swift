@@ -302,6 +302,7 @@ extension ConversationListViewController: CommunicationServiceDelegate {
             return
         }
         if conversationViewController.viewIfLoaded?.window != nil {
+            print("Lost contact")
             conversationViewController.blockUserInput()
         }
         tableView.reloadData()

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,22 +27,30 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VSX-SA-XKc" userLabel="Message Input">
-                    <rect key="frame" x="0.0" y="634.5" width="375" height="32.5"/>
+                    <rect key="frame" x="0.0" y="634.5" width="319" height="32.5"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gt-k3-7IU">
+                    <rect key="frame" x="319" y="634.5" width="56" height="32.5"/>
+                    <state key="normal" title="Button"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="top" secondItem="ceU-jr-N6w" secondAttribute="bottom" id="3Uj-9c-cFV"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="height" secondItem="VSX-SA-XKc" secondAttribute="height" id="7gf-W6-91p"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="83H-cq-M8g"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="85R-u5-IFQ"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Oyz-yl-FFQ"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.05" id="PZJ-W8-NaE"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="XqD-7P-rEA"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="djh-cg-Sde"/>
+                <constraint firstItem="VSX-SA-XKc" firstAttribute="width" secondItem="ceU-jr-N6w" secondAttribute="width" multiplier="0.85" id="eyH-Tj-wSu"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="gjt-Bw-ELv"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="VSX-SA-XKc" secondAttribute="trailing" id="ncg-Lk-EfN"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="leading" secondItem="VSX-SA-XKc" secondAttribute="trailing" id="odA-mF-jS9"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="ouF-9Z-bx0"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33.5" y="74.5"/>
