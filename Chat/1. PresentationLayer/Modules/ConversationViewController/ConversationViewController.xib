@@ -28,13 +28,13 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VSX-SA-XKc" userLabel="Message Input">
-                    <rect key="frame" x="0.0" y="634.5" width="269" height="32.5"/>
+                    <rect key="frame" x="0.0" y="634.5" width="269" height="32"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gt-k3-7IU">
-                    <rect key="frame" x="274" y="634.5" width="45" height="32.5"/>
+                    <rect key="frame" x="274" y="639.5" width="45" height="22.5"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="45" id="84p-1P-z39"/>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="sIm-Im-eiv"/>
@@ -48,18 +48,17 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="top" secondItem="ceU-jr-N6w" secondAttribute="bottom" id="3Uj-9c-cFV"/>
-                <constraint firstItem="1gt-k3-7IU" firstAttribute="height" secondItem="VSX-SA-XKc" secondAttribute="height" id="7gf-W6-91p"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="85R-u5-IFQ"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Oyz-yl-FFQ"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.05" id="PZJ-W8-NaE"/>
-                <constraint firstItem="1gt-k3-7IU" firstAttribute="centerY" secondItem="VSX-SA-XKc" secondAttribute="centerY" id="VEN-Bl-jEK"/>
-                <constraint firstItem="VSX-SA-XKc" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="XqD-7P-rEA"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="djh-cg-Sde"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="width" secondItem="ceU-jr-N6w" secondAttribute="width" multiplier="0.83" id="eyH-Tj-wSu"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="height" secondItem="VSX-SA-XKc" secondAttribute="height" multiplier="0.7" id="fH0-SE-PwG"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="gjt-Bw-ELv"/>
                 <constraint firstItem="1gt-k3-7IU" firstAttribute="leading" secondItem="VSX-SA-XKc" secondAttribute="trailing" constant="5" id="kKi-8W-jAS"/>
                 <constraint firstItem="1gt-k3-7IU" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-5" id="odA-mF-jS9"/>
-                <constraint firstItem="1gt-k3-7IU" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="ouF-9Z-bx0"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-5" id="pEs-qU-Aft"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="top" secondItem="ceU-jr-N6w" secondAttribute="bottom" constant="5" id="uX6-Td-jhp"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33.5" y="74.5"/>

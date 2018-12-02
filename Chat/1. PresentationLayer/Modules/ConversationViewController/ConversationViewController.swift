@@ -43,6 +43,7 @@ class ConversationViewController: UIViewController {
         // Do any additional setup after loading the view.
         configureChatTableView()
         configureNavBar()
+        configureMessageInputTextField()
     }
     
     override func awakeFromNib() {
@@ -60,12 +61,19 @@ class ConversationViewController: UIViewController {
         delegate?.updateDialogues(for: self.contact)
     }
     
+    private func configureMessageInputTextField() {
+        self.messageInputTextField.addTarget(self, action: #selector(ConversationViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+    }
+    
     private func configureSendMessageButton() {
         self.sendMessageBtn.setTitle(self.SEND_MESSAGE_TITLE, for: .normal)
         self.sendMessageBtn.setTitleColor(UIColor.white, for: .normal)
-        self.sendMessageBtn.layer.cornerRadius = 15
+        self.sendMessageBtn.layer.cornerRadius = self.sendMessageBtn.frame.height * 0.4
         
-        self.changeSendMessageButtonAppearence(forOblineState: contact.isOnline)
+        // NOTE: Changing "send" button color to gray based on homework's text (should't be highlighted when ...
+        // .. texfield input is empty.
+        let isButtonHightlightedByDefault = false
+        self.changeSendMessageButtonAppearence(forOnlineState: isButtonHightlightedByDefault)
     }
     
     private func configureNavBar() {
@@ -123,10 +131,10 @@ class ConversationViewController: UIViewController {
         self.messageInputTextField.isEnabled = isOnline
         isInputEnabled = isOnline
         changeContactNameLabelAppearence(forOnlineState: isOnline)
-        changeSendMessageButtonAppearence(forOblineState: isOnline)
+        changeSendMessageButtonAppearence(forOnlineState: isOnline)
     }
     
-    private func changeSendMessageButtonAppearence(forOblineState isOnline: Bool) {
+    private func changeSendMessageButtonAppearence(forOnlineState isOnline: Bool) {
         let colorTransitionAnimation: () -> Void = {
             self.sendMessageBtn.backgroundColor = isOnline ? self.SEND_BUTTON_COLOR_ONLINE : self.SEND_BUTTON_COLOR_OFFLINE
         }
@@ -218,7 +226,9 @@ extension ConversationViewController: UITableViewDataSource {
         textField.resignFirstResponder()
         guard let text = textField.text else {
             return
-            
+        }
+        if text.isEmpty {
+            return
         }
         let newMessage = Message(identifier: generateMessageID(), text: text, isRecived: false, date: Date())
         self.contact.dialoque.append(newMessage)
@@ -226,6 +236,11 @@ extension ConversationViewController: UITableViewDataSource {
         let clearedText = ""
         textField.text = clearedText
         chatTableView.reloadData()
+        
+        // NOTE: Changing "send" button color to gray based on homework's text (should't be highlighted when ...
+        // .. texfield input is empty.
+        let isButtonHighlighted = false
+        self.changeContactNameLabelAppearence(forOnlineState: isButtonHighlighted)
     }
     
 }
@@ -241,6 +256,18 @@ extension ConversationViewController: UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return true
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        
+        let isBtnStateOnline = (self.sendMessageBtn.backgroundColor == self.SEND_BUTTON_COLOR_ONLINE)
+        if (text.isEmpty && isBtnStateOnline) {
+            self.changeSendMessageButtonAppearence(forOnlineState: false)
+        } else if (!text.isEmpty && !isBtnStateOnline) {
+            self.changeSendMessageButtonAppearence(forOnlineState: self.contact.isOnline)
+
+        }
     }
     
     func generateMessageID() -> String {
