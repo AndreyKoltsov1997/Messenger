@@ -34,7 +34,11 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gt-k3-7IU">
-                    <rect key="frame" x="319" y="634.5" width="56" height="32.5"/>
+                    <rect key="frame" x="324" y="634.5" width="51" height="32.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="84p-1P-z39"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="sIm-Im-eiv"/>
+                    </constraints>
                     <state key="normal" title="Send"/>
                     <connections>
                         <action selector="onSendMessageBtnPressed:" destination="-1" eventType="touchUpInside" id="jZR-1d-Glr"/>
@@ -49,11 +53,12 @@
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="85R-u5-IFQ"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Oyz-yl-FFQ"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.05" id="PZJ-W8-NaE"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="centerY" secondItem="VSX-SA-XKc" secondAttribute="centerY" id="VEN-Bl-jEK"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="XqD-7P-rEA"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="djh-cg-Sde"/>
                 <constraint firstItem="VSX-SA-XKc" firstAttribute="width" secondItem="ceU-jr-N6w" secondAttribute="width" multiplier="0.85" id="eyH-Tj-wSu"/>
                 <constraint firstItem="ceU-jr-N6w" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="gjt-Bw-ELv"/>
-                <constraint firstItem="1gt-k3-7IU" firstAttribute="leading" secondItem="VSX-SA-XKc" secondAttribute="trailing" id="odA-mF-jS9"/>
+                <constraint firstItem="1gt-k3-7IU" firstAttribute="leading" secondItem="VSX-SA-XKc" secondAttribute="trailing" constant="5" id="odA-mF-jS9"/>
                 <constraint firstItem="1gt-k3-7IU" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="ouF-9Z-bx0"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
