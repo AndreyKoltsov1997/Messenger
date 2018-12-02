@@ -13,6 +13,11 @@ class ConversationViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var chatTableView: UITableView!
     @IBOutlet weak var messageInputTextField: UITextField!
+    @IBOutlet weak var sendMessageBtn: UIButton!
+    
+    @IBAction func onSendMessageBtnPressed(_ sender: UIButton) {
+        self.sendMessage(from: messageInputTextField)
+    }
     
     // MARK: - Properties
     public var contact: Contact!
@@ -23,7 +28,7 @@ class ConversationViewController: UIViewController {
     private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
 
     private let AVALIABLE_USER_INPUT_PLACEHOLDER = "Message..."
-
+    private let SEND_MESSAGE_TITLE = "Send"
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -33,14 +38,28 @@ class ConversationViewController: UIViewController {
         navigationItem.title = contact.name
     }
     
+    override func awakeFromNib() {
+        self.awakeFromNib()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.messageInputTextField.placeholder = self.AVALIABLE_USER_INPUT_PLACEHOLDER
+        
+        self.configureSendMessageButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         delegate?.updateDialogues(for: self.contact)
+    }
+    
+    private func configureSendMessageButton() {
+        self.sendMessageBtn.setTitle(self.SEND_MESSAGE_TITLE, for: .normal)
+        self.sendMessageBtn.setTitleColor(UIColor.white, for: .normal)
+        
+        self.sendMessageBtn.backgroundColor = UIColor.blue
+        self.sendMessageBtn.layer.cornerRadius = 15
     }
     
     private func configureChatTableView() {
@@ -129,6 +148,19 @@ extension ConversationViewController: UITableViewDataSource {
         return defaultNumberOfSections
     }
     
+    private func sendMessage(from textField: UITextField) {
+        textField.resignFirstResponder()
+        guard let text = textField.text else {
+            return
+            
+        }
+        let newMessage = Message(identifier: generateMessageID(), text: text, isRecived: false, date: Date())
+        self.contact.dialoque.append(newMessage)
+        delegate?.sendMessage(newMessage, to: contact.peer)
+        let clearedText = ""
+        textField.text = clearedText
+        chatTableView.reloadData()
+    }
     
 }
 
@@ -150,20 +182,6 @@ extension ConversationViewController: UITextFieldDelegate {
         return string!
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // TODO: Impliment message sending here
-        textField.resignFirstResponder()
-        guard let text = textField.text else {
-            return true
-        }
-        let newMessage = Message(identifier: generateMessageID(), text: text, isRecived: false, date: Date())
-        self.contact.dialoque.append(newMessage)
-        delegate?.sendMessage(newMessage, to: contact.peer)
-        let clearedText = ""
-        textField.text = clearedText
-        chatTableView.reloadData()
-        return true
-    }
 }
 
 

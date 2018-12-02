@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="chatTableView" destination="ceU-jr-N6w" id="kGL-c8-3cj"/>
                 <outlet property="messageInputTextField" destination="VSX-SA-XKc" id="CVA-9a-RBh"/>
+                <outlet property="sendMessageBtn" destination="1gt-k3-7IU" id="LGR-yz-cVk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -35,6 +36,9 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gt-k3-7IU">
                     <rect key="frame" x="319" y="634.5" width="56" height="32.5"/>
                     <state key="normal" title="Send"/>
+                    <connections>
+                        <action selector="onSendMessageBtnPressed:" destination="-1" eventType="touchUpInside" id="jZR-1d-Glr"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
