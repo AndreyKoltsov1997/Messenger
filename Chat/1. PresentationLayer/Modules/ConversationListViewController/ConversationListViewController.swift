@@ -146,7 +146,7 @@ class ConversationListViewController: UIViewController {
             return
         }
         if conversationViewController.viewIfLoaded?.window != nil {
-            if (contact.peer.identifier != conversationViewController.contact.peer.identifier) {
+            if (contact.peer != conversationViewController.contact.peer) {
                 print("Idenfiriers are not equal")
                 return
             }

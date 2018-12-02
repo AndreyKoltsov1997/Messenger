@@ -22,7 +22,7 @@ class ConversationViewController: UIViewController {
     // MARK: - Properties
     public var contact: Contact!
     public var userName: String = ""
-    public var isInputBlocked: Bool = false
+    public var isInputEnabled: Bool = false
     weak var delegate: ConversationListViewControllerDelegate?
     private let sentMessageIdentifier = String(describing: SentMessageCell.self)
     private let recivingMessageIdentifier = String(describing: RecivedMessagesCell.self)
@@ -90,16 +90,33 @@ class ConversationViewController: UIViewController {
         let username = self.contact?.name ?? "User"
         self.messageInputTextField.placeholder =  username + " is not avaliable."
         showAlert(message: username + " is no longer avaliable.")
-        self.messageInputTextField.isEnabled = false
-        isInputBlocked = true
+        processOnlineStateChaning(toOnlineStatus: false)
+        
+    }
+    
+    private func processOnlineStateChaning(toOnlineStatus isOnline: Bool) {
+        self.messageInputTextField.isEnabled = isOnline
+        isInputEnabled = isOnline
+        let colorTransitionAnimation: () -> Void = {
+            self.sendMessageBtn.backgroundColor = isOnline ? UIColor.blue : UIColor.red
+        }
+        UIView.transition(with: self.sendMessageBtn, duration: 0.5, options: .transitionCrossDissolve, animations: colorTransitionAnimation)
+        
+        let stateChangingAnimDuration = 0.5
+        let frameGrowthPercentage = CGFloat(1.15)
+        UIView.animate(withDuration: stateChangingAnimDuration, delay: 0, options: [], animations: {
+            self.sendMessageBtn.transform = CGAffineTransform(scaleX: frameGrowthPercentage, y: frameGrowthPercentage)
+        }, completion: { _ in
+            UIView.animate(withDuration: stateChangingAnimDuration, delay: stateChangingAnimDuration, options: [], animations: {
+                self.sendMessageBtn.transform = CGAffineTransform.identity
+            }, completion: nil)
+            
+        })
     }
     
     public func unblockUserInput() {
-        self.messageInputTextField.isEnabled = true
         self.messageInputTextField.placeholder =  self.AVALIABLE_USER_INPUT_PLACEHOLDER
-
-        contact.isOnline = true
-        isInputBlocked = false
+        processOnlineStateChaning(toOnlineStatus: true)
     }
 }
 
