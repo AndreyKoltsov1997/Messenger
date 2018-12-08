@@ -98,3 +98,28 @@ extension ImageSelectionViewController: UICollectionViewDataSource {
     }
     
 }
+
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension ImageSelectionViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.bounds.width
+        let amountOfImagesInRow = CGFloat(3.0)
+        
+        let cellWidth = width / amountOfImagesInRow
+        let targetSize = CGSize(width: cellWidth, height: cellWidth)
+        return targetSize
+    }
+}
+
+
