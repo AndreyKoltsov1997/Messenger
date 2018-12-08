@@ -17,6 +17,8 @@ protocol ICoreAssembly {
     var operationsDataManager: OperationDataManager { get }
     
     // Network Operations
+    var requestSender: IRequestSender { get }
+    var requestLoader: IRequestLoader { get }
 }
 
 
@@ -24,6 +26,9 @@ class CoreAssembly: ICoreAssembly {
     lazy var gcdDataManager = GCDDataManager()
     lazy var operationsDataManager = OperationDataManager()
     lazy var coreDataStorage = StorageCoreData()
+
+    lazy var requestSender: IRequestSender = RequestSender()
+    lazy var requestLoader: IRequestLoader = RequestLoader()
 }
 
 
