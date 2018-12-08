@@ -19,8 +19,8 @@ class PixabayAPIService: IImageDownloadService {
     private var images: [PixelbayResponseModel]?
     
     init(requestSender: IRequestSender, requestLoader: IRequestLoader) {
-        self.requestSender = requestSender
         self.requestLoader = requestLoader
+        self.requestSender = requestSender
     }
     
     func performRequest(completion: @escaping (Int) -> Void) {
