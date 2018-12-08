@@ -371,8 +371,9 @@ extension ProfileViewController: ProfileImageDelegate {
             return
         }
         self.profilePictureImage.image = image
+        // NOTE: Converting in order to save to SQLite
         if let imageBinaryData = UIImagePNGRepresentation(image) {
-            conversationListDelegate?.updateImage(imageBinaryData)
+            self.profile.image = imageBinaryData
         }
     }
 }
