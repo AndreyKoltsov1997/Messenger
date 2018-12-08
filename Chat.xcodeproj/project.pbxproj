@@ -44,6 +44,7 @@
 		5540F72D21BBF61800334FED /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F72C21BBF61800334FED /* RequestFactory.swift */; };
 		5540F73121BBF7A400334FED /* ImageDownloaderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73021BBF7A400334FED /* ImageDownloaderService.swift */; };
 		5540F73321BBF91800334FED /* PixabayAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73221BBF91800334FED /* PixabayAPIService.swift */; };
+		5540F73521BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73421BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift */; };
 		55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */; };
 		55537EB421A4853600DBB885 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB321A4853600DBB885 /* CoreAssembly.swift */; };
 		55537EB621A4B11400DBB885 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB521A4B11400DBB885 /* ServiceAssembly.swift */; };
@@ -118,6 +119,7 @@
 		5540F72C21BBF61800334FED /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
 		5540F73021BBF7A400334FED /* ImageDownloaderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderService.swift; sourceTree = "<group>"; };
 		5540F73221BBF91800334FED /* PixabayAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayAPIService.swift; sourceTree = "<group>"; };
+		5540F73421BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewControllerDelegate.swift; sourceTree = "<group>"; };
 		55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		55537EB321A4853600DBB885 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		55537EB521A4B11400DBB885 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				5540F70B21BBD64800334FED /* ImageSelectionViewController.swift */,
+				5540F73421BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift */,
 				5540F70F21BBD67B00334FED /* ImageSelectionViewController.storyboard */,
 			);
 			path = ImagesViewController;
@@ -621,6 +624,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5540F73521BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift in Sources */,
 				5540F73121BBF7A400334FED /* ImageDownloaderService.swift in Sources */,
 				55001EBD21A5B3EA002F5D12 /* ConversationsListCell.swift in Sources */,
 				5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */,
