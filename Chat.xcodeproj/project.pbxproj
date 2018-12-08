@@ -44,7 +44,7 @@
 		5540F72D21BBF61800334FED /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F72C21BBF61800334FED /* RequestFactory.swift */; };
 		5540F73121BBF7A400334FED /* ImageDownloaderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73021BBF7A400334FED /* ImageDownloaderService.swift */; };
 		5540F73321BBF91800334FED /* PixabayAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73221BBF91800334FED /* PixabayAPIService.swift */; };
-		5540F73521BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73421BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift */; };
+		5540F73721BBFF0500334FED /* ProfileImageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73621BBFF0500334FED /* ProfileImageDelegate.swift */; };
 		55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */; };
 		55537EB421A4853600DBB885 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB321A4853600DBB885 /* CoreAssembly.swift */; };
 		55537EB621A4B11400DBB885 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB521A4B11400DBB885 /* ServiceAssembly.swift */; };
@@ -119,7 +119,7 @@
 		5540F72C21BBF61800334FED /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
 		5540F73021BBF7A400334FED /* ImageDownloaderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderService.swift; sourceTree = "<group>"; };
 		5540F73221BBF91800334FED /* PixabayAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayAPIService.swift; sourceTree = "<group>"; };
-		5540F73421BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewControllerDelegate.swift; sourceTree = "<group>"; };
+		5540F73621BBFF0500334FED /* ProfileImageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageDelegate.swift; sourceTree = "<group>"; };
 		55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		55537EB321A4853600DBB885 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		55537EB521A4B11400DBB885 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -250,7 +250,6 @@
 			isa = PBXGroup;
 			children = (
 				5540F70B21BBD64800334FED /* ImageSelectionViewController.swift */,
-				5540F73421BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift */,
 				5540F70F21BBD67B00334FED /* ImageSelectionViewController.storyboard */,
 			);
 			path = ImagesViewController;
@@ -495,6 +494,7 @@
 			children = (
 				5509958A2157955600D377E5 /* ProfileViewController.storyboard */,
 				558252532160224800AA3FD0 /* ProfileViewController.swift */,
+				5540F73621BBFF0500334FED /* ProfileImageDelegate.swift */,
 				55D2AED8218F14CF00625FFB /* ProvileViewControllerDelegate.swift */,
 			);
 			path = ProfileViewController;
@@ -624,7 +624,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5540F73521BBFBDF00334FED /* ImageSelectionViewControllerDelegate.swift in Sources */,
 				5540F73121BBF7A400334FED /* ImageDownloaderService.swift in Sources */,
 				55001EBD21A5B3EA002F5D12 /* ConversationsListCell.swift in Sources */,
 				5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */,
@@ -634,6 +633,7 @@
 				55064610216A97BD00EB961B /* RecivedMessagesCell.swift in Sources */,
 				5540F72421BBF02500334FED /* IRequestLoader.swift in Sources */,
 				5573D000218F6A0D00F82D05 /* IStorageManagerService.swift in Sources */,
+				5540F73721BBFF0500334FED /* ProfileImageDelegate.swift in Sources */,
 				55E2363F216A7FA80040E4DB /* SentMessageCell.swift in Sources */,
 				5540F71E21BBED4100334FED /* RequestSender.swift in Sources */,
 				55BBDF062191F555009AEAE1 /* ConversationViewControllerDelegate.swift in Sources */,

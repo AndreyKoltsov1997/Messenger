@@ -56,7 +56,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     func imageSelectionViewController() -> ImageSelectionViewController? {
         let imageSelectionViewController = UIStoryboard(name: "ImageSelectionViewController", bundle: nil).instantiateInitialViewController() as? ImageSelectionViewController
-        imageSelectionViewController?.configureViewController(profileStorageService: serviceAssembly.profileStorageService())
+        imageSelectionViewController?.configureViewController(service: serviceAssembly.pixabayAPIService())
         return imageSelectionViewController
     }
     

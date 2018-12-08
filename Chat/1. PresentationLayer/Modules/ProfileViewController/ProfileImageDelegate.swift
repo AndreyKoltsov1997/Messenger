@@ -1,5 +1,5 @@
 //
-//  ImageSelectionViewControllerDelegate.swift
+//  ProfileImageDelegate.swift
 //  Chat
 //
 //  Created by Andrey Koltsov on 08/12/2018.
@@ -9,6 +9,6 @@
 import Foundation
 import UIKit
 
-protocol ImageSelectionViewControllerDelegate {
+protocol ProfileImageDelegate: class {
     func setImage(image: UIImage?)
 }

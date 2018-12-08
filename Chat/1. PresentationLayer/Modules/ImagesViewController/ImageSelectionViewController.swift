@@ -22,6 +22,11 @@ class ImageSelectionViewController: UIViewController {
         }
     }
     
+    weak var delegate: ProfileImageDelegate?
+    
+    private var imageDownloadService: IImageDownloadService?
+
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -31,7 +36,7 @@ class ImageSelectionViewController: UIViewController {
     
     
     //MARK: - Public Methods
-    public func configureViewController(with service: ImageFetchingService) {
-//        self.profile = ProfileModel(profileStorageService: profileStorageService)
+    public func configureViewController(service service: IImageDownloadService) {
+        self.imageDownloadService = service
     }
 }
