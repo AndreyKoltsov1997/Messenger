@@ -36,6 +36,8 @@
 		5540F71721BBE99700334FED /* IParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71621BBE99700334FED /* IParser.swift */; };
 		5540F71921BBEA0000334FED /* PixelbayAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71821BBEA0000334FED /* PixelbayAPI.swift */; };
 		5540F71C21BBEB6E00334FED /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71B21BBEB6E00334FED /* IRequest.swift */; };
+		5540F71E21BBED4100334FED /* RequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71D21BBED4100334FED /* RequestSender.swift */; };
+		5540F72021BBEEA800334FED /* RequestConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71F21BBEEA800334FED /* RequestConfiguration.swift */; };
 		55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */; };
 		55537EB421A4853600DBB885 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB321A4853600DBB885 /* CoreAssembly.swift */; };
 		55537EB621A4B11400DBB885 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB521A4B11400DBB885 /* ServiceAssembly.swift */; };
@@ -102,6 +104,8 @@
 		5540F71621BBE99700334FED /* IParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IParser.swift; sourceTree = "<group>"; };
 		5540F71821BBEA0000334FED /* PixelbayAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelbayAPI.swift; sourceTree = "<group>"; };
 		5540F71B21BBEB6E00334FED /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
+		5540F71D21BBED4100334FED /* RequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSender.swift; sourceTree = "<group>"; };
+		5540F71F21BBEEA800334FED /* RequestConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestConfiguration.swift; sourceTree = "<group>"; };
 		55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		55537EB321A4853600DBB885 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		55537EB521A4B11400DBB885 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -251,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				5540F71321BBE94E00334FED /* IRequestSender.swift */,
+				5540F71D21BBED4100334FED /* RequestSender.swift */,
 			);
 			path = RequestSender;
 			sourceTree = "<group>";
@@ -268,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				5540F71B21BBEB6E00334FED /* IRequest.swift */,
+				5540F71F21BBEEA800334FED /* RequestConfiguration.swift */,
 			);
 			path = RequestCommon;
 			sourceTree = "<group>";
@@ -565,6 +571,7 @@
 				55064610216A97BD00EB961B /* RecivedMessagesCell.swift in Sources */,
 				5573D000218F6A0D00F82D05 /* IStorageManagerService.swift in Sources */,
 				55E2363F216A7FA80040E4DB /* SentMessageCell.swift in Sources */,
+				5540F71E21BBED4100334FED /* RequestSender.swift in Sources */,
 				55BBDF062191F555009AEAE1 /* ConversationViewControllerDelegate.swift in Sources */,
 				5540F71921BBEA0000334FED /* PixelbayAPI.swift in Sources */,
 				55A6D225217CDE0E00B9A135 /* FileName.swift in Sources */,
@@ -583,6 +590,7 @@
 				55001EB721A5B3EA002F5D12 /* ConversationListViewControllerDelegate.swift in Sources */,
 				550995872157955600D377E5 /* AppDelegate.swift in Sources */,
 				553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */,
+				5540F72021BBEEA800334FED /* RequestConfiguration.swift in Sources */,
 				55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */,
 				55537EC321A4D2CA00DBB885 /* RootAssembly.swift in Sources */,
 				5540F71721BBE99700334FED /* IParser.swift in Sources */,

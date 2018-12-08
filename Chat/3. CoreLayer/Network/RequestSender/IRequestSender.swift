@@ -8,14 +8,9 @@
 
 import Foundation
 
-struct RequestConfig<Parser> where Parser: IParser {
-    let request: IRequest
-    let parser: Parser
-}
-
 protocol IRequestSender {
     
-    func send<Parser>(requestConfig: RequestConfig<Parser>,
+    func send<Parser>(requestConfiguration: RequestConfiguration<Parser>,
                       completion: @escaping (Parser.ResponseModel?) -> Void)
     
 }
