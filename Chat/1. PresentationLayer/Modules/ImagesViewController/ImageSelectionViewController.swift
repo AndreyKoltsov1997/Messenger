@@ -46,7 +46,7 @@ class ImageSelectionViewController: UIViewController {
         
         imagesCollectionView.register(UINib.init(nibName: self.IMAGE_NIB_NAME, bundle: nil), forCellWithReuseIdentifier: self.IMAGE_REUSABLE_CELL_ID)
         
-        
+        imagesCollectionView.delegate = self
         imagesCollectionView.dataSource = self
         
         DispatchQueue.global().async { [weak self] in
@@ -122,4 +122,15 @@ extension ImageSelectionViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 
+extension ImageSelectionViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.imageDownloadService?.load(index: indexPath.row) { (image) in
+            DispatchQueue.main.async { [weak self] in
+                print("Image has been selected.")
+            }
+        }
+        
+    }
+}
