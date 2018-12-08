@@ -56,7 +56,10 @@ class PresentationAssembly: IPresentationAssembly {
     
     func imageSelectionViewController() -> ImageSelectionViewController? {
         let imageSelectionViewController = UIStoryboard(name: "ImageSelectionViewController", bundle: nil).instantiateInitialViewController() as? ImageSelectionViewController
+
+
         imageSelectionViewController?.configureViewController(service: serviceAssembly.pixabayAPIService())
+        print("is imageSelectionViewController nil: " + String((imageSelectionViewController == nil)))
         return imageSelectionViewController
     }
     

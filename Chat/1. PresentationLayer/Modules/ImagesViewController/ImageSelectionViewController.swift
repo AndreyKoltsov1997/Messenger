@@ -34,7 +34,6 @@ class ImageSelectionViewController: UIViewController {
         
     }
     
-    
     //MARK: - Public Methods
     public func configureViewController(service: IImageDownloadService) {
         self.imageDownloadService = service

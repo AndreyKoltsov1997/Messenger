@@ -66,6 +66,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         let downloadImageOption = UIAlertAction(title: Constants.OPTION_DOWNLOAD_LIBRARY_DEFAULT_TITLE, style: .default) { _ in
             self.displayAvaliableDownloadedImages()
+            print("Download option has been selected")
+            
         }
         chooseImageAlertVC.addAction(downloadImageOption)
         self.present(chooseImageAlertVC, animated: true) {
@@ -127,6 +129,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     func displayAvaliableDownloadedImages() {
+        print("is self.presentationAssembly nil: " + String(self.presentationAssembly == nil))
+
         guard let imageSelectionVC = self.presentationAssembly?.imageSelectionViewController() else {
             let misleadingMsg = "Unable to get image selection VC from presentation assembly."
             print(misleadingMsg)

@@ -97,8 +97,6 @@ class TinkoffLogoSprayer {
     private func getSprayingTimer(sprayingFrom touch: UITouch) -> Timer {
         return Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { timer in
             guard let originView = touch.view else {
-                let misleadingMsg = "Unable to get view instance."
-                print(misleadingMsg)
                 return
             }
             
