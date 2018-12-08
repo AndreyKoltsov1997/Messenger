@@ -24,6 +24,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - Dependencies
     public var profileStorageService: IProfileStorageService?
+    public var presentationAssembly: IPresentationAssembly?
     
     // MARK: - Properies
     weak var conversationListDelegate: ConversationListViewDelegate?
@@ -49,18 +50,25 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // NOTE: chooseImageAlertVC actions
         let chooseImageFromGalleryAction = UIAlertAction(title: Constants.OPTION_OPEN_LIBRARY_DEFAULT_TITLE, style: .default) {
-            _ in self.processImageChoosingFromGallery()
+            _ in
+            self.processImageChoosingFromGallery()
         }
         chooseImageAlertVC.addAction(chooseImageFromGalleryAction)
         
         let cameraSource = UIImagePickerControllerSourceType.camera
         if UIImagePickerController.isSourceTypeAvailable(cameraSource) {
             let takePhotoAction = UIAlertAction(title: Constants.OPTION_TAKE_PHOTO_DEFAULT_TITLE, style: .default) {
-                _ in self.openCameraIfAvaliable(forSource: cameraSource)
+                _ in
+                self.openCameraIfAvaliable(forSource: cameraSource)
             }
             chooseImageAlertVC.addAction(takePhotoAction)
         }
         
+        let downloadImageOption = UIAlertAction(title: Constants.OPTION_DOWNLOAD_LIBRARY_DEFAULT_TITLE, style: .default) { _ in
+            self.displayAvaliableDownloadedImages()
+            
+        }
+        chooseImageAlertVC.addAction(downloadImageOption)
         self.present(chooseImageAlertVC, animated: true) {
             chooseImageAlertVC.view.superview?.subviews.first?.isUserInteractionEnabled = true
             chooseImageAlertVC.view.superview?.subviews.first?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.actionDismissChooseImageAlert)))
@@ -117,6 +125,17 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         } else {
             self.openGallery(source: photoLibrarySource)
         }
+    }
+    
+    func displayAvaliableDownloadedImages() {
+        guard let imageSelectionVC = self.presentationAssembly?.imageSelectionViewController() else {
+            let misleadingMsg = "Unable to get image selection VC from presentation assembly."
+            print(misleadingMsg)
+            return
+        }
+        imageSelectionVC.profileImageDelegate = self
+        self.present(imageSelectionVC, animated: true, completion: nil)
+
     }
     
     private func showRequestSourceAlert(message: String) {
@@ -298,8 +317,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     //MARK: - Public Methods
-    public func configureViewController(profileStorageService: IProfileStorageService) {
+    public func configureViewController(profileStorageService: IProfileStorageService, presentationAssembly: PresentationAssembly) {
         self.profile = ProfileModel(profileStorageService: profileStorageService)
+        self.presentationAssembly = presentationAssembly
     }
     
 }
@@ -338,5 +358,22 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     func onFinishSaving() {
         self.showActionDoneAlert(message: "Profile info has been saved")
         self.activityIndicator.stopAnimating()
+    }
+}
+
+
+// MARK: - ProfileImageDelegate
+extension ProfileViewController: ProfileImageDelegate {
+    func setImage(image: UIImage?) {
+        guard let image = image else {
+            let misleadingMsg = "No image has been found in callback."
+            print(misleadingMsg)
+            return
+        }
+        self.profilePictureImage.image = image
+        // NOTE: Converting in order to save to SQLite
+        if let imageBinaryData = UIImagePNGRepresentation(image) {
+            self.profile.image = imageBinaryData
+        }
     }
 }

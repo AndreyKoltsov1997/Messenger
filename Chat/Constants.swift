@@ -44,6 +44,8 @@ struct Constants {
     // MARK: -  Options for profile picture choosing
     static let OPTION_TAKE_PHOTO_DEFAULT_TITLE = "Take photo"
     static let OPTION_OPEN_LIBRARY_DEFAULT_TITLE = "Choose from library"
+    static let OPTION_DOWNLOAD_LIBRARY_DEFAULT_TITLE = "Download"
+
     
     // MARK: - Default user info
     static let DEFAULT_USERNAME = "Andrey Koltsov"

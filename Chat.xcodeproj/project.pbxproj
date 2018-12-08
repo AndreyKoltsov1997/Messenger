@@ -30,6 +30,24 @@
 		5539672921863A7300AA4D05 /* CodableMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539672821863A7300AA4D05 /* CodableMessage.swift */; };
 		553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A880E217D19E3004B8EC6 /* FileSaver.swift */; };
 		553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A8810217D1A00004B8EC6 /* FileLoader.swift */; };
+		5540F70C21BBD64800334FED /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F70B21BBD64800334FED /* ImageSelectionViewController.swift */; };
+		5540F71021BBD67B00334FED /* ImageSelectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5540F70F21BBD67B00334FED /* ImageSelectionViewController.storyboard */; };
+		5540F71421BBE94E00334FED /* IRequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71321BBE94E00334FED /* IRequestSender.swift */; };
+		5540F71721BBE99700334FED /* IParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71621BBE99700334FED /* IParser.swift */; };
+		5540F71921BBEA0000334FED /* PixelbayAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71821BBEA0000334FED /* PixelbayAPI.swift */; };
+		5540F71C21BBEB6E00334FED /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71B21BBEB6E00334FED /* IRequest.swift */; };
+		5540F71E21BBED4100334FED /* RequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71D21BBED4100334FED /* RequestSender.swift */; };
+		5540F72021BBEEA800334FED /* RequestConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71F21BBEEA800334FED /* RequestConfiguration.swift */; };
+		5540F72421BBF02500334FED /* IRequestLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F72321BBF02500334FED /* IRequestLoader.swift */; };
+		5540F72621BBF03B00334FED /* RequestLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F72521BBF03B00334FED /* RequestLoader.swift */; };
+		5540F72B21BBF2E000334FED /* PixelbayImagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F72A21BBF2E000334FED /* PixelbayImagesRequest.swift */; };
+		5540F72D21BBF61800334FED /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F72C21BBF61800334FED /* RequestFactory.swift */; };
+		5540F73121BBF7A400334FED /* ImageDownloaderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73021BBF7A400334FED /* ImageDownloaderService.swift */; };
+		5540F73321BBF91800334FED /* PixabayAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73221BBF91800334FED /* PixabayAPIService.swift */; };
+		5540F73721BBFF0500334FED /* ProfileImageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73621BBFF0500334FED /* ProfileImageDelegate.swift */; };
+		5540F73B21BC013000334FED /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73921BC013000334FED /* ImageCollectionViewCell.swift */; };
+		5540F73C21BC013000334FED /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5540F73A21BC013000334FED /* ImageCollectionViewCell.xib */; };
+		5540F73E21BC029400334FED /* LoadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73D21BC029400334FED /* LoadingImage.swift */; };
 		55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */; };
 		55537EB421A4853600DBB885 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB321A4853600DBB885 /* CoreAssembly.swift */; };
 		55537EB621A4B11400DBB885 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB521A4B11400DBB885 /* ServiceAssembly.swift */; };
@@ -90,6 +108,24 @@
 		5539672821863A7300AA4D05 /* CodableMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMessage.swift; sourceTree = "<group>"; };
 		553A880E217D19E3004B8EC6 /* FileSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSaver.swift; sourceTree = "<group>"; };
 		553A8810217D1A00004B8EC6 /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
+		5540F70B21BBD64800334FED /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
+		5540F70F21BBD67B00334FED /* ImageSelectionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageSelectionViewController.storyboard; sourceTree = "<group>"; };
+		5540F71321BBE94E00334FED /* IRequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequestSender.swift; sourceTree = "<group>"; };
+		5540F71621BBE99700334FED /* IParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IParser.swift; sourceTree = "<group>"; };
+		5540F71821BBEA0000334FED /* PixelbayAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelbayAPI.swift; sourceTree = "<group>"; };
+		5540F71B21BBEB6E00334FED /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
+		5540F71D21BBED4100334FED /* RequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSender.swift; sourceTree = "<group>"; };
+		5540F71F21BBEEA800334FED /* RequestConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestConfiguration.swift; sourceTree = "<group>"; };
+		5540F72321BBF02500334FED /* IRequestLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequestLoader.swift; sourceTree = "<group>"; };
+		5540F72521BBF03B00334FED /* RequestLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestLoader.swift; sourceTree = "<group>"; };
+		5540F72A21BBF2E000334FED /* PixelbayImagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelbayImagesRequest.swift; sourceTree = "<group>"; };
+		5540F72C21BBF61800334FED /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
+		5540F73021BBF7A400334FED /* ImageDownloaderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderService.swift; sourceTree = "<group>"; };
+		5540F73221BBF91800334FED /* PixabayAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayAPIService.swift; sourceTree = "<group>"; };
+		5540F73621BBFF0500334FED /* ProfileImageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageDelegate.swift; sourceTree = "<group>"; };
+		5540F73921BC013000334FED /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		5540F73A21BC013000334FED /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		5540F73D21BC029400334FED /* LoadingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingImage.swift; sourceTree = "<group>"; };
 		55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		55537EB321A4853600DBB885 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		55537EB521A4B11400DBB885 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -216,6 +252,108 @@
 			path = FileManager;
 			sourceTree = "<group>";
 		};
+		5540F70821BBD56900334FED /* ImagesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5540F73821BC00E900334FED /* ImageCollectionViewCell */,
+				5540F70B21BBD64800334FED /* ImageSelectionViewController.swift */,
+				5540F70F21BBD67B00334FED /* ImageSelectionViewController.storyboard */,
+			);
+			path = ImagesViewController;
+			sourceTree = "<group>";
+		};
+		5540F71121BBE92100334FED /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5540F72821BBF28E00334FED /* Requests */,
+				5540F72221BBF00200334FED /* RequestLoader */,
+				5540F71521BBE98800334FED /* Parsers */,
+				5540F71221BBE93F00334FED /* RequestSender */,
+				5540F72C21BBF61800334FED /* RequestFactory.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5540F71221BBE93F00334FED /* RequestSender */ = {
+			isa = PBXGroup;
+			children = (
+				5540F71321BBE94E00334FED /* IRequestSender.swift */,
+				5540F71D21BBED4100334FED /* RequestSender.swift */,
+			);
+			path = RequestSender;
+			sourceTree = "<group>";
+		};
+		5540F71521BBE98800334FED /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				5540F72721BBF25F00334FED /* Pixelbay */,
+				5540F71621BBE99700334FED /* IParser.swift */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		5540F72221BBF00200334FED /* RequestLoader */ = {
+			isa = PBXGroup;
+			children = (
+				5540F72321BBF02500334FED /* IRequestLoader.swift */,
+				5540F72521BBF03B00334FED /* RequestLoader.swift */,
+			);
+			path = RequestLoader;
+			sourceTree = "<group>";
+		};
+		5540F72721BBF25F00334FED /* Pixelbay */ = {
+			isa = PBXGroup;
+			children = (
+				5540F71821BBEA0000334FED /* PixelbayAPI.swift */,
+			);
+			path = Pixelbay;
+			sourceTree = "<group>";
+		};
+		5540F72821BBF28E00334FED /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				5540F72921BBF2BE00334FED /* Pixelbay */,
+				5540F71B21BBEB6E00334FED /* IRequest.swift */,
+				5540F71F21BBEEA800334FED /* RequestConfiguration.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		5540F72921BBF2BE00334FED /* Pixelbay */ = {
+			isa = PBXGroup;
+			children = (
+				5540F72A21BBF2E000334FED /* PixelbayImagesRequest.swift */,
+			);
+			path = Pixelbay;
+			sourceTree = "<group>";
+		};
+		5540F72E21BBF76A00334FED /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5540F72F21BBF77800334FED /* Pixabay */,
+				5540F73021BBF7A400334FED /* ImageDownloaderService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5540F72F21BBF77800334FED /* Pixabay */ = {
+			isa = PBXGroup;
+			children = (
+				5540F73221BBF91800334FED /* PixabayAPIService.swift */,
+			);
+			path = Pixabay;
+			sourceTree = "<group>";
+		};
+		5540F73821BC00E900334FED /* ImageCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5540F73921BC013000334FED /* ImageCollectionViewCell.swift */,
+				5540F73D21BC029400334FED /* LoadingImage.swift */,
+				5540F73A21BC013000334FED /* ImageCollectionViewCell.xib */,
+			);
+			path = ImageCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		55537EA821A478CB00DBB885 /* 1. PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +374,7 @@
 		55537EAA21A478FC00DBB885 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				5540F70821BBD56900334FED /* ImagesViewController */,
 				5591805D21B461520089BC2B /* TinkoffLogoSrayer */,
 				55001EAE21A5B3EA002F5D12 /* ConversationListViewController */,
 				55E23630216A7B0D0040E4DB /* ConversationViewController */,
@@ -256,6 +395,7 @@
 		55537EAE21A484B200DBB885 /* 3. CoreLayer */ = {
 			isa = PBXGroup;
 			children = (
+				5540F71121BBE92100334FED /* Network */,
 				55D2AECC218EF02900625FFB /* CoreData */,
 				55A6D221217CDDAE00B9A135 /* File System Opetations */,
 				55537EAF21A484CB00DBB885 /* Assembly */,
@@ -282,6 +422,7 @@
 		55537EB221A484E600DBB885 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				5540F72E21BBF76A00334FED /* Network */,
 				55001EA521A4E8D9002F5D12 /* CommunicationService */,
 				55537EBA21A4C2E100DBB885 /* ContactProcessingService */,
 				55537EB921A4B65700DBB885 /* ProfileStorageService */,
@@ -370,6 +511,7 @@
 			children = (
 				5509958A2157955600D377E5 /* ProfileViewController.storyboard */,
 				558252532160224800AA3FD0 /* ProfileViewController.swift */,
+				5540F73621BBFF0500334FED /* ProfileImageDelegate.swift */,
 				55D2AED8218F14CF00625FFB /* ProvileViewControllerDelegate.swift */,
 			);
 			path = ProfileViewController;
@@ -484,9 +626,11 @@
 				550995912157955700D377E5 /* LaunchScreen.storyboard in Resources */,
 				5509958E2157955700D377E5 /* Assets.xcassets in Resources */,
 				55064611216A97BD00EB961B /* RecivedMessagesCell.xib in Resources */,
+				5540F73C21BC013000334FED /* ImageCollectionViewCell.xib in Resources */,
 				55001EBC21A5B3EA002F5D12 /* ConversationsListCell.xib in Resources */,
 				55E23638216A7D4B0040E4DB /* ConversationViewController.xib in Resources */,
 				55E23640216A7FA80040E4DB /* SentMessageCell.xib in Resources */,
+				5540F71021BBD67B00334FED /* ImageSelectionViewController.storyboard in Resources */,
 				5509958C2157955600D377E5 /* ProfileViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,14 +642,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5540F73121BBF7A400334FED /* ImageDownloaderService.swift in Sources */,
 				55001EBD21A5B3EA002F5D12 /* ConversationsListCell.swift in Sources */,
 				5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */,
 				55537EB821A4B65000DBB885 /* ProfileStorageService.swift in Sources */,
+				5540F71C21BBEB6E00334FED /* IRequest.swift in Sources */,
 				55A6D233217CF19600B9A135 /* ImageSavingOperation.swift in Sources */,
 				55064610216A97BD00EB961B /* RecivedMessagesCell.swift in Sources */,
+				5540F72421BBF02500334FED /* IRequestLoader.swift in Sources */,
 				5573D000218F6A0D00F82D05 /* IStorageManagerService.swift in Sources */,
+				5540F73721BBFF0500334FED /* ProfileImageDelegate.swift in Sources */,
 				55E2363F216A7FA80040E4DB /* SentMessageCell.swift in Sources */,
+				5540F71E21BBED4100334FED /* RequestSender.swift in Sources */,
 				55BBDF062191F555009AEAE1 /* ConversationViewControllerDelegate.swift in Sources */,
+				5540F71921BBEA0000334FED /* PixelbayAPI.swift in Sources */,
 				55A6D225217CDE0E00B9A135 /* FileName.swift in Sources */,
 				55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */,
 				55D2AED9218F14CF00625FFB /* ProvileViewControllerDelegate.swift in Sources */,
@@ -516,25 +666,35 @@
 				55001EB821A5B3EA002F5D12 /* ConversationListViewDelegate.swift in Sources */,
 				5539672921863A7300AA4D05 /* CodableMessage.swift in Sources */,
 				553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */,
+				5540F71421BBE94E00334FED /* IRequestSender.swift in Sources */,
 				55F7BBAF2191E89800752AB6 /* ContactProcessingService.swift in Sources */,
 				55D2AED7218F04ED00625FFB /* ProfileModel.swift in Sources */,
 				55001EB721A5B3EA002F5D12 /* ConversationListViewControllerDelegate.swift in Sources */,
 				550995872157955600D377E5 /* AppDelegate.swift in Sources */,
 				553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */,
+				5540F72021BBEEA800334FED /* RequestConfiguration.swift in Sources */,
 				55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */,
+				5540F73B21BC013000334FED /* ImageCollectionViewCell.swift in Sources */,
 				55537EC321A4D2CA00DBB885 /* RootAssembly.swift in Sources */,
+				5540F72B21BBF2E000334FED /* PixelbayImagesRequest.swift in Sources */,
+				5540F72621BBF03B00334FED /* RequestLoader.swift in Sources */,
+				5540F71721BBE99700334FED /* IParser.swift in Sources */,
 				55A6D223217CDDCA00B9A135 /* GCDDataManager.swift in Sources */,
 				55E23642216A85770040E4DB /* MessageCellConfiguration.swift in Sources */,
 				55D2AECF218EF06C00625FFB /* ProfileModel.xcdatamodeld in Sources */,
+				5540F73E21BC029400334FED /* LoadingImage.swift in Sources */,
 				55001EBB21A5B3EA002F5D12 /* ConversationCellConfiguration.swift in Sources */,
 				55001EBF21A5B414002F5D12 /* StorageCoreData.swift in Sources */,
+				5540F72D21BBF61800334FED /* RequestFactory.swift in Sources */,
 				5591806121B461C40089BC2B /* Sprayer.swift in Sources */,
 				5591805F21B461650089BC2B /* TinkoffLogoSprayer.swift in Sources */,
 				5565F69E219837AB00F14504 /* ConversationListModelDelegate.swift in Sources */,
 				55D2AED2218EF1F200625FFB /* UserProfile+CoreDataClass.swift in Sources */,
 				55A6D235217CF1B600B9A135 /* DiscriptionSavingOperation.swift in Sources */,
+				5540F70C21BBD64800334FED /* ImageSelectionViewController.swift in Sources */,
 				5539671D2184BA7C00AA4D05 /* ICommunicationService.swift in Sources */,
 				558252542160224800AA3FD0 /* ProfileViewController.swift in Sources */,
+				5540F73321BBF91800334FED /* PixabayAPIService.swift in Sources */,
 				55001EC121A5B42C002F5D12 /* StorageDataSQLite.swift in Sources */,
 				55D2AED3218EF1F200625FFB /* UserProfile+CoreDataProperties.swift in Sources */,
 				55E2362A216A387B0040E4DB /* Message.swift in Sources */,

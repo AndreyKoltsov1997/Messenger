@@ -14,6 +14,8 @@ protocol IServicesAssembly {
     func gcdDataManager() -> GCDDataManager
     func contactProcessingService() -> IContactsProcessingService
     func profileStorageService() -> ProfileStorageService
+    func pixabayAPIService() -> PixabayAPIService
+
 }
 
 class ServicesAssembly {
@@ -47,6 +49,10 @@ extension ServicesAssembly: IServicesAssembly {
     
     func communicationService(displayingName name: String) -> ICommunicationService {
         return CommunicationService(displayingName: name)
+    }
+    
+    func pixabayAPIService() -> PixabayAPIService {
+        return PixabayAPIService(requestSender: self.coreAssembly.requestSender, requestLoader: self.coreAssembly.requestLoader)
     }
     
 }

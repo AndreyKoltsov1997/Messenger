@@ -12,6 +12,7 @@ protocol IDataManager {
     func loadProfile(sender: UIViewController)
     func saveProfile(sender: ProfileModel)
 }
+
 class GCDDataManager {
     
     // Dependencies
