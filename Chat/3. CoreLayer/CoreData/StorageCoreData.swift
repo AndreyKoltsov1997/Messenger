@@ -75,7 +75,7 @@ class StorageCoreData: IStorageManagerService {
         StorageCoreData.persistentContainer.performBackgroundTask { (backgroundContext) in
             let fetchRequest: NSFetchRequest<UserProfile> = UserProfile.fetchRequest()
             if (self.isEntityExist(withName: UserProfile.TAG, withIn: fetchRequest)) {
-                // NOTE: Changing existing profile info
+                // NOTE: [UserProfile exist within SQLite] Changing existing profile info
                 do {
                     let userProfileInfo = try StorageCoreData.context.fetch(fetchRequest)
                     userProfileInfo.first?.name = name
@@ -91,12 +91,14 @@ class StorageCoreData: IStorageManagerService {
                     print(StorageCoreData.TAG, "An error has occured while re-writing profile info:", error.localizedDescription)
                 }
             } else {
+                // NOTE: [User profile doesn't exist iwthin SQLite] Creating user profile info
                 let userProfile = UserProfile(context: StorageCoreData.context)
                 userProfile.name = name
                 userProfile.discription = discription
+                
                 if let image = image as NSData? {
                     userProfile.image = image
-                } else {
+                }  else {
                     print(StorageCoreData.TAG, "Unable to save image.")
                 }
                 self.saveContext()
