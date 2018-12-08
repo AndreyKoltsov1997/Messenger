@@ -15,26 +15,26 @@ class RequestSender: IRequestSender {
     
     func send<Parser>(requestConfiguration: RequestConfiguration<Parser>, completion: @escaping (Parser.ResponseModel?) -> Void) where Parser : IParser {
         guard let urlRequest = requestConfiguration.request.urlRequest else {
+            let misleadingMsg = "Unable to get the URL Request configuration"
+            print(misleadingMsg)
             completion(nil)
             return
         }
         
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
             if let error = error {
-                print("Error in RequestSender: \(error.localizedDescription)")
+                let misleadingMessage = "An error has occured while trying to fetch data from the server:"
+                print(misleadingMessage + error.localizedDescription)
                 completion(nil)
             }
             guard let fetchedData = data,
                 let parsedModel: Parser.ResponseModel = requestConfiguration.parser.parse(data: fetchedData) else {
+                    print("Unable to parse response from the server.")
                     completion(nil)
                     return
             }
-            
             completion(parsedModel)
         }
-        
         task.resume()
     }
-    
-    
 }

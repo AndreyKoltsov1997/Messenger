@@ -12,6 +12,5 @@ protocol IRequestSender {
     
     func send<Parser>(requestConfiguration: RequestConfiguration<Parser>,
                       completion: @escaping (Parser.ResponseModel?) -> Void)
-    
 }
 

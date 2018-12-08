@@ -14,11 +14,11 @@ struct PixelbarApiResponse: Codable {
 
 struct PixelbayResponseModel: Codable {
     let id: Int?
+    let imageURL: String?
+    let largeImageURL: String?
+    let fullHDURL: String?
     let previewURL: String?
     let webformatURL: String?
-    let largeImageURL: String?
-    let fullHDURLL: String?
-    let imageURL: String?
 }
 
 class PixabayImagesParser: IParser {
