@@ -9,8 +9,12 @@
 import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
+    
 
-    private var loadingImage: LoadingImage? = nil
+    // MARK: - Properties
+    public var loadingImage: LoadingImage? = nil
+    
+    // MARK: - Lifecycle
     
     override func awakeFromNib() {
         super.awakeFromNib()

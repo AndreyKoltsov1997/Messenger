@@ -13,17 +13,19 @@ import UIKit
 
 class LoadingImage: UIImageView {
     
+    // MARK: - Properties
     static let IMAGE_PLACEHOLDER = "Image"
     private lazy var loader: IRequestLoader = RequestLoader()
     private var targetURL: String?
     
-    func loadImage(from url: String) {
+    // MARK: - Public functions 
+    public func loadImage(from url: String) {
         DispatchQueue.main.async { [weak self] in
             self?.image = UIImage(named: LoadingImage.IMAGE_PLACEHOLDER)
         }
         
         // NOTE: .cancel() method is called for boosting the speed of data loading: ...
-        // ... otherwise the app will load every picture User throught. 
+        // ... otherwise the app will load every picture User throught.
         self.targetURL = url
         loader.load(url: url) { (data) in
             guard let data = data else {
