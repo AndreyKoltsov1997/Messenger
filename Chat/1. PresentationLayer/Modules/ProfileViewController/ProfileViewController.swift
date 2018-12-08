@@ -66,7 +66,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         let downloadImageOption = UIAlertAction(title: Constants.OPTION_DOWNLOAD_LIBRARY_DEFAULT_TITLE, style: .default) { _ in
             self.displayAvaliableDownloadedImages()
-            print("Download option has been selected")
             
         }
         chooseImageAlertVC.addAction(downloadImageOption)
@@ -129,13 +128,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     func displayAvaliableDownloadedImages() {
-        print("is self.presentationAssembly nil: " + String(self.presentationAssembly == nil))
-
         guard let imageSelectionVC = self.presentationAssembly?.imageSelectionViewController() else {
             let misleadingMsg = "Unable to get image selection VC from presentation assembly."
             print(misleadingMsg)
             return
         }
+        imageSelectionVC.profileImageDelegate = self
         self.present(imageSelectionVC, animated: true, completion: nil)
 
     }
@@ -360,5 +358,21 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     func onFinishSaving() {
         self.showActionDoneAlert(message: "Profile info has been saved")
         self.activityIndicator.stopAnimating()
+    }
+}
+
+
+// MARK: - ProfileImageDelegate
+extension ProfileViewController: ProfileImageDelegate {
+    func setImage(image: UIImage?) {
+        guard let image = image else {
+            let misleadingMsg = "No image has been found in callback."
+            print(misleadingMsg)
+            return
+        }
+        self.profilePictureImage.image = image
+        if let imageBinaryData = UIImagePNGRepresentation(image) {
+            conversationListDelegate?.updateImage(imageBinaryData)
+        }
     }
 }

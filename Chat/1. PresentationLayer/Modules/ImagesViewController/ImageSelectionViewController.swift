@@ -15,10 +15,11 @@ class ImageSelectionViewController: UIViewController {
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     
     // MARK: - Properties
-    weak var delegate: ProfileImageDelegate?
+    public var profileImageDelegate: ProfileImageDelegate?
+
     private let IMAGE_REUSABLE_CELL_ID = "ImageCollectionViewCell"
     private let IMAGE_NIB_NAME = "ImageCollectionViewCell"
-    
+
     private var imagesAmount: Int = 0 {
         didSet {
             imagesCollectionView.reloadData()
@@ -27,7 +28,6 @@ class ImageSelectionViewController: UIViewController {
     
     // MARK: - Dependencies
     private var imageDownloadService: IImageDownloadService?
-
 
     
     // MARK: - Lifecycle
@@ -128,7 +128,8 @@ extension ImageSelectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.imageDownloadService?.load(index: indexPath.row) { (image) in
             DispatchQueue.main.async { [weak self] in
-                print("Image has been selected.")
+               self?.profileImageDelegate?.setImage(image: image)
+                self?.dismiss(animated: true, completion: nil)
             }
         }
         
