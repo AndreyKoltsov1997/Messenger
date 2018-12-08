@@ -22,8 +22,8 @@ class LoadingImage: UIImageView {
             self?.image = UIImage(named: LoadingImage.IMAGE_PLACEHOLDER)
         }
         
-        
-        loader.cancel()
+        // NOTE: .cancel() method is called for boosting the speed of data loading: ...
+        // ... otherwise the app will load every picture User throught. 
         self.targetURL = url
         loader.load(url: url) { (data) in
             guard let data = data else {

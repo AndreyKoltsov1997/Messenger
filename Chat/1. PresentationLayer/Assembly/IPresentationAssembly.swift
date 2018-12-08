@@ -50,7 +50,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     func profileViewController() -> ProfileViewController? {
         let profileViewController = UIStoryboard(name: "ProfileViewController", bundle: nil).instantiateInitialViewController() as? ProfileViewController
-        profileViewController?.configureViewController(profileStorageService: serviceAssembly.profileStorageService())
+        profileViewController?.configureViewController(profileStorageService: serviceAssembly.profileStorageService(), presentationAssembly: self)
         return profileViewController
     }
     
