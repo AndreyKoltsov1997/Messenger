@@ -29,4 +29,9 @@ class ImageSelectionViewController: UIViewController {
         
     }
     
+    
+    //MARK: - Public Methods
+    public func configureViewController(with service: ImageFetchingService) {
+//        self.profile = ProfileModel(profileStorageService: profileStorageService)
+    }
 }

@@ -17,6 +17,10 @@ protocol IPresentationAssembly {
 
     // Screen with user profile
     func profileViewController() -> ProfileViewController?
+    
+    // Selection of User Profile Picture from fetched images
+    
+    func imageSelectionViewController() -> ImageSelectionViewController?
 }
 
 class PresentationAssembly: IPresentationAssembly {
@@ -48,6 +52,12 @@ class PresentationAssembly: IPresentationAssembly {
         let profileViewController = UIStoryboard(name: "ProfileViewController", bundle: nil).instantiateInitialViewController() as? ProfileViewController
         profileViewController?.configureViewController(profileStorageService: serviceAssembly.profileStorageService())
         return profileViewController
+    }
+    
+    func imageSelectionViewController() -> ImageSelectionViewController? {
+        let imageSelectionViewController = UIStoryboard(name: "ImageSelectionViewController", bundle: nil).instantiateInitialViewController() as? ImageSelectionViewController
+        imageSelectionViewController?.configureViewController(profileStorageService: serviceAssembly.profileStorageService())
+        return imageSelectionViewController
     }
     
     

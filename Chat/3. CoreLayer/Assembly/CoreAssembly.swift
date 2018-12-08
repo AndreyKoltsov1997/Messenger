@@ -15,6 +15,8 @@ protocol ICoreAssembly {
     // File System Storage
     var gcdDataManager: GCDDataManager { get }
     var operationsDataManager: OperationDataManager { get }
+    
+    // Network Operations
 }
 
 

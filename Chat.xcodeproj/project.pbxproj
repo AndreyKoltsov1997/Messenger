@@ -32,6 +32,10 @@
 		553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A8810217D1A00004B8EC6 /* FileLoader.swift */; };
 		5540F70C21BBD64800334FED /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F70B21BBD64800334FED /* ImageSelectionViewController.swift */; };
 		5540F71021BBD67B00334FED /* ImageSelectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5540F70F21BBD67B00334FED /* ImageSelectionViewController.storyboard */; };
+		5540F71421BBE94E00334FED /* IRequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71321BBE94E00334FED /* IRequestSender.swift */; };
+		5540F71721BBE99700334FED /* IParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71621BBE99700334FED /* IParser.swift */; };
+		5540F71921BBEA0000334FED /* PixelbayAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71821BBEA0000334FED /* PixelbayAPI.swift */; };
+		5540F71C21BBEB6E00334FED /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F71B21BBEB6E00334FED /* IRequest.swift */; };
 		55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */; };
 		55537EB421A4853600DBB885 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB321A4853600DBB885 /* CoreAssembly.swift */; };
 		55537EB621A4B11400DBB885 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB521A4B11400DBB885 /* ServiceAssembly.swift */; };
@@ -94,6 +98,10 @@
 		553A8810217D1A00004B8EC6 /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		5540F70B21BBD64800334FED /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
 		5540F70F21BBD67B00334FED /* ImageSelectionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageSelectionViewController.storyboard; sourceTree = "<group>"; };
+		5540F71321BBE94E00334FED /* IRequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequestSender.swift; sourceTree = "<group>"; };
+		5540F71621BBE99700334FED /* IParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IParser.swift; sourceTree = "<group>"; };
+		5540F71821BBEA0000334FED /* PixelbayAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelbayAPI.swift; sourceTree = "<group>"; };
+		5540F71B21BBEB6E00334FED /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
 		55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		55537EB321A4853600DBB885 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		55537EB521A4B11400DBB885 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -229,6 +237,41 @@
 			path = ImagesViewController;
 			sourceTree = "<group>";
 		};
+		5540F71121BBE92100334FED /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5540F71A21BBEB0500334FED /* RequestCommon */,
+				5540F71521BBE98800334FED /* Parser */,
+				5540F71221BBE93F00334FED /* RequestSender */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5540F71221BBE93F00334FED /* RequestSender */ = {
+			isa = PBXGroup;
+			children = (
+				5540F71321BBE94E00334FED /* IRequestSender.swift */,
+			);
+			path = RequestSender;
+			sourceTree = "<group>";
+		};
+		5540F71521BBE98800334FED /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				5540F71621BBE99700334FED /* IParser.swift */,
+				5540F71821BBEA0000334FED /* PixelbayAPI.swift */,
+			);
+			path = Parser;
+			sourceTree = "<group>";
+		};
+		5540F71A21BBEB0500334FED /* RequestCommon */ = {
+			isa = PBXGroup;
+			children = (
+				5540F71B21BBEB6E00334FED /* IRequest.swift */,
+			);
+			path = RequestCommon;
+			sourceTree = "<group>";
+		};
 		55537EA821A478CB00DBB885 /* 1. PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +313,7 @@
 		55537EAE21A484B200DBB885 /* 3. CoreLayer */ = {
 			isa = PBXGroup;
 			children = (
+				5540F71121BBE92100334FED /* Network */,
 				55D2AECC218EF02900625FFB /* CoreData */,
 				55A6D221217CDDAE00B9A135 /* File System Opetations */,
 				55537EAF21A484CB00DBB885 /* Assembly */,
@@ -516,11 +560,13 @@
 				55001EBD21A5B3EA002F5D12 /* ConversationsListCell.swift in Sources */,
 				5573CFFE218F359800F82D05 /* CoreDataStorageSQLite.swift in Sources */,
 				55537EB821A4B65000DBB885 /* ProfileStorageService.swift in Sources */,
+				5540F71C21BBEB6E00334FED /* IRequest.swift in Sources */,
 				55A6D233217CF19600B9A135 /* ImageSavingOperation.swift in Sources */,
 				55064610216A97BD00EB961B /* RecivedMessagesCell.swift in Sources */,
 				5573D000218F6A0D00F82D05 /* IStorageManagerService.swift in Sources */,
 				55E2363F216A7FA80040E4DB /* SentMessageCell.swift in Sources */,
 				55BBDF062191F555009AEAE1 /* ConversationViewControllerDelegate.swift in Sources */,
+				5540F71921BBEA0000334FED /* PixelbayAPI.swift in Sources */,
 				55A6D225217CDE0E00B9A135 /* FileName.swift in Sources */,
 				55E23637216A7D4B0040E4DB /* ConversationViewController.swift in Sources */,
 				55D2AED9218F14CF00625FFB /* ProvileViewControllerDelegate.swift in Sources */,
@@ -531,6 +577,7 @@
 				55001EB821A5B3EA002F5D12 /* ConversationListViewDelegate.swift in Sources */,
 				5539672921863A7300AA4D05 /* CodableMessage.swift in Sources */,
 				553A8811217D1A00004B8EC6 /* FileLoader.swift in Sources */,
+				5540F71421BBE94E00334FED /* IRequestSender.swift in Sources */,
 				55F7BBAF2191E89800752AB6 /* ContactProcessingService.swift in Sources */,
 				55D2AED7218F04ED00625FFB /* ProfileModel.swift in Sources */,
 				55001EB721A5B3EA002F5D12 /* ConversationListViewControllerDelegate.swift in Sources */,
@@ -538,6 +585,7 @@
 				553A880F217D19E3004B8EC6 /* FileSaver.swift in Sources */,
 				55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */,
 				55537EC321A4D2CA00DBB885 /* RootAssembly.swift in Sources */,
+				5540F71721BBE99700334FED /* IParser.swift in Sources */,
 				55A6D223217CDDCA00B9A135 /* GCDDataManager.swift in Sources */,
 				55E23642216A85770040E4DB /* MessageCellConfiguration.swift in Sources */,
 				55D2AECF218EF06C00625FFB /* ProfileModel.xcdatamodeld in Sources */,

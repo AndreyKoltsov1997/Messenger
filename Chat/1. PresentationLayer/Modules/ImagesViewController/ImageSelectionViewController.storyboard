@@ -13,7 +13,7 @@
         <!--ImageSelectionViewController-->
         <scene sceneID="IfZ-80-GZw">
             <objects>
-                <viewController id="20u-RP-08r" userLabel="ImageSelectionViewController" customClass="ImageSelectionViewController" customModule="Chat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageSelectionViewController" id="20u-RP-08r" userLabel="ImageSelectionViewController" customClass="ImageSelectionViewController" customModule="Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gLn-Pu-eJi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
