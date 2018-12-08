@@ -323,7 +323,6 @@
 			children = (
 				5540F72F21BBF77800334FED /* Pixabay */,
 				5540F73021BBF7A400334FED /* ImageDownloaderService.swift */,
-				5540F73221BBF91800334FED /* PixabayAPIService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -331,6 +330,7 @@
 		5540F72F21BBF77800334FED /* Pixabay */ = {
 			isa = PBXGroup;
 			children = (
+				5540F73221BBF91800334FED /* PixabayAPIService.swift */,
 			);
 			path = Pixabay;
 			sourceTree = "<group>";
