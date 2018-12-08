@@ -40,5 +40,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSPrincipalClass</key>
+	<string>Sprayer</string>
 </dict>
 </plist>
