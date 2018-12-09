@@ -17,6 +17,8 @@ class NetworkTests: XCTestCase {
     private var imageManager: IImageManagerService?
     private let TEST_IMAGE_NAME = Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME
     
+    // MARK: - Lifecycle
+    
     override func setUp() {
        super.setUp()
         
@@ -34,9 +36,28 @@ class NetworkTests: XCTestCase {
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+        self.requestManagerMock = nil
+        self.imageManager = nil
     }
+    
+    // MARK: - Tests
 
-   
+    func testRequestManagerCallOnImageDownload() {
+        // given
+        let apiURL = "test_url" // make the test connection-independent, so no need in ACTUAL working URL
+        
+        // when
+        self.requestManagerMock?.load(url: apiURL, completion: {_ in })
+        
+        // then
+        guard let hasRequestLoaded = self.requestManagerMock?.hasLoadRequested else {
+            let hasTestPassed = false
+            XCTAssertTrue(hasTestPassed)
+            return
+        }
+        
+        XCTAssertTrue(hasRequestLoaded)
+    }
 
 }
