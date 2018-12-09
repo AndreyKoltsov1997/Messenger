@@ -61,7 +61,7 @@ class ConversationListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       
+        self.loadProfilePicturePreview()
     }
     
     // MARK: - Private functions
@@ -151,10 +151,13 @@ class ConversationListViewController: UIViewController {
         }
     }
     
-    private func loadUserPic() {
-       
-        let gcdDataManager = GCDDataManager()
-        gcdDataManager.loadProfile(sender: self)
+    private func loadProfilePicturePreview() {
+        self.profileStorageService?.loadProfile { userName, userDescription, profilePictureBinaryData in
+            if let rawProfilePicPreview = profilePictureBinaryData {
+                self.profilePicturePreview.image = UIImage(data: Data(referencing: rawProfilePicPreview))
+
+            }
+        }
     }
     
     private func configureTableView() {
