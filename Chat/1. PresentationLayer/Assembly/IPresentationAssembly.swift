@@ -44,7 +44,7 @@ class PresentationAssembly: IPresentationAssembly {
         
          guard let conversationListViewController = navigation.viewControllers.first as? ConversationListViewController else { fatalError() }
         
-        conversationListViewController.setupViewController(presentationAssembly: self, storage: serviceAssembly.storageManagerService(), communicationService: serviceAssembly.communicationService(displayingName: "Andrey Koltsov"), contactProcessingService: serviceAssembly.contactProcessingService())
+        conversationListViewController.setupViewController(presentationAssembly: self, storage: serviceAssembly.storageManagerService(), communicationService: serviceAssembly.communicationService(displayingName: "Andrey Koltsov"), contactProcessingService: serviceAssembly.contactProcessingService(), profileStorageService: serviceAssembly.profileStorageService())
                 return navigation
     }
     

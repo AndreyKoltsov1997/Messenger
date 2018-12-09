@@ -27,6 +27,7 @@ class ConversationListViewController: UIViewController {
     private var storage: IStorageManagerService?
     private var communicationService: CommunicationService?
     private var contactProcessingService: IContactsProcessingService?
+    private var profileStorageService: IProfileStorageService?
 
 
     // MARK: - Presentation Layer Dependencies
@@ -60,7 +61,7 @@ class ConversationListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadUserPic()
+       
     }
     
     // MARK: - Private functions
@@ -118,11 +119,6 @@ class ConversationListViewController: UIViewController {
     
     private func addUserToList(userPeer user: Peer) {
         DispatchQueue.main.async {
-//            let contact = self.contactProcessingService?.findContact(withPeer: user)
-//            let isContactExist = (contact != nil)
-//            if !isContactExist {
-//
-//            }
             
             self.contactProcessingService?.processFoundContact(user, completion: { isContactExist, contact in
                 if !isContactExist {
@@ -156,6 +152,7 @@ class ConversationListViewController: UIViewController {
     }
     
     private func loadUserPic() {
+       
         let gcdDataManager = GCDDataManager()
         gcdDataManager.loadProfile(sender: self)
     }
@@ -171,11 +168,12 @@ class ConversationListViewController: UIViewController {
 
     // MARK: - Public functions
     
-    public func setupViewController(presentationAssembly: PresentationAssembly, storage: IStorageManagerService, communicationService: ICommunicationService?, contactProcessingService: IContactsProcessingService?) {
+    public func setupViewController(presentationAssembly: PresentationAssembly, storage: IStorageManagerService, communicationService: ICommunicationService?, contactProcessingService: IContactsProcessingService?, profileStorageService: IProfileStorageService?) {
         self.presentationAssembly = presentationAssembly
         self.storage = storage
         self.communicationService = communicationService as? CommunicationService
         self.contactProcessingService = contactProcessingService as? ContactProcessingService
+        self.profileStorageService = profileStorageService
     }
     
     public func configureProfile(profileInfo: ProfileModel?) {
