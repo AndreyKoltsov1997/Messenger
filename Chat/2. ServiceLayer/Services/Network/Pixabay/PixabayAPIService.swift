@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 
-class PixabayAPIService: IImageDownloadService {
+class PixabayAPIService: IImageManagerService {
     
     private let requestSender: IRequestSender
     private let requestLoader: IRequestLoader
@@ -40,7 +40,7 @@ class PixabayAPIService: IImageDownloadService {
         }
     }
     
-    func webformatURL(index: Int) -> String? {
+    func getWebFormatURL(index: Int) -> String? {
         guard let imageURL = images?[index].webformatURL else {
             let misleadingMessage = "Unable to get web format URL from the response."
             print(misleadingMessage)

@@ -49,6 +49,8 @@
 		5540F73C21BC013000334FED /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5540F73A21BC013000334FED /* ImageCollectionViewCell.xib */; };
 		5540F73E21BC029400334FED /* LoadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73D21BC029400334FED /* LoadingImage.swift */; };
 		5540F75421BD4E0F00334FED /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F75321BD4E0F00334FED /* NetworkTests.swift */; };
+		5540F75E21BD513400334FED /* IRequestManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F75D21BD513400334FED /* IRequestManagerMock.swift */; };
+		5540F76021BD51F800334FED /* RequestManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F75F21BD51F800334FED /* RequestManagerMock.swift */; };
 		55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */; };
 		55537EB421A4853600DBB885 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB321A4853600DBB885 /* CoreAssembly.swift */; };
 		55537EB621A4B11400DBB885 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB521A4B11400DBB885 /* ServiceAssembly.swift */; };
@@ -140,6 +142,8 @@
 		5540F75121BD4E0F00334FED /* NetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5540F75321BD4E0F00334FED /* NetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
 		5540F75521BD4E0F00334FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5540F75D21BD513400334FED /* IRequestManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequestManagerMock.swift; sourceTree = "<group>"; };
+		5540F75F21BD51F800334FED /* RequestManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerMock.swift; sourceTree = "<group>"; };
 		55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		55537EB321A4853600DBB885 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		55537EB521A4B11400DBB885 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -380,10 +384,28 @@
 		5540F75221BD4E0F00334FED /* NetworkTests */ = {
 			isa = PBXGroup;
 			children = (
+				5540F75B21BD50FD00334FED /* MockAndStubs */,
 				5540F75321BD4E0F00334FED /* NetworkTests.swift */,
 				5540F75521BD4E0F00334FED /* Info.plist */,
 			);
 			path = NetworkTests;
+			sourceTree = "<group>";
+		};
+		5540F75B21BD50FD00334FED /* MockAndStubs */ = {
+			isa = PBXGroup;
+			children = (
+				5540F75C21BD512000334FED /* RequestManagerMock */,
+			);
+			path = MockAndStubs;
+			sourceTree = "<group>";
+		};
+		5540F75C21BD512000334FED /* RequestManagerMock */ = {
+			isa = PBXGroup;
+			children = (
+				5540F75D21BD513400334FED /* IRequestManagerMock.swift */,
+				5540F75F21BD51F800334FED /* RequestManagerMock.swift */,
+			);
+			path = RequestManagerMock;
 			sourceTree = "<group>";
 		};
 		55537EA821A478CB00DBB885 /* 1. PresentationLayer */ = {
@@ -773,7 +795,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5540F76021BD51F800334FED /* RequestManagerMock.swift in Sources */,
 				5540F75421BD4E0F00334FED /* NetworkTests.swift in Sources */,
+				5540F75E21BD513400334FED /* IRequestManagerMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

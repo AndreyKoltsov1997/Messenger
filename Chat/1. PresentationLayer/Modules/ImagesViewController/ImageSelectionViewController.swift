@@ -27,7 +27,7 @@ class ImageSelectionViewController: UIViewController {
     }
     
     // MARK: - Dependencies
-    private var imageDownloadService: IImageDownloadService?
+    private var imageDownloadService: IImageManagerService?
 
     
     // MARK: - Lifecycle
@@ -59,7 +59,7 @@ class ImageSelectionViewController: UIViewController {
         }
     }
     
-    public func configureViewController(service: IImageDownloadService) {
+    public func configureViewController(service: IImageManagerService) {
         self.imageDownloadService = service
     }
     
@@ -88,7 +88,7 @@ extension ImageSelectionViewController: UICollectionViewDataSource {
         
         image.frame = cell.bounds
         
-        if let url = imageDownloadService?.webformatURL(index: indexPath.row) {
+        if let url = imageDownloadService?.getWebFormatURL(index: indexPath.row) {
             DispatchQueue.global().async {
                 image.loadImage(from: url)
             }
