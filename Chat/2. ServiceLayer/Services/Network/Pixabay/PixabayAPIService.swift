@@ -50,21 +50,17 @@ class PixabayAPIService: IImageManagerService {
         return imageURL
     }
     
-    func load(index: Int, completion: @escaping (UIImage?) -> Void) {
-        guard let imageURL = images?[index].webformatURL else {
-            completion(nil)
-            return
-        }
-        
-        requestLoader.load(url: imageURL) { (data) in
-            guard let data = data else {
-                let misleadingMsg = "Unable to load image."
+    func load(url: String, completion: @escaping (UIImage?) -> Void) {
+        requestLoader.load(url: url) { imageBinaryData in
+            guard let imageData = imageBinaryData else {
+                let misleadingMsg = "Unable to convert loaded response to image."
                 print(misleadingMsg)
                 completion(nil)
                 return
             }
             
-            completion(UIImage(data: data))
+            let actualImage = UIImage(data: imageData, scale: 1.0)
+            completion(actualImage)
         }
     }
     

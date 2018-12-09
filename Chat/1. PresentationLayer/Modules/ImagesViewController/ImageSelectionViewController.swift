@@ -126,7 +126,13 @@ extension ImageSelectionViewController: UICollectionViewDelegateFlowLayout {
 
 extension ImageSelectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.imageDownloadService?.load(index: indexPath.row) { (image) in
+        guard let imageURL = imageDownloadService?.getWebFormatURL(index: indexPath.row) else {
+            let misleadingMsg = "Unable to get image URL."
+            print(misleadingMsg)
+            return
+        }
+        
+        self.imageDownloadService?.load(url: imageURL) { (image) in
             DispatchQueue.main.async { [weak self] in
                self?.profileImageDelegate?.setImage(image: image)
                 self?.dismiss(animated: true, completion: nil)

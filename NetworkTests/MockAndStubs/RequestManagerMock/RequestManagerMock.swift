@@ -35,7 +35,7 @@ class RequestManagerMock: IRequestManagerMock {
         }
         let imageBinaryRepresentation = image.pngData()
         completion(imageBinaryRepresentation)
-        
+    
     }
     
     // NOTE: Cancelling the load of an image

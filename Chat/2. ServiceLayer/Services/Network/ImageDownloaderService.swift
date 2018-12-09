@@ -13,8 +13,7 @@ protocol IImageManagerService {
     
     func performRequest(completion: @escaping (Int) -> Void)
     func getWebFormatURL(index: Int) -> String?
-    
-    func load(index: Int, completion: @escaping (UIImage?) -> Void)
+    func load(url: String, completion: @escaping (UIImage?) -> Void)
     
 }
 
