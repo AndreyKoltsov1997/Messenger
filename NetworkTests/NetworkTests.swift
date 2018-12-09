@@ -62,52 +62,54 @@ class NetworkTests: XCTestCase {
     }
     
     func testOnImageLoaderReturnsImage() {
-        let testName = "testOnImageLoaderReturnsImage"
+        let currentTestName = "testOnImageLoaderReturnsImage"
         
         // given
         guard let imageLoader = self.mockedImageManager else {
             let misleadingMsg = "Image loader entity hasn't been found in tests."
-            self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: testName)
+            self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: currentTestName)
             return
         }
         
         let testApiURL = "test_url" // NOTE: no need in actual URL since tests are netowrk-independent
+        // NOTE: Using  because of the complition callback block
+        let imageLoadingExpectation = self.expectation(description: currentTestName)
         
         // when
-        let queueName = "IMAGE_LOAD_TEST"
-        let queue = DispatchQueue(label: queueName)
-        
-
-        queue.sync {
-            imageLoader.load(url: testApiURL) { (loadedImage) in
-                guard let image = loadedImage else {
-                    let misleadingMsg = "Image hasn't been loaded in test."
-                    print(misleadingMsg)
-                    let hasTestPassed = false
-                    XCTAssertTrue(hasTestPassed)
-                    return
-                }
-                let loadedImageBinaryData = image.pngData()
-                
-                let testImage = UIImage(named: self.TEST_IMAGE_NAME)
-                guard let actualTestImage = testImage else {
-                    let misleadingMsg = "Unable to find image with name \(self.TEST_IMAGE_NAME)"
-                    self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: testName)
-                    return
-                }
-                
-                guard let testImagebinaryData = self.getDecompressedImageData(for: actualTestImage) else {
-                    let misleadingMsg = "Unable to decompress test image"
-                    self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: testName)
-                    return
-                }
-                
-                //then
-                let hasTestPassed = (loadedImageBinaryData == testImagebinaryData)
+        var hasTestPassed: Bool = false
+        imageLoader.load(url: testApiURL) { (loadedImage) in
+            guard let image = loadedImage else {
+                let misleadingMsg = "Image hasn't been loaded in test."
+                print(misleadingMsg)
+                let hasTestPassed = false
                 XCTAssertTrue(hasTestPassed)
+                return
             }
-            XCTAssertTrue(false)
+            let loadedImageBinaryData = image.pngData()
+            
+            let testImage = UIImage(named: self.TEST_IMAGE_NAME)
+            guard let actualTestImage = testImage else {
+                let misleadingMsg = "Unable to find image with name \(self.TEST_IMAGE_NAME)"
+                self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: currentTestName)
+                return
+            }
+            
+            guard let testImagebinaryData = self.getDecompressedImageData(for: actualTestImage) else {
+                let misleadingMsg = "Unable to decompress test image"
+                self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: currentTestName)
+                return
+            }
+            
+            hasTestPassed = (loadedImageBinaryData == testImagebinaryData)
+            imageLoadingExpectation.fulfill()
         }
+        
+        // NOTE: Default callback time has been calculated emperically
+        let defaultCallbackTimeout = Double(6.5)
+        waitForExpectations(timeout: defaultCallbackTimeout, handler: nil)
+        
+        // then
+        XCTAssertTrue(hasTestPassed)
         
     }
     
