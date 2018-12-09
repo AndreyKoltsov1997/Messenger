@@ -19,6 +19,7 @@ struct PixelbayImagesRequestConstants {
     static let REQUEST_ALL_IMAGES_PARAM = "" // Parameter for "request items" ("q"). The server return all images it it's empty
     
 }
+
 class PixabayImagesRequest: IRequest {
     
     private var amountOfImagesPerPage = 200

@@ -179,7 +179,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         return ((self.userNameField.text != self.profile.name) || (self.userDiscriptionField.text != self.profile.discripton))
     }
     
-    
     private func setButtonInteraction(avaliable isEnabled: Bool) {
         saveButton.isEnabled = isEnabled
         
@@ -303,7 +302,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     
     private func checkIfSaveIsAvaliable() {
-        isUserDataUpdated() ? setButtonInteraction(avaliable: true) : setButtonInteraction(avaliable: false)
+//        isUserDataUpdated() ? setButtonInteraction(avaliable: true) : setButtonInteraction(avaliable: false)
+        let isProfileSaveAlwaysAvaliable = true  // NOTE: "Save" button blocking is deprecated
+        setButtonInteraction(avaliable: isProfileSaveAlwaysAvaliable)
     }
     
     // MARK: UIImagePickerDelegate methods

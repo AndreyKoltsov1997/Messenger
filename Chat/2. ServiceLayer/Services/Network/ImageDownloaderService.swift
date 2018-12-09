@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-protocol IImageDownloadService {
+protocol IImageManagerService {
     
     func performRequest(completion: @escaping (Int) -> Void)
-    func webformatURL(index: Int) -> String?
-    
-    func load(index: Int, completion: @escaping (UIImage?) -> Void)
+    func getWebFormatURL(index: Int) -> String?
+    func load(url: String, completion: @escaping (UIImage?) -> Void)
     
 }
+
