@@ -12,11 +12,24 @@ import XCTest
 
 class NetworkTests: XCTestCase {
 
-    var imageDownloader: IRequestLoader?
+    // MARK: - Properties
+    private var requestManagerMock: IRequestManagerMock?
+    private var imageManager: IImageManagerService?
+    private let TEST_IMAGE_NAME = Constants.PROFILE_PICTURE_PLACEHOLDER_IMAGE_NAME
     
     override func setUp() {
        super.setUp()
         
+       let testingImage = UIImage(named: self.TEST_IMAGE_NAME)
+        if let image = testingImage {
+            self.requestManagerMock = RequestManagerMock(image: image)
+
+        }
+        
+        if let requestManager = self.requestManagerMock {
+            let testRequestSender = RequestSender()
+             self.imageManager = PixabayAPIService(requestSender: testRequestSender, requestLoader: requestManager)
+        }
         
     }
 
