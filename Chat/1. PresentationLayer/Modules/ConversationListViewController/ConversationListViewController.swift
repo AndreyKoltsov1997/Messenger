@@ -154,10 +154,13 @@ class ConversationListViewController: UIViewController {
     private func loadProfilePicturePreview() {
         self.profileStorageService?.loadProfile { userName, userDescription, profilePictureBinaryData in
             if let rawProfilePicPreview = profilePictureBinaryData {
-                self.profilePicturePreview.image = UIImage(data: Data(referencing: rawProfilePicPreview))
-
+                DispatchQueue.main.async {
+                     self.profilePicturePreview.image = UIImage(data: Data(referencing: rawProfilePicPreview))
+                }
             }
         }
+       
+       
     }
     
     private func configureTableView() {

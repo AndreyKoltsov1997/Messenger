@@ -74,34 +74,39 @@ class NetworkTests: XCTestCase {
         let testApiURL = "test_url" // NOTE: no need in actual URL since tests are netowrk-independent
         
         // when
+        let queueName = "IMAGE_LOAD_TEST"
+        let queue = DispatchQueue(label: queueName)
         
-        imageLoader.load(url: testApiURL) { (loadedImage) in
-            guard let image = loadedImage else {
-                let misleadingMsg = "Image hasn't been loaded in test."
-                print(misleadingMsg)
-                let hasTestPassed = false
+
+        queue.sync {
+            imageLoader.load(url: testApiURL) { (loadedImage) in
+                guard let image = loadedImage else {
+                    let misleadingMsg = "Image hasn't been loaded in test."
+                    print(misleadingMsg)
+                    let hasTestPassed = false
+                    XCTAssertTrue(hasTestPassed)
+                    return
+                }
+                let loadedImageBinaryData = image.pngData()
+                
+                let testImage = UIImage(named: self.TEST_IMAGE_NAME)
+                guard let actualTestImage = testImage else {
+                    let misleadingMsg = "Unable to find image with name \(self.TEST_IMAGE_NAME)"
+                    self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: testName)
+                    return
+                }
+                
+                guard let testImagebinaryData = self.getDecompressedImageData(for: actualTestImage) else {
+                    let misleadingMsg = "Unable to decompress test image"
+                    self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: testName)
+                    return
+                }
+                
+                //then
+                let hasTestPassed = (loadedImageBinaryData == testImagebinaryData)
                 XCTAssertTrue(hasTestPassed)
-                return
             }
-            let loadedImageBinaryData = image.pngData()
-            
-            let testImage = UIImage(named: self.TEST_IMAGE_NAME)
-            guard let actualTestImage = testImage else {
-                let misleadingMsg = "Unable to find image with name \(self.TEST_IMAGE_NAME)"
-                self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: testName)
-                return
-            }
-            
-            guard let testImagebinaryData = self.getDecompressedImageData(for: actualTestImage) else {
-               let misleadingMsg = "Unable to decompress test image"
-                self.invalidateAssertTrueTest(reason: misleadingMsg, senderName: testName)
-                return
-            }
-            
-            //then
-            let hasTestPassed = (loadedImageBinaryData == testImagebinaryData)
-            XCTAssertTrue(hasTestPassed)
-            
+            XCTAssertTrue(false)
         }
         
     }
