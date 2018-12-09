@@ -48,6 +48,7 @@
 		5540F73B21BC013000334FED /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73921BC013000334FED /* ImageCollectionViewCell.swift */; };
 		5540F73C21BC013000334FED /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5540F73A21BC013000334FED /* ImageCollectionViewCell.xib */; };
 		5540F73E21BC029400334FED /* LoadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F73D21BC029400334FED /* LoadingImage.swift */; };
+		5540F75421BD4E0F00334FED /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540F75321BD4E0F00334FED /* NetworkTests.swift */; };
 		55537EAC21A4797800DBB885 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */; };
 		55537EB421A4853600DBB885 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB321A4853600DBB885 /* CoreAssembly.swift */; };
 		55537EB621A4B11400DBB885 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55537EB521A4B11400DBB885 /* ServiceAssembly.swift */; };
@@ -80,6 +81,16 @@
 		55E23642216A85770040E4DB /* MessageCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E23641216A85770040E4DB /* MessageCellConfiguration.swift */; };
 		55F7BBAF2191E89800752AB6 /* ContactProcessingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7BBAE2191E89800752AB6 /* ContactProcessingService.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5540F75621BD4E0F00334FED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5509957B2157955600D377E5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 550995822157955600D377E5;
+			remoteInfo = Chat;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		55001EAF21A5B3EA002F5D12 /* ConversationListViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +137,9 @@
 		5540F73921BC013000334FED /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		5540F73A21BC013000334FED /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		5540F73D21BC029400334FED /* LoadingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingImage.swift; sourceTree = "<group>"; };
+		5540F75121BD4E0F00334FED /* NetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5540F75321BD4E0F00334FED /* NetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
+		5540F75521BD4E0F00334FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55537EAB21A4797800DBB885 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		55537EB321A4853600DBB885 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		55537EB521A4B11400DBB885 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -161,6 +175,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		550995802157955600D377E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5540F74E21BD4E0F00334FED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -217,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				550995852157955600D377E5 /* Chat */,
+				5540F75221BD4E0F00334FED /* NetworkTests */,
 				550995842157955600D377E5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -225,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				550995832157955600D377E5 /* Chat.app */,
+				5540F75121BD4E0F00334FED /* NetworkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -352,6 +375,15 @@
 				5540F73A21BC013000334FED /* ImageCollectionViewCell.xib */,
 			);
 			path = ImageCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		5540F75221BD4E0F00334FED /* NetworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				5540F75321BD4E0F00334FED /* NetworkTests.swift */,
+				5540F75521BD4E0F00334FED /* Info.plist */,
+			);
+			path = NetworkTests;
 			sourceTree = "<group>";
 		};
 		55537EA821A478CB00DBB885 /* 1. PresentationLayer */ = {
@@ -584,18 +616,40 @@
 			productReference = 550995832157955600D377E5 /* Chat.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5540F75021BD4E0F00334FED /* NetworkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5540F75A21BD4E0F00334FED /* Build configuration list for PBXNativeTarget "NetworkTests" */;
+			buildPhases = (
+				5540F74D21BD4E0F00334FED /* Sources */,
+				5540F74E21BD4E0F00334FED /* Frameworks */,
+				5540F74F21BD4E0F00334FED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5540F75721BD4E0F00334FED /* PBXTargetDependency */,
+			);
+			name = NetworkTests;
+			productName = NetworkTests;
+			productReference = 5540F75121BD4E0F00334FED /* NetworkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		5509957B2157955600D377E5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Peter the Great St.Petersburg Polytechnic University";
 				TargetAttributes = {
 					550995822157955600D377E5 = {
 						CreatedOnToolsVersion = 9.4.1;
+					};
+					5540F75021BD4E0F00334FED = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 550995822157955600D377E5;
 					};
 				};
 			};
@@ -613,6 +667,7 @@
 			projectRoot = "";
 			targets = (
 				550995822157955600D377E5 /* Chat */,
+				5540F75021BD4E0F00334FED /* NetworkTests */,
 			);
 		};
 /* End PBXProject section */
@@ -632,6 +687,13 @@
 				55E23640216A7FA80040E4DB /* SentMessageCell.xib in Resources */,
 				5540F71021BBD67B00334FED /* ImageSelectionViewController.storyboard in Resources */,
 				5509958C2157955600D377E5 /* ProfileViewController.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5540F74F21BD4E0F00334FED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,7 +769,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5540F74D21BD4E0F00334FED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5540F75421BD4E0F00334FED /* NetworkTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5540F75721BD4E0F00334FED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 550995822157955600D377E5 /* Chat */;
+			targetProxy = 5540F75621BD4E0F00334FED /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5509958A2157955600D377E5 /* ProfileViewController.storyboard */ = {
@@ -879,6 +957,51 @@
 			};
 			name = Release;
 		};
+		5540F75821BD4E0F00334FED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YRDT5BG45Z;
+				INFOPLIST_FILE = NetworkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.spbstu.hsse.NetworkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chat.app/Chat";
+			};
+			name = Debug;
+		};
+		5540F75921BD4E0F00334FED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YRDT5BG45Z;
+				INFOPLIST_FILE = NetworkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.spbstu.hsse.NetworkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chat.app/Chat";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -896,6 +1019,15 @@
 			buildConfigurations = (
 				550995962157955700D377E5 /* Debug */,
 				550995972157955700D377E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5540F75A21BD4E0F00334FED /* Build configuration list for PBXNativeTarget "NetworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5540F75821BD4E0F00334FED /* Debug */,
+				5540F75921BD4E0F00334FED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
